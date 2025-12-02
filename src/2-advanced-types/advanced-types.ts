@@ -10,6 +10,7 @@ let employeeObj: {
         console.log(date);
     }
 };
+console.log(employeeObj);
 
 // Type Aliases
 type Employee = {
@@ -25,6 +26,7 @@ let newEmployee: Employee = {
         console.log(date);
     }
 };
+console.log(newEmployee);
 
 // Union Types
 
@@ -37,3 +39,5 @@ function kgToLbs(weight: number | string): number {
     }
 }
 
+console.log(kgToLbs(10));
+console.log(kgToLbs("10kg"));

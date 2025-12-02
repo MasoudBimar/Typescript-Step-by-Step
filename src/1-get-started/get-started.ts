@@ -7,6 +7,8 @@ let is_published: boolean = true;
 let level; // any type
 let y: string = "Hello, World!";
 
+console.log(x, x2, course, is_published, level, y);
+
 function greet(name: string): string {
     return `${y} My name is ${name} and my lucky number is ${x}.`;
 }
@@ -16,9 +18,10 @@ greet("TypeScript User");
 // Arrays
 
 let numbers = [1, 2, 3, 4, 5, 'test']; // inferred as (number | string)[]
+console.log(numbers);
 
 let typed_numbers: number[] = [10, 20, 30, 40, 50];
-
+console.log(typed_numbers);
 
 function calculateTax(income: number, taxYear: number = 2022): number {
     if (taxYear < 2023) {
@@ -43,3 +46,5 @@ let employee: {
         console.log(date);
     }
 };
+
+console.log(employee);
