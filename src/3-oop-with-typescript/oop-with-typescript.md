@@ -2,9 +2,10 @@
 
 - OOP
 - Classes
-- Typeof/Instanceof
-- Constructors / Constructor Parameter Properties
+- Typeof vs Instanceof
+- Const vs Readonly
 - Access Control Keywords (private / protected / public)
+- Constructors / Constructor Parameter Properties
 - Getters & Setters
 - Static members
 - Index Signature
@@ -58,18 +59,6 @@ const user1 = new User(1, "Alice", "Admin");
 console.log(user1.displayName);
 ```
 
-better version without redundancy is this:
-
-```ts
-class User {
-  constructor(public id: number, public name: string, public role: string) {}
-
-  get displayName(): string {
-    return `${this.role}: ${this.name}`;
-  }
-}
-```
-
 ## Typeof/Instanceof
 
 ### Summary
@@ -112,7 +101,7 @@ function isUser(obj: unknown): obj is User {
 }
 ```
 
-### why is works:
+### why it works
 
 it checks the prototype chain
 
@@ -189,6 +178,8 @@ Use readonly for:
 Visibility modifiers in TypeScript—public, protected, private—are basically your guardrails for controlling how a class can be used. They don’t exist at runtime; they exist purely for the compiler to enforce architectural boundaries.
 Think of them as instructions to future developers: “Touch this, but not that.”
 
+All this properties are public by default.
+
 public
 
 - This is the default. Everything is public unless stated otherwise.
@@ -203,6 +194,258 @@ protected
 
 - Accessible inside the class and inside subclasses, but nowhere else.
 
+```ts
+class User {
+  public name: string; // Accessible everywhere
+  protected role: string; // Accessible in this class + subclasses
+  private password: string; // Accessible only inside this class
+
+  constructor(name: string, role: string, password: string) {
+    this.name = name;
+    this.role = role;
+    this.password = password;
+  }
+
+  public updateName(newName: string): void {
+    this.name = newName;
+  }
+
+  protected getRole(): string {
+    return this.role;
+  }
+
+  private validatePassword(pw: string): boolean {
+    return pw === this.password;
+  }
+}
+
+class Admin extends User {
+  constructor(name: string, password: string) {
+    super(name, "admin", password);
+  }
+
+  public printRole(): void {
+    // Allowed: `role` is protected → accessible here
+    console.log(`Role: ${this.role}`);
+  }
+}
+
+const u = new User("Alice", "reader", "secret123");
+
+// Allowed
+console.log(u.name);
+u.updateName("Alicia");
+
+// Not allowed (compile-time errors):
+// u.role;
+// u.getRole();
+// u.password;
+// u.validatePassword("secret123");
+
+const admin = new Admin("Bob", "pass123");
+admin.printRole();
+```
+
+## Parameter Properties
+
+```ts
+class User {
+  id: number;
+  name: string;
+  role: string;
+
+  constructor(id: number, name: string, role: string) {
+    this.id = id;
+    this.name = name;
+    this.role = role;
+  }
+
+  get displayName(): string {
+    return `${this.role}: ${this.name}`;
+  }
+}
+
+// this is the better version with Typescript feature called Parameter Properties
+
+class User {
+  constructor(public id: number, protected name: string, private role: string) {}
+
+  get displayName(): string {
+    return `${this.role}: ${this.name}`;
+  }
+}
+```
+
+## Getters & Setters
+
+Why using Getters & Setters is clean
+
+- \_name and \_price are private, guaranteeing invariants.
+- Getters and setters provide controlled access with validation.
+- The class surface stays minimal and predictable.
+- Works naturally with frameworks like Angular, where computed values or validation logic often go into getters/setters.
+
+```ts
+class Product {
+  // Private fields ensure encapsulation
+  private _name: string;
+  private _price: number;
+
+  constructor(name: string, price: number) {
+    this._name = name;
+    this._price = price;
+  }
+
+  // Public getter
+  public get name(): string {
+    return this._name;
+  }
+
+  // Public setter with validation logic
+  public set name(value: string) {
+    if (!value.trim()) {
+      throw new Error("Product name cannot be empty.");
+    }
+    this._name = value;
+  }
+
+  // Getter for price
+  public get price(): number {
+    return this._price;
+  }
+
+  // Setter with guard
+  public set price(value: number) {
+    if (value < 0) {
+      throw new Error("Price cannot be negative.");
+    }
+    this._price = value;
+  }
+
+  public toString(): string {
+    return `${this._name} — €${this._price}`;
+  }
+}
+
+const product = new Product("Keyboard", 79);
+
+console.log(product.name); // Access getter
+product.name = "Mechanical Keyboard"; // Setter with validation
+
+console.log(product.price);
+product.price = 99;
+
+console.log(product.toString());
+
+// Not allowed (private):
+// product._name;
+// product._price;
+```
+
+## Index Signature
+
+Index signatures are TypeScript’s way of saying: “This object can have dynamic keys, and here’s the shape of the values behind those keys.”
+They’re useful when you don’t know all property names ahead of time but you can describe the type pattern.
+
+```ts
+// This means: any string key is allowed, and its value must be a number.
+type MyMap = {
+  [key: string]: number;
+};
+```
+
+More Practical Example:
+
+```ts
+interface ErrorMessages {
+  [field: string]: string; // index signature
+}
+
+const errors: ErrorMessages = {
+  username: "Required",
+  email: "Invalid format",
+  password: "Too short",
+};
+
+// Allowed
+errors["confirmPassword"] = "Mismatch";
+
+// Not allowed
+// errors.count = 5;          // ❌ number is not assignable to string
+```
+
+Moxed defined propeties + index signature
+
+```ts
+interface ApiResponse {
+  status: number; // known property
+  [key: string]: number; // dynamic properties must also be number
+}
+
+const res: ApiResponse = {
+  status: 200,
+  items: 42, // allowed
+  total: 100, // allowed
+};
+```
+
+### When not to use index signatures
+
+1. TypeScript has improved alternatives: `Record<Key, Value>;`
+
+```ts
+type Scores = Record<string, number>;
+```
+
+2. Mapped types (much safer when keys are known):
+
+```ts
+type UserRoles = "admin" | "editor" | "viewer";
+
+type Permissions = {
+  [R in UserRoles]: boolean;
+};
+```
+
+Index signatures are best when property names are truly unknown.
+
+## Static Members
+
+Static members are the pieces of a class that belong to the class itself, not to any instance. Think of them as shared tools sitting on the class’s shelf, untouched by the quirks of individual objects.
+
+They’re great for utilities, counters, factory methods, configuration, and anything that shouldn’t depend on instance state.
+
+```ts
+class Counter {
+  private static _count = 0; // private static field
+
+  public static increment(): void {
+    Counter._count++;
+  }
+
+  public static get count(): number {
+    // static getter
+    return Counter._count;
+  }
+
+  public static reset(): void {
+    Counter._count = 0;
+  }
+
+  constructor() {
+    Counter.increment(); // accessing static member
+  }
+}
+
+const a = new Counter();
+const b = new Counter();
+
+console.log(Counter.count); // 2
+
+Counter.reset();
+console.log(Counter.count); // 0
+```
+
 ## Inheritance
 
 Classic “is-a” relationships.
@@ -210,25 +453,26 @@ Classic “is-a” relationships.
 expected class should be:
 
 ```ts
+class User {
+  constructor(public id: number, public name: string, public role: string) {}
+
+  get displayName(): string {
+    return `${this.role}: ${this.name}`;
+  }
+}
+
+// Putting access modifiers directly on constructor parameters in a class creates new properties, and subclasses may shadow, override incorrectly, or accidentally depend on construction order.
+// It looks concise, but it hides real state and breaks safe inheritance.
+// So we dont need access modifiers on params we pass to super through childs constructor
+
 class Employee extends User {
-  constructor(id: number, name: string, role = "Employee") {
+  // so we have employeeNumber with access modifier
+  // and the rest of params came without any modifiers
+  constructor(public employeeNumber: number, id: number, name: string, role) {
     super(id, name, role);
   }
 
   calculateSalary(): number {
-    return 5000;
-  }
-}
-```
-
-and transpiled version to javascript is
-
-```js
-class Employee extends User {
-  constructor(id, name, role = "Employee") {
-    super(id, name, role);
-  }
-  calculateSalary() {
     return 5000;
   }
 }
