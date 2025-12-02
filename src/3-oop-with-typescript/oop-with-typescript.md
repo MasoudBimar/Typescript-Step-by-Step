@@ -5,6 +5,7 @@
 - Typeof vs Instanceof
 - Const vs Readonly
 - Access Control Keywords (private / protected / public)
+- Private vs Protected Members
 - Constructors / Constructor Parameter Properties
 - Getters & Setters
 - Static members
@@ -246,6 +247,18 @@ const admin = new Admin("Bob", "pass123");
 admin.printRole();
 ```
 
+## Private vs Protected Members
+
+### private
+
+Accessible only inside the class where it is declared.
+
+### protected
+
+Accessible inside the class AND inside subclasses.
+
+Both hide internal details, but protected creates an inheritance-friendly API, while private creates a hard boundary.
+
 ## Parameter Properties
 
 ```ts
@@ -484,6 +497,7 @@ But in modern Angular/TS, you avoid deep trees—composition is often cleaner.
 ## Polymorphism
 
 Different classes implement the same interface or override shared behavior.
+Polymorphism is a way to keep classes open for extenstion and close for modification(Open Close Priciple)
 
 ```ts
 interface PaymentMethod {
@@ -509,6 +523,32 @@ This pattern is common in:
 - form serialization
 - backend integration layers
 
+Another example
+
+```ts
+abstract class Animal {
+  abstract speak(): string;
+}
+
+class Dog extends Animal {
+  override speak(): string {
+    return "Woof";
+  }
+}
+
+class Cat extends Animal {
+  override speak(): string {
+    return "Meow";
+  }
+}
+
+const pets: Animal[] = [new Dog(), new Cat()];
+
+for (const p of pets) {
+  console.log(p.speak());
+}
+```
+
 ## Abstraction (abstract classes & interfaces)
 
 Abstract class → partial implementation
@@ -516,33 +556,72 @@ Interface → structure only
 
 ```ts
 abstract class Shape {
-  abstract area(): number;
+  abstract area(): number; // area should be marked as abstract for tellimg the compiler that its not ready
 }
 
 class Circle extends Shape {
-  constructor(private r: number) {
+  constructor(private radius: number) {
     super();
   }
   area() {
-    return Math.PI * this.r * this.r;
+    return Math.PI * this.radius * this.radius;
   }
 }
 ```
-
-## Encapsulation
-
-Control what can be accessed or modified.
 
 ```ts
-class Counter {
-  #value = 0; // JavaScript private field
-  public inc() {
-    this.#value++;
-  }
-  public getValue() {
-    return this.#value;
+interface Movable {
+  move(): void;
+}
+
+abstract class Animal implements Movable {
+  constructor(protected name: string) {}
+
+  abstract move(): void;
+
+  public describe(): string {
+    return `${this.name} is alive`;
   }
 }
+
+class Dog extends Animal {
+  override move(): void {
+    console.log("Dog runs");
+  }
+}
+
+const a: Animal = new Dog("Rex");
+a.move(); // Dog runs
+a.describe(); // Rex is alive
 ```
 
-This prevents accidental misuse across your app.
+Key Differences (Concise + Precise)
+Exists at runtime?
+
+- Interface: erased at compile time → no JS output
+- Abstract class: becomes a real JS class
+
+Can contain implementation?
+
+- Interface: ❌ no
+- Abstract class: ✔ yes
+
+Can have constructor?
+
+- Interface: ❌
+- Abstract class: ✔
+
+Supports access modifiers?
+
+- Interface: ❌ no private/protected
+- Abstract class: ✔ private, protected, public
+
+Multiple inheritance?
+
+- Interface: ✔ a class can implement multiple interfaces
+- Abstract class: ❌ only one parent class allowed
+
+Field declarations?
+
+- Interface: only type signatures
+- Abstract class: real fields, readonly, visibility, etc.
