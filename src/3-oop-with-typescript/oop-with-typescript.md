@@ -1,21 +1,25 @@
-# Object oriented Programming with Typescript
+# Object-Oriented Programming with TypeScript
 
-- OOP
+Topics covered:
+
+- OOP basics
 - Classes
-- Typeof vs Instanceof
-- Const vs Readonly
-- Access Control Keywords (private / protected / public)
-- Private vs Protected Members
-- Constructors / Constructor Parameter Properties
-- Getters & Setters
+- typeof vs instanceof
+- const vs readonly
+- Access control keywords (private / protected / public)
+- Private vs protected members
+- Constructor parameter properties
+- Getters and setters
 - Static members
-- Index Signature
+- Index signatures
 - Inheritance
 - Polymorphism
 - Abstract classes
 - Interfaces
 
-## Object Oriented Programming
+## Object-Oriented Programming
+
+OOP organizes code around objects that bundle state and behavior. TypeScript layers static typing and visibility rules on top of JavaScript's prototype-based model to make those objects safer to use.
 
 ## Classes
 
@@ -26,6 +30,7 @@ class UserClass {
   id: number;
   name: string;
   role: string;
+
   constructor(id: number, name: string, role: string) {
     this.id = id;
     this.name = name;
@@ -38,7 +43,7 @@ class UserClass {
 }
 ```
 
-and transpiled version to javascript is
+JavaScript output looks like:
 
 ```js
 "use strict";
@@ -60,16 +65,16 @@ const user1 = new User(1, "Alice", "Admin");
 console.log(user1.displayName);
 ```
 
-## Typeof/Instanceof
+## typeof vs instanceof
 
 ### Summary
 
-Use typeof when you check primitive types.
-Use instanceof when you check class instances or objects created by constructors.
+- Use `typeof` for primitives.
+- Use `instanceof` for class instances or objects created by constructors.
 
 ### When to use typeof
 
-typeof only works reliably for primitive values:
+`typeof` only works reliably for primitive values:
 
 - string
 - number
@@ -90,7 +95,7 @@ function handle(input: string | number) {
 
 ### When to use instanceof
 
-instanceof checks whether an object was created by a specific class or constructor.
+`instanceof` checks whether an object was created by a specific class or constructor.
 
 ```ts
 class User {
@@ -102,9 +107,9 @@ function isUser(obj: unknown): obj is User {
 }
 ```
 
-### why it works
+### Why it works
 
-it checks the prototype chain
+`instanceof` walks the prototype chain:
 
 ```ts
 obj.__proto__ === Class.prototype;
@@ -113,40 +118,39 @@ obj.__proto__ === Class.prototype;
 So it only works for:
 
 - real classes
-- objects instantiated with new
+- objects instantiated with `new`
 - things sharing a prototype chain
 
-## Const vs Readonly
+## const vs readonly
 
-The essential difference: They operate on different things and at different times.
+The essential difference: they operate on different things and at different times.
 
-- const is a JavaScript runtime rule.
-- readonly is a TypeScript compile-time rule.
+- `const` is a JavaScript runtime rule.
+- `readonly` is a TypeScript compile-time rule.
 
-### const — prevents reassignment of a variable
+### const - prevents reassignment of a variable
 
-const controls the binding, not the value inside it.
+`const` controls the binding, not the value inside it.
 
 ```ts
 const user = { name: "Masoud" };
 
-// ❌ Not allowed
-user = { name: "Bimmer" };
+// Not allowed
+// user = { name: "Bimmer" };
 
-// ✅ Allowed (mutation)
+// Allowed (mutation)
 user.name = "Bimmer";
 ```
 
-`const` does NOT make objects immutable. It only says: “This variable cannot point to another value.”
+`const` does NOT make objects immutable. It only says: this variable cannot point to another value.
 
-Use const for:
+Use `const` for:
 
 - function-scoped immutable bindings
-- Angular constants (tokens, configs, utility objects)
-- arrays or objects that shouldn't be reassigned, only mutated
-- everything that is not meant to be reassigned (best practice)
+- arrays or objects that should not be rebound, only mutated
+- anything that is not meant to be reassigned (best practice)
 
-### readonly — prevents mutation of properties
+### readonly - prevents mutation of properties
 
 `readonly` is a TypeScript type-level constraint.
 It stops you from modifying fields inside an object.
@@ -161,25 +165,22 @@ class User {
 
 const u = new User(1);
 
-// ❌ Compile-time error
-u.id = 2;
+// Compile-time error
+// u.id = 2;
 ```
 
-Use readonly for:
+Use `readonly` for:
 
 - immutability in domain models
-- Angular Inputs
-- DTOs fetched from API
+- DTOs fetched from an API
 - configuration objects in services
-- NgRx state definitions (to prevent accidental mutation)
-- preventing accidental mutation inside functions
+- preventing accidental mutation inside functions or state containers
 
 ## Access Control Keywords (private / protected / public)
 
-Visibility modifiers in TypeScript—public, protected, private—are basically your guardrails for controlling how a class can be used. They don’t exist at runtime; they exist purely for the compiler to enforce architectural boundaries.
-Think of them as instructions to future developers: “Touch this, but not that.”
+Visibility modifiers in TypeScript (public, protected, private) are compile-time guardrails for controlling how a class can be used. They do not exist at runtime; they are enforced by the compiler to express intent.
 
-All this properties are public by default.
+All members are public by default.
 
 public
 
@@ -188,8 +189,8 @@ public
 
 private
 
-- This makes a property accessible only inside the class where it’s declared.
-- Not accessible in subclasses, outside consumers, anywhere except the class itself
+- Accessible only inside the class where it is declared.
+- Not accessible in subclasses, outside consumers, anywhere except the class itself.
 
 protected
 
@@ -226,7 +227,7 @@ class Admin extends User {
   }
 
   public printRole(): void {
-    // Allowed: `role` is protected → accessible here
+    // Allowed: `role` is protected - accessible here
     console.log(`Role: ${this.role}`);
   }
 }
@@ -249,37 +250,16 @@ admin.printRole();
 
 ## Private vs Protected Members
 
-### private
+- `private`: accessible only inside the class where it is declared.
+- `protected`: accessible inside the class and inside subclasses.
 
-Accessible only inside the class where it is declared.
+Both hide internal details, but `protected` creates an inheritance-friendly API, while `private` creates a hard boundary.
 
-### protected
+## Constructor Parameter Properties
 
-Accessible inside the class AND inside subclasses.
-
-Both hide internal details, but protected creates an inheritance-friendly API, while private creates a hard boundary.
-
-## Parameter Properties
+Parameter properties let you declare and initialize members right in the constructor signature.
 
 ```ts
-class User {
-  id: number;
-  name: string;
-  role: string;
-
-  constructor(id: number, name: string, role: string) {
-    this.id = id;
-    this.name = name;
-    this.role = role;
-  }
-
-  get displayName(): string {
-    return `${this.role}: ${this.name}`;
-  }
-}
-
-// this is the better version with Typescript feature called Parameter Properties
-
 class User {
   constructor(public id: number, protected name: string, private role: string) {}
 
@@ -289,14 +269,15 @@ class User {
 }
 ```
 
+They reduce boilerplate, but be careful not to accidentally shadow fields by redeclaring them in subclasses.
+
 ## Getters & Setters
 
-Why using Getters & Setters is clean
+Why getters and setters are useful:
 
-- \_name and \_price are private, guaranteeing invariants.
+- `_name` and `_price` are private, guaranteeing invariants.
 - Getters and setters provide controlled access with validation.
 - The class surface stays minimal and predictable.
-- Works naturally with frameworks like Angular, where computed values or validation logic often go into getters/setters.
 
 ```ts
 class Product {
@@ -336,7 +317,7 @@ class Product {
   }
 
   public toString(): string {
-    return `${this._name} — €${this._price}`;
+    return `${this._name} - $${this._price}`;
   }
 }
 
@@ -357,8 +338,8 @@ console.log(product.toString());
 
 ## Index Signature
 
-Index signatures are TypeScript’s way of saying: “This object can have dynamic keys, and here’s the shape of the values behind those keys.”
-They’re useful when you don’t know all property names ahead of time but you can describe the type pattern.
+Index signatures are TypeScript's way of saying: this object can have dynamic keys, and here is the shape of the values behind those keys.
+They are useful when you do not know all property names ahead of time but you can describe the type pattern.
 
 ```ts
 // This means: any string key is allowed, and its value must be a number.
@@ -367,7 +348,7 @@ type MyMap = {
 };
 ```
 
-More Practical Example:
+More practical example:
 
 ```ts
 interface ErrorMessages {
@@ -384,10 +365,10 @@ const errors: ErrorMessages = {
 errors["confirmPassword"] = "Mismatch";
 
 // Not allowed
-// errors.count = 5;          // ❌ number is not assignable to string
+// errors.count = 5; // number is not assignable to string
 ```
 
-Moxed defined propeties + index signature
+### Mixed defined properties + index signature
 
 ```ts
 interface ApiResponse {
@@ -404,13 +385,13 @@ const res: ApiResponse = {
 
 ### When not to use index signatures
 
-1. TypeScript has improved alternatives: `Record<Key, Value>;`
+1. Prefer `Record<Key, Value>` when keys are unknown but consistent:
 
 ```ts
 type Scores = Record<string, number>;
 ```
 
-2. Mapped types (much safer when keys are known):
+2. Prefer mapped types when keys are known:
 
 ```ts
 type UserRoles = "admin" | "editor" | "viewer";
@@ -424,9 +405,7 @@ Index signatures are best when property names are truly unknown.
 
 ## Static Members
 
-Static members are the pieces of a class that belong to the class itself, not to any instance. Think of them as shared tools sitting on the class’s shelf, untouched by the quirks of individual objects.
-
-They’re great for utilities, counters, factory methods, configuration, and anything that shouldn’t depend on instance state.
+Static members belong to the class itself, not to any instance. They work well for utilities, counters, factory methods, and configuration that should not depend on instance state.
 
 ```ts
 class Counter {
@@ -461,9 +440,7 @@ console.log(Counter.count); // 0
 
 ## Inheritance
 
-Classic “is-a” relationships.
-
-expected class should be:
+Classic "is-a" relationships. Extend a base class when sharing behavior makes sense.
 
 ```ts
 class User {
@@ -474,14 +451,8 @@ class User {
   }
 }
 
-// Putting access modifiers directly on constructor parameters in a class creates new properties, and subclasses may shadow, override incorrectly, or accidentally depend on construction order.
-// It looks concise, but it hides real state and breaks safe inheritance.
-// So we dont need access modifiers on params we pass to super through childs constructor
-
 class Employee extends User {
-  // so we have employeeNumber with access modifier
-  // and the rest of params came without any modifiers
-  constructor(public employeeNumber: number, id: number, name: string, role) {
+  constructor(id: number, name: string, role = "Employee", public employeeNumber?: number) {
     super(id, name, role);
   }
 
@@ -489,15 +460,24 @@ class Employee extends User {
     return 5000;
   }
 }
+
+const employee1 = new Employee(2, "Bob");
+console.log(employee1.displayName);
+console.log(employee1.calculateSalary());
 ```
 
-Used when extending base logic makes sense.
-But in modern Angular/TS, you avoid deep trees—composition is often cleaner.
+Adding access modifiers to constructor parameters implicitly creates class properties.
+This can unintentionally hide state, cause incorrect overriding in subclasses,
+or introduce subtle bugs related to construction order.
+It looks concise, but it undermines safe inheritance.
+Therefore, avoid using access modifiers on parameters passed to `super` from a subclass constructor.
+
+Keep inheritance shallow in most codebases; composition often stays simpler.
 
 ## Polymorphism
 
 Different classes implement the same interface or override shared behavior.
-Polymorphism is a way to keep classes open for extenstion and close for modification(Open Close Priciple)
+Polymorphism keeps code open for extension and closed for modification (Open/Closed Principle).
 
 ```ts
 interface PaymentMethod {
@@ -523,7 +503,7 @@ This pattern is common in:
 - form serialization
 - backend integration layers
 
-Another example
+Another example:
 
 ```ts
 abstract class Animal {
@@ -549,14 +529,14 @@ for (const p of pets) {
 }
 ```
 
-## Abstraction (abstract classes & interfaces)
+## Abstraction (abstract classes and interfaces)
 
-Abstract class → partial implementation
-Interface → structure only
+- Abstract class: partial implementation plus shared behavior.
+- Interface: shape only.
 
 ```ts
 abstract class Shape {
-  abstract area(): number; // area should be marked as abstract for tellimg the compiler that its not ready
+  abstract area(): number; // area should be marked as abstract to tell the compiler that it is not implemented here
 }
 
 class Circle extends Shape {
@@ -595,33 +575,11 @@ a.move(); // Dog runs
 a.describe(); // Rex is alive
 ```
 
-Key Differences (Concise + Precise)
-Exists at runtime?
+### Key differences (concise)
 
-- Interface: erased at compile time → no JS output
-- Abstract class: becomes a real JS class
-
-Can contain implementation?
-
-- Interface: ❌ no
-- Abstract class: ✔ yes
-
-Can have constructor?
-
-- Interface: ❌
-- Abstract class: ✔
-
-Supports access modifiers?
-
-- Interface: ❌ no private/protected
-- Abstract class: ✔ private, protected, public
-
-Multiple inheritance?
-
-- Interface: ✔ a class can implement multiple interfaces
-- Abstract class: ❌ only one parent class allowed
-
-Field declarations?
-
-- Interface: only type signatures
-- Abstract class: real fields, readonly, visibility, etc.
+- Runtime presence: Interface is erased; abstract class is emitted as a class.
+- Implementation: Interface cannot contain implementation; abstract class can.
+- Constructor: Interface has none; abstract class can have one but cannot be instantiated directly.
+- Access modifiers: Interface members are public by default; abstract classes can use private/protected/public.
+- Multiple inheritance: A class can implement many interfaces; it can extend only one abstract/base class.
+- Fields: Interface has only type signatures; abstract class can declare real fields (including readonly and visibility).
