@@ -314,3 +314,16 @@ class UserStore<User> extends Store<User> {
   };
 }
 ```
+
+## The keyof Operator
+
+```ts
+
+class SearchableStore<T extends {name: string}> extends Store<T> {
+
+  find(property: string, value: unknown): T | undefined {
+    retirn this.items.find(obj => obj[property] === value); // No index signature with a parameter of type 'string' was found on type
+  };
+
+}
+```
