@@ -262,3 +262,5 @@ function process(x: string | number) {
 ```
 
 we need to set never explicitly because sometime typescript compiler infer the return type as void
+
+[OOP in Typescript](./../3-oop-with-typescript/oop-with-typescript.md)

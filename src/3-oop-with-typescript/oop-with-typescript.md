@@ -583,3 +583,5 @@ a.describe(); // Rex is alive
 - Access modifiers: Interface members are public by default; abstract classes can use private/protected/public.
 - Multiple inheritance: A class can implement many interfaces; it can extend only one abstract/base class.
 - Fields: Interface has only type signatures; abstract class can declare real fields (including readonly and visibility).
+
+[Generics In Typescript](./../4-generics-with-typescript/generics-with-typescript.md)
