@@ -584,4 +584,4 @@ a.describe(); // Rex is alive
 - Multiple inheritance: A class can implement many interfaces; it can extend only one abstract/base class.
 - Fields: Interface has only type signatures; abstract class can declare real fields (including readonly and visibility).
 
-[Generics In Typescript](./../4-generics-with-typescript/generics-with-typescript.md)
+[Generics In Typescript](./../4-generics-with-typescript/generic-with-typescript.md)

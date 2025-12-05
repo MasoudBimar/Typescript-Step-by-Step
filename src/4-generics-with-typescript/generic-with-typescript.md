@@ -432,3 +432,5 @@ Uncapitalize<StringType>;
 ```
 
 [Typescript Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
+[Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)
