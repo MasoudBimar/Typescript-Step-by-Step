@@ -317,13 +317,118 @@ class UserStore<User> extends Store<User> {
 
 ## The keyof Operator
 
+The keyof operator takes an object type and produces a string or numeric literal union of its keys. The following type P is the same type as `type P = "x" | "y"`:
+
+```ts
+type Point = { x: number; y: number };
+type P = keyof Point;
+```
+
+If the type has a string or number index signature, keyof will return those types instead:
+
 ```ts
 
 class SearchableStore<T extends {name: string}> extends Store<T> {
-
-  find(property: string, value: unknown): T | undefined {
-    retirn this.items.find(obj => obj[property] === value); // No index signature with a parameter of type 'string' was found on type
+  // If the property use string type we have this error
+  // No index signature with a parameter of type 'string' was found on type
+  // We should tell the compiler were not using index signature
+  // were using actuall properties of type T
+  // The keyof of operator returns the uinion of properties of given type
+  find(property: keyof T , value: unknown): T | undefined {
+    retirn this.items.find(obj => obj[property] === value);
   };
 
 }
 ```
+
+## Type Mapping
+
+Sometimes a type need to based on another type so reapeating the exact properties make it duplicate.
+
+With type mapping we can iterate over one type properties and their types and create another type with some manipulation.
+
+- based type => readonly version
+- based type => required all properties version
+- based type => optional version
+
+First step create a type based on another using type mapping:
+
+```ts
+interface User {
+  id: number;
+  name: string;
+  birthDate: Date;
+}
+
+type ReadonlyUser {
+  // index signature & keyof
+  readonly [Property in keyof User]: User[Property];
+  // left-hand side iterate over all User's properties using index signature & keyof
+  // right-hand side get type of corresponding property
+}
+
+```
+
+Next step change the property name to K and make it generic:
+
+```ts
+type Readonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+let newUser: Readonly<User> = {
+  id: 2,
+  name: "Masoud",
+  birthDate: new Date(),
+};
+
+newUser.name = "somethingElse"; // Error: Cannot assign to 'name' because it is a read-only property
+```
+
+Same as for Optional,
+
+```ts
+type Readonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+type Optional<T> = {
+  [K in keyof T]?: T[K];
+};
+
+type Required<T> = {
+  [K in keyof T]: T[K] | null;
+};
+```
+
+### Because these types are pretty usefull they are actually built into Typescript
+
+Typescript Utility Types
+
+```ts
+Awaited<Type>;
+Partial<Type>;
+Required<Type>;
+Readonly<Type>;
+Record<Keys, Type>;
+Pick<Type, Keys>;
+Omit<Type, Keys>;
+Exclude<UnionType, ExcludedMembers>;
+Extract<Type, Union>;
+NonNullable<Type>;
+Parameters<Type>;
+ConstructorParameters<Type>;
+ReturnType<Type>;
+InstanceType<Type>;
+NoInfer<Type>;
+ThisParameterType<Type>;
+OmitThisParameter<Type>;
+ThisType<Type>;
+//Intrinsic String Manipulation Types
+Uppercase<StringType>;
+Lowercase<StringType>;
+Capitalize<StringType>;
+Uncapitalize<StringType>;
+```
+
+[Typescript Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
