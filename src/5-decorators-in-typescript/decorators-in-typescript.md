@@ -195,3 +195,78 @@ class C {}
 
 First Pipe Decorator will be called then the Component
 Like `f(g(x))` [docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+## Method Decorator
+
+TypeScript legacy (“stage 2”) method decorators are runtime functions that TypeScript calls with (target, propertyKey, descriptor) and that can observe / modify / replace the method by editing (or returning) the PropertyDescriptor.[typesacript docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
+
+We can define the @enumerable decorator using the following function declaration:
+
+```ts
+function enumerable(value: boolean) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    descriptor.enumerable = value;
+  };
+}
+```
+
+- `target` is the prototype for instance methods, or the constructor for static methods.
+- `key` is the method name.
+- `descriptor` is the `PropertyDescriptor` for the method (can be undefined if you compile below ES5)
+- If you return a descriptor, TypeScript uses it as the method’s descriptor (but return values are ignored when targeting < ES5).
+
+```ts
+export function LogCalls(): MethodDecorator {
+  return (target: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+    const original = descriptor.value as Function;
+
+    descriptor.value = function (this: unknown, ...args: unknown[]) {
+      // we cant use arrow function here because with FAT we cant access to this
+      console.log(String(propertyKey), "args:", args);
+      return original.apply(this, args);
+    };
+  };
+}
+
+class Demo {
+  @LogCalls()
+  sum(a: number, b: number) {
+    return a + b;
+  }
+}
+```
+
+## Accessor Decorator
+
+An Accessor Decorator is declared just before an accessor declaration. The accessor decorator is applied to the Property Descriptor for the accessor and can be used to observe, modify, or replace an accessor’s definitions.
+
+TypeScript disallows decorating both the get and set accessor for a single member.
+Instead, all decorators for the member must be applied to the first accessor specified in document order.
+This is because decorators apply to a Property Descriptor, which combines both the get and set accessor, not each declaration separately.
+
+```ts
+function configurable(value: boolean) {
+  return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    descriptor.configurable = value;
+  };
+}
+
+class Point {
+  private _x: number;
+  private _y: number;
+  constructor(x: number, y: number) {
+    this._x = x;
+    this._y = y;
+  }
+
+  @configurable(false)
+  get x() {
+    return this._x;
+  }
+
+  @configurable(false)
+  get y() {
+    return this._y;
+  }
+}
+```

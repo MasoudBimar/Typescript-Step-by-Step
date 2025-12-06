@@ -114,11 +114,11 @@ Another example:
 
 ```ts
 class KeyValuePair<K, V> {
-  constructor(public key: T, public value: V) {}
+  constructor(public key: K, public value: V) {}
 }
 
 let pair = new KeyValuePair<string, number>("1", 123);
-let pair2 = new KeyValuePair("1", 123); // without supplying the generic type argumants compiler infer the types based on constructor parameters
+let pair2 = new KeyValuePair("1", 123); // without supplying the generic type arguments, the compiler infers the types based on constructor parameters
 ```
 
 ## Generic Functions
@@ -263,7 +263,7 @@ function getValue<T extends object, K extends keyof T>(obj: T, key: K) {
 ```
 
 ```ts
-function createInstance<T extends new (...args: any[]) => any>(ctor: T) {
+function createInstance<T extends new (...args: unknown[]) => unknown>(ctor: T) {
   return new ctor();
 }
 ```
@@ -286,7 +286,7 @@ class Store<T> {
   protected items: T[] = []; // should be private or protected if we plan to inherit from it
 
   add(value: T): void {
-    this.users.push(value);
+    this.items.push(value);
   }
 }
 
@@ -294,24 +294,24 @@ let store = new Store<User>();
 
 // Pass on the generic type parameter
 class CompressibleStore<T> extends Store<T> {
-  compress() {};
+  compress() {}
 }
 
 let store = new CompressibleStore<User>();
 store.compress();
 
 // Restricting the generic type parameter
-class SearchableStore<T extends {name: string}> extends Store<T> {
+class SearchableStore<T extends { name: string }> extends Store<T> {
   find(name: string): T | undefined {
-    retirn this.items.find(obj => obj.name === name); // we need to use constraints to  add name property to T
-  };
+    return this.items.find((obj) => obj.name === name); // we need to use constraints to add the name property to T
+  }
 }
 
 // Fix the generic type parameter
 class UserStore<User> extends Store<User> {
   filterByCategory(category: string): User[] {
     return [];
-  };
+  }
 }
 ```
 
@@ -327,23 +327,21 @@ type P = keyof Point;
 If the type has a string or number index signature, keyof will return those types instead:
 
 ```ts
-
-class SearchableStore<T extends {name: string}> extends Store<T> {
-  // If the property use string type we have this error
-  // No index signature with a parameter of type 'string' was found on type
-  // We should tell the compiler were not using index signature
-  // were using actuall properties of type T
-  // The keyof of operator returns the uinion of properties of given type
-  find(property: keyof T , value: unknown): T | undefined {
-    retirn this.items.find(obj => obj[property] === value);
-  };
-
+class SearchableStore<T extends { name: string }> extends Store<T> {
+  // If the property uses a string type, we get this error:
+  // "No index signature with a parameter of type 'string' was found on type"
+  // We need to tell the compiler we're not using an index signature,
+  // but actual properties of type T.
+  // The keyof operator returns the union of properties of the given type
+  find(property: keyof T, value: unknown): T | undefined {
+    return this.items.find((obj) => obj[property] === value);
+  }
 }
 ```
 
 ## Type Mapping
 
-Sometimes a type need to based on another type so reapeating the exact properties make it duplicate.
+Sometimes a type needs to be based on another type, so repeating the exact properties makes it duplicate.
 
 With type mapping we can iterate over one type properties and their types and create another type with some manipulation.
 
@@ -360,13 +358,12 @@ interface User {
   birthDate: Date;
 }
 
-type ReadonlyUser {
+type ReadonlyUser = {
   // index signature & keyof
   readonly [Property in keyof User]: User[Property];
-  // left-hand side iterate over all User's properties using index signature & keyof
-  // right-hand side get type of corresponding property
-}
-
+  // left-hand side: iterate over all User's properties using index signature & keyof
+  // right-hand side: get the type of the corresponding property
+};
 ```
 
 Next step change the property name to K and make it generic:
@@ -401,7 +398,7 @@ type Required<T> = {
 };
 ```
 
-### Because these types are pretty usefull they are actually built into Typescript
+### Because these types are quite useful, they are built into TypeScript
 
 Typescript Utility Types
 
@@ -433,4 +430,4 @@ Uncapitalize<StringType>;
 
 [Typescript Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
-[Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)
+Next Section: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)
