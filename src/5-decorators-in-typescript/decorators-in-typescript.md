@@ -79,7 +79,14 @@ Think of decorators as compile-time annotations that:
 
 ## Class Decorators
 
+TypeScript currently has two decorator systems:
+
+- Legacy / “stage 2” decorators ("experimentalDecorators": true) — this is what Angular still relies on.
+- New / “stage 3” (standard-ish) decorators (TypeScript 5+) aligned with the TC39 proposal.
+  [More Information About this](https://github.com/angular/angular/issues/65739)
+
 ```ts
+// stage 2
 function Component(constructor: Function) {
   constructor.prototype.someId = Date.now();
   constructor.prototype.insertInDom = () => {
@@ -127,3 +134,64 @@ let SampleComponent = (() => {
 })();
 //# sourceMappingURL=decorators-in-typescript.js.map
 ```
+
+### Parametrized Decorators
+
+```ts
+type ComponentOptions = {
+  selector: string;
+};
+
+// Decorator Factory
+function Component(options: ComponentOptions) {
+  return (constructor: Function) => {
+    constructor.prototype.options = options;
+    constructor.prototype.someId = Date.now();
+    constructor.prototype.insertInDom = () => {
+      console.log("inside insertInDom");
+    };
+  };
+}
+
+@Component({ selector: "#selector-name" })
+class SampleComponent {}
+```
+
+### Decorator Composition
+
+```ts
+type ComponentOptions = {
+  selector: string;
+};
+
+function Pipe(constructor: Function) {
+  console.log("Pipe Decorator called");
+  constructor.prototype.pipe = true;
+}
+
+function Component(options: ComponentOptions) {
+  return (constructor: Function) => {
+    console.log("Component Decorator called");
+    constructor.prototype.options = options;
+    constructor.prototype.someId = Date.now();
+    constructor.prototype.insertInDom = () => {
+      console.log("inside insertInDom");
+    };
+  };
+}
+
+@Component({ selector: "#selector-name" })
+@Pipe
+class SampleComponent {}
+```
+
+In Stage 2 / “legacy” TypeScript decorators ("experimentalDecorators": true), “decorator composition” is literally function composition: stacking @f and @g behaves like f(g(x)) for the decorated thing. TypeScript also defines a strict order for when different kinds of decorators run.
+
+```ts
+@f
+@g
+class C {}
+```
+
+First Pipe Decorator will be called then the Component
+Like `f(g(x))` [docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
