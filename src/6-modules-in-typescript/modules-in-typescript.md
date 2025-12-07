@@ -86,12 +86,12 @@ import { Circle as MyCircle, Square } from "./file1";
 
 ## Module formats
 
-Javascript has a lot of ways for supporting Module formats:
+JavaScript has several module formats and historical patterns:
 
 - AMD
 - UMD
 - CommonJS
-- Es2015/ ES6
+- ES2015 / ES6 (ESM)
 
 ### AMD
 
@@ -136,9 +136,9 @@ UMD is a pattern, not a language standard: it detects AMD vs CommonJS vs “glob
 
 Usage:
 
-- In AMD: `require(['./math.umd'], m => m.add(1,2))`
+- In AMD: `require(['./math.umd'], (m) => m.add(1, 2))`
 - In Node: `const math = require('./math.umd');`
-- In browser global: `<script src="math.umd.js"></script>` then ...
+- In a browser global: `<script src="math.umd.js"></script>` then access `window.math`
 
 ### CommonJS
 
@@ -174,24 +174,115 @@ console.log(add(1, 2));
 
 ES modules use export and import and are statically analyzable
 
-> [!NOTE]  
-> We can set the Module format in ts.config module config.
-> Best item is `module: "es6"`
+> [!NOTE]
+> Set the module format via `compilerOptions.module` in `tsconfig.json` (examples: `"es6"`, `"es2022"`, or `"esnext"`).
 
 ## Default Exports
 
 ```ts
 // math.ts
-export default class User{}
+export default class User {}
 
-export class Other1
+export class Other1 {}
 
-class Other2
+class Other2 {}
 
 // main.ts
-
-import User, {Other1} from './math';
-
+import User, { Other1 } from "./math";
 ```
 
 ## Wildcard imports
+
+You can import an entire module namespace (all its exports) into a single object.
+
+### Namespace import (`import * as X from "…"`)
+
+This is the closest thing TypeScript has to a “wildcard import”.
+
+```ts
+import * as math from "./math";
+
+math.add(1, 2);
+math.mul(2, 3);
+```
+
+What you get is the module’s namespace object (basically “all exports as properties”).
+Dynamic import() returns the same kind of namespace object.
+
+When it’s a good idea
+
+- You truly want “the whole module as an API surface” (plugin registries, polyfills, utilities).
+- You’re dealing with CommonJS interop edge-cases and need the namespace form.
+
+> [!CAUTION]
+> In many cases this makes dependencies less explicit and can hurt tree-shaking, because you import the entire namespace even if you only use a single export.
+
+### Re-export wildcard (`export * from "…"`) a.k.a. barrel files
+
+This is not an import into the current file’s scope — it’s “re-export everything from another module”.
+
+```ts
+// index.ts
+export * from "./math";
+export * from "./strings";
+```
+
+> [!CAUTION]
+> Downside: can create dependency hairballs and circular deps if overused (especially in large Nx monorepos).
+
+### Real filesystem globs (“import everything in this folder”)
+
+TypeScript/ESM does not support import "./dir/\*.ts" by itself.
+
+> [!NOTE]
+> If you see this, it’s a bundler feature, e.g. Vite’s import.meta.glob:
+>
+> ```ts
+> const modules = import.meta.glob("./plugins/*.ts");
+> ```
+
+## Re-exporting
+
+When a module grows, a common pattern is to split exports into separate files and re-export them from a single barrel file (for example, `index.ts`) to simplify imports elsewhere.
+
+Example — many classes in one file (not ideal):
+
+```ts
+export class C1 {}
+export class C2 {}
+export class C3 {}
+export class C4 {}
+```
+
+Refactor into separate files:
+
+```ts
+// C/C1.ts
+export class C1 {}
+
+// C/C2.ts
+export class C2 {}
+
+// C/C3.ts
+export class C3 {}
+
+// C/C4.ts
+export class C4 {}
+```
+
+Create a barrel (`C/index.ts`) to re-export the pieces:
+
+```ts
+export { C1 } from "./C1";
+export { C2 } from "./C2";
+export { C3 } from "./C3";
+export { C4 } from "./C4";
+```
+
+Then import elsewhere using:
+
+```ts
+import { C1, C2 } from "./C";
+```
+
+Note: to enable certain resolution strategies or path mapping you may need to configure `tsconfig.json` (for example, setting `moduleResolution: "node"` or adding `paths` mappings). Use these options only when required by your build/tooling.
