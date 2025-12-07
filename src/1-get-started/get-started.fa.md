@@ -2,17 +2,22 @@
 
 TypeScript یک ابرمجموعهٔ نحوی از JavaScript است که انواع ایستا (static types) را اضافه می‌کند. این زبان به‌گونه‌ای طراحی شده تا به توسعه‌دهندگان کمک کند خطاها را زودتر از طریق سیستم نوع‌شناسی شناسایی کنند و توسعهٔ JavaScript را کارآمدتر سازد. کد TypeScript به JavaScript معمولی ترنسپایل می‌شود و می‌تواند در هر محیطی که از JavaScript پشتیبانی می‌کند اجرا شود، مانند مرورگرها و Node.js.
 
-## TypeScript چه چیزهایی به JavaScript اضافه می‌کند
+## زبان TypeScript چه چیزهایی به JavaScript اضافه می‌کند
 
-- تایپ ایستا (Static Typing)
-- تکمیل کد (Code completion)
-- ابزارهای بازسازی کد (Refactoring)
+- تایپ ایستا
+  - Static Typing
+- تکمیل کد
+  - Code completion
+- ابزارهای بازسازی کد
+  - Refactoring
 - نگارش کوتاه‌تر و قابلیت‌های جدید زبان
+
+  - Shorthand notation and new features
 
 ## Static Typing
 
-JavaScript یک زبان با نوع‌دهی پویا (Dynamically-Typed) است.
-TypeScript یک زبان با نوع‌دهی ایستا (Statically-Typed) است. TypeScript از بررسی نوع در زمان کامپایل استفاده می‌کند؛ یعنی پیش از اجرای برنامه بررسی می‌کند که انواع مشخص‌شده با هم سازگار باشند، نه در زمان اجرا. به عبارت ساده، TypeScript همان JavaScript است با لایه‌ای از بررسی نوع.
+JavaScript یک زبان با تایپ پویا (Dynamically-Typed) است.
+TypeScript یک زبان با تایپ ایستا (Statically-Typed) است. TypeScript از بررسی تایپ در زمان کامپایل استفاده می‌کند؛ یعنی پیش از اجرای برنامه بررسی می‌کند که انواع مشخص‌شده با هم سازگار باشند، نه در زمان اجرا. به عبارت ساده، TypeScript همان JavaScript است با لایه‌ای از بررسی تایپ یا نوع داده.
 
 ### معایب TypeScript
 
