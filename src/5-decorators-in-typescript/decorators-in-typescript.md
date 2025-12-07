@@ -1,11 +1,11 @@
-# Decorators In Typescript
+# Decorators In TypeScript
 
 - What? Why? Where?
-- Class Decorators
-- Method Decorators
-- Property Decorators
-- Accessor Decorators
-- Parameter Decorators
+- Class Decorator
+- Method Decorator
+- Property Decorator
+- Accessor Decorator
+- Parameter Decorator
 
 ## What? Why? Where?
 
@@ -98,7 +98,7 @@ function Component(constructor: Function) {
 class SampleComponent {}
 ```
 
-Here is the Js Generated
+Here is the generated JavaScript
 
 ```js
 "use strict";
@@ -193,12 +193,12 @@ In Stage 2 / “legacy” TypeScript decorators ("experimentalDecorators": true)
 class C {}
 ```
 
-First Pipe Decorator will be called then the Component
+First, the Pipe decorator will be called, then the Component decorator.
 Like `f(g(x))` [docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
 ## Method Decorator
 
-TypeScript legacy (“stage 2”) method decorators are runtime functions that TypeScript calls with (target, propertyKey, descriptor) and that can observe / modify / replace the method by editing (or returning) the PropertyDescriptor.[typesacript docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
+TypeScript legacy ("stage 2") method decorators are runtime functions that TypeScript calls with (target, propertyKey, descriptor) and that can observe / modify / replace the method by editing (or returning) the PropertyDescriptor. [TypeScript docs](https://www.typescriptlang.org/docs/handbook/decorators.html)
 
 We can define the @enumerable decorator using the following function declaration:
 
@@ -221,7 +221,7 @@ export function LogCalls(): MethodDecorator {
     const original = descriptor.value as Function;
 
     descriptor.value = function (this: unknown, ...args: unknown[]) {
-      // we cant use arrow function here because with FAT we cant access to this
+      // we can't use arrow functions here because with FAT we can't access this
       console.log(String(propertyKey), "args:", args);
       return original.apply(this, args);
     };
@@ -268,5 +268,79 @@ class Point {
   get y() {
     return this._y;
   }
+}
+```
+
+Another Accessor Decorator
+
+```ts
+function Capitalize(target: any, methodName: string, descriptor: PropertyDescriptor) {
+  const original = descriptor.get;
+  descriptor.get = function () {
+    const result = original?.call(this);
+    return typeof result === "string" ? result.toUpperCase() : result;
+  };
+}
+```
+
+## Property Decorator
+
+```ts
+function MinLength(length: number) {
+  return (target: any, propertyName: string) => {
+    let value: string;
+    const descriptor: PropertyDescriptor = {
+      get() {
+        return value;
+      },
+      set(newValue: string) {
+        if (newValue.length < length) {
+          throw new Error(`${propertyName} should be at least ${length} characters long`);
+        }
+        value = newValue;
+      },
+    };
+    Object.defineProperty(target, propertyName, descriptor);
+  };
+}
+
+class User {
+  @MinLength(4)
+  password: string;
+
+  constructor(password: string) {
+    this.password = password;
+  }
+}
+
+let user = new User("123");
+console.log(user.password);
+```
+
+## Parameter Decorator
+
+Here are some examples of Typescript Parameter Decorator that is used in angular framework
+
+- Angular API: [@Inject](https://angular.dev/api/core/Inject)
+- Angular API: [@Optional](https://angular.dev/api/core/Optional)
+- Angular API: [@Self](https://angular.dev/api/core/Self)
+- Angular API: [@SkipSelf](https://angular.dev/api/core/SkipSelf)
+- Angular API: [@Host](https://angular.dev/api/core/Host)
+- Angular API: [@Attribute](https://angular.dev/api/core/Attribute)
+
+```ts
+type WatchedParameter = {
+  methodName: string;
+  parameterIndex: number;
+};
+
+const watchedParameters: WatchedParameter[] = [];
+
+function Watch(target: any, methodName: string, parameterIndex: number) {
+  watchedParameters.push({ methodName, parameterIndex });
+}
+
+class Vehicle {
+  move(@Watch speed: number) {}
 }
 ```

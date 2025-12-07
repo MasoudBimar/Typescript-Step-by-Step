@@ -1,4 +1,4 @@
-# Typescript Advanced Types
+# TypeScript Advanced Types
 
 - Type aliases
 - Unions and intersections
@@ -9,7 +9,7 @@
 
 ## Type Aliases & Interfaces
 
-Here we compare types with interfaces
+Let's compare type aliases with interfaces
 
 ### Type Aliases
 
@@ -44,7 +44,7 @@ const rectangle: Rectangle = {
 
 ## Type Narrowing
 
-what is the type narrowing:
+What is type narrowing?
 
 ```ts
 function kgToLbs(weight: number | string): number {
@@ -101,10 +101,9 @@ resize: () => void
 type UIWidget = Draggable & Resizable;
 
 let textBox: UIWidget = {
-resize: ()=> {};
-drag: () => {}
-
-}
+  resize: () => {},
+  drag: () => {}
+};
 ```
 
 ## Literal Types
@@ -116,7 +115,7 @@ type percent = 3 | 6 | 9; // Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
-## Nuulable Values
+## Nullable Values
 
 Instead of disabling `strictNullChecks`, we should explicitly include null or undefined in the types when needed
 
@@ -177,7 +176,7 @@ let log: any = null; // (msg: string) =>{}
 log?.("test");
 ```
 
-## Nullish Coalescing Opeator
+## Nullish Coalescing Operator
 
 What it does:
 
@@ -200,9 +199,9 @@ This makes it a “null-or-undefined fallback,” not a “falsey fallback.”
 
 ## Type Assertion
 
-`as` wont do the conversion it just tell the compiler about return type of that expression
+`as` won't do the conversion; it just tells the compiler about the return type of that expression.
 
-In other word, A type assertion tells the TypeScript compiler to treat a value as a specific type without changing the runtime value.
+In other words, a type assertion tells the TypeScript compiler to treat a value as a specific type without changing the runtime value.
 
 ```ts
 const value = something as MyType;
@@ -213,9 +212,9 @@ The first form (as) is the modern standard.
 
 ## The Unknown Type
 
-Assume we have a parameter defining a parameter with any type we basically bypass the type checking.
+When we define a parameter with the `any` type, we basically bypass type checking.
 
-but if we use `unknown`, we have to use type narrowing or type guards
+But if we use `unknown`, we have to use type narrowing or type guards
 
 ```ts
 function render(document: any) {
@@ -225,12 +224,12 @@ function render(document: any) {
 
 ```ts
   function render(document: unknown){
-    // we either need to use type narrowing with typeOf or instnaceOf
+    // We need to use type narrowing with typeof or instanceof
     // Narrowing
-    if(document typeof === 'string'){ // for primitives
+    if(typeof document === 'string'){ // for primitives
       document.toUpperCase();
     }
-    if(document instanceof === WordDocument){ // for objects
+    if(document instanceof WordDocument){ // for objects
       document.toUpperCase();
     }
   }
@@ -261,6 +260,6 @@ function process(x: string | number) {
 }
 ```
 
-we need to set never explicitly because sometime typescript compiler infer the return type as void
+We should set `never` explicitly because sometimes the TypeScript compiler infers the return type as `void`.
 
 [OOP in Typescript](./../3-oop-with-typescript/oop-with-typescript.md)
