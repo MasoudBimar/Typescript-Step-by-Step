@@ -1,20 +1,20 @@
 # Generic With Typescript
 
-- What? Why? Where?
-- Generic Classes
-- Generic Functions
-- Generic Interfaces
-- Generic Constraints
-- Extending Generic Classes
-- Type Mapping
+- چیست؟ چرا؟ کجا؟
+- کلاس‌های جنریک
+- توابع جنریک
+- رابط‌های جنریک
+- محدودیت‌های جنریک
+- توسعه کلاس‌های جنریک
+- نقشه‌برداری نوع
 
-## What? Why? Where?
+## چیست؟ چرا؟ کجا؟
 
-### What are Generics?
+### Generic‌ها چیستند؟
 
-A generic is a type parameter — like a variable for types.
+Generic یک پارامتر نوع است — مانند یک متغیر برای انواع.
 
-When you write a function or class, instead of committing to a specific type (string, number, YourType), you say:
+وقتی یک تابع یا کلاس می‌نویسید، به‌جای التزام به یک نوع خاص (string، number، YourType)، می‌گویید:
 
 ```ts
 function wrap<T>(value: T) {
@@ -22,36 +22,36 @@ function wrap<T>(value: T) {
 }
 ```
 
-Here T is a placeholder. The function doesn't care what value is; it only promises to keep its type consistent.
+اینجا T یک جای‌نگین است. تابع برای مقدار مهم نیست؛ فقط وعده می‌دهد نوع آن را ثابت نگه دارد.
 
-It’s the same idea as algebra: f(x) = x² does not need to know what x is, only that x behaves consistently within the function.
+این همان ایده‌ای است که در جبر داریم: f(x) = x² نیازی ندارد بداند x چیست، تنها اینکه x در داخل تابع به‌طور مسلسل رفتار کند.
 
-### Why do we need Generics?
+### چرا به Generics نیاز داریم?
 
-TypeScript’s generics solve a recurring problem: reusability without losing type safety.
+Generics در TypeScript یک مشکل تکراری را حل می‌کند: قابل‌استفاده‌بودن بدون از دست دادن ایمنی نوع.
 
-Without generics, functions that work for “any type” must fall back to any, which is basically an escape hatch that breaks safety guarantees.
+بدون Generics، توابعی که برای "هر نوعی" کار کنند باید به any برگردند، که اساساً یک درب فرار است که تضمین‌های ایمنی را می‌شکند.
 
-Generics let you build:
+Generics اجازه می‌دهد تا بسازید:
 
-- Reusable APIs without sacrificing precision.
-- Fluent chains of transformations where the type "flows" with the data.
-- Contracts that depend on other types.
+- API‌های قابل‌استفاده بدون قربانی کردن دقت.
+- زنجیره‌های روان تبدیل‌ها جایی که نوع با داده "جریان می‌یابد".
+- قرارداد‌هایی که به انواع دیگری وابسته‌اند.
 
-Examples of problems solved by generics:
+نمونه‌های مسائل حل‌شده توسط Generics:
 
-- Mapping values while keeping the same shape.
-- Expressing “a promise of X”.
-- Creating collections `(Array<T>, Map<K, V>)`.
-- Enforcing relationships between multiple types.
+- نگاشت مقادیر در حالی که شکل یکسان می‌ماند.
+- بیان "یک وعده از X".
+- ایجاد مجموعه‌ها `(Array<T>, Map<K, V>)`.
+- اعمال روابط بین انواع متعدد.
 
-They’re a mathematical language for expressing constraints in code.
+آنها یک زبان ریاضیاتی برای بیان محدودیت‌ها در کد هستند.
 
-### Where are Generics used?
+### Generics کجا استفاده می‌شود?
 
-Almost everywhere a pattern depends on a type the user of the function chooses.
+تقریباً در هر جایی که یک الگو به نوعی که کاربر تابع انتخاب می‌کند وابسته است.
 
-Here are the common places:
+اینجا جاهای معمول هستند:
 
 Functions
 
@@ -92,7 +92,7 @@ function logLength<T extends { length: number }>(item: T) {
 }
 ```
 
-## Generic classes
+## کلاس‌های جنریک
 
 ```ts
 class Box<T> {
@@ -110,24 +110,24 @@ console.log(numBox.get()); // number
 console.log(strBox.get()); // string
 ```
 
-Another example:
+نمونه دیگر:
 
 ```ts
 class KeyValuePair<K, V> {
-  constructor(public key: T, public value: V) {}
+  constructor(public key: K, public value: V) {}
 }
 
 let pair = new KeyValuePair<string, number>("1", 123);
-let pair2 = new KeyValuePair("1", 123); // without supplying the generic type argumants compiler infer the types based on constructor parameters
+let pair2 = new KeyValuePair("1", 123); // بدون تامین آرگومان‌های نوع جنریک، کامپایلر انواع را بر اساس پارامترهای سازنده استنتاج می‌کند
 ```
 
-## Generic Functions
+## توابع جنریک
 
-A function with type parameters — usually written as `<T>, <T, U>, ` etc.
-These parameters behave like variables for types, not for values.
+یک تابع با پارامترهای نوع — معمولاً به‌صورت `<T>, <T, U>,` و غیره نوشته می‌شود.
+این پارامترها مانند متغیرهای انواع رفتار می‌کنند، نه برای مقادیر.
 
-`T` captures whatever type the caller passes in, and the function returns that same type.
-Nothing magical — just a promise of consistency.
+`T` هر نوعی را که فراخوان آن منتقل می‌کند می‌گیرد، و تابع همان نوع را برمی‌گرداند.
+هیچ جادویی نیست — فقط وعده‌ای برای سازگاری.
 
 ```ts
 function wrapInArray<T>(value: T) {
@@ -143,11 +143,11 @@ class ArrayUtils {
 let numbers = ArrayUtils.wrapInArray(1);
 ```
 
-## Generic Interfaces
+## رابط‌های جنریک
 
-Where Are Generic Interfaces Used?
+رابط‌های جنریک کجا استفاده می‌شود؟
 
-- Data Containers
+- ظروف داده
 
   ```ts
   interface Result<T> {
@@ -158,7 +158,7 @@ Where Are Generic Interfaces Used?
   const r: Result<User> = { data: { name: "Jon" } };
   ```
 
-- HTTP Responses
+- پاسخ‌های HTTP
 
   ```ts
   interface ApiResponse<T> {
@@ -167,7 +167,7 @@ Where Are Generic Interfaces Used?
   }
   ```
 
-- Collections & Dictionaries
+- مجموعه‌ها و واژه‌نامه‌ها
 
   ```ts
   interface Dictionary<T> {
@@ -177,7 +177,7 @@ Where Are Generic Interfaces Used?
   const scores: Dictionary<number> = { alice: 10 };
   ```
 
-- Function Signatures
+- امضای توابع
 
   ```ts
   interface Transformer<T, R> {
@@ -187,7 +187,7 @@ Where Are Generic Interfaces Used?
   const toLength: Transformer<string, number> = (s) => s.length;
   ```
 
-- Constraints
+- محدودیت‌ها
 
 ```ts
 interface NamedEntity {
@@ -200,20 +200,20 @@ interface Store<T extends NamedEntity> {
 }
 ```
 
-## Generic Constraints
+## محدودیت‌های جنریک
 
-### What Are Generic Constraints?
+### محدودیت‌های جنریک چیستند؟
 
-A constraint is a rule placed on a type parameter, written as:
+محدودیت یک قاعده‌ای است که بر روی یک پارامتر نوع قرار می‌گیرد، به این‌صورت نوشته می‌شود:
 
 ```ts
 <T extends SomeType>
 
 ```
 
-`extends` here means “T must be assignable to this type” — not inheritance.
+`extends` اینجا به معنی "T باید قابل اختصاص به این نوع باشد" است — نه وراثت.
 
-We can constraint by interface or a class.
+ما می‌توانیم بر اساس Interface یا کلاس محدود کنیم.
 
 ```ts
 function logLength<T extends { length: number }>(item: T) {
@@ -234,27 +234,27 @@ function doSomething<T extends Person>(value: T): T {
 doSomething(new Customer("test"));
 ```
 
-### Why Use Constraints?
+### چرا از محدودیت‌ها استفاده کنیم؟
 
-They solve the problem of generic functions that need specific operations.
+آنها مسئله توابع جنریک را حل می‌کنند که به عملیات خاصی نیاز دارند.
 
-Without constraints, TypeScript won’t allow property access or method usage:
+بدون محدودیت‌ها، TypeScript دسترسی به ویژگی یا استفاده از روش را اجازه نمی‌دهد:
 
 ```ts
 function fail<T>(x: T) {
-  return x.length; // ❌ Error — T could be anything
+  return x.length; // ❌ خطا — T می‌تواند هر چیزی باشد
 }
 ```
 
-With Constraints
+با محدودیت‌ها
 
 ```ts
 function ok<T extends { length: number }>(x: T) {
-  return x.length; // ✔️ Safe
+  return x.length; // ✔️ محفوظ
 }
 ```
 
-### Restricting to Objects, Classes and Unions or even shape of an object
+### محدود کردن به Objects، Classes و Unions یا حتی شکل یک object
 
 ```ts
 function getValue<T extends object, K extends keyof T>(obj: T, key: K) {
@@ -263,7 +263,7 @@ function getValue<T extends object, K extends keyof T>(obj: T, key: K) {
 ```
 
 ```ts
-function createInstance<T extends new (...args: any[]) => any>(ctor: T) {
+function createInstance<T extends new (...args: unknown[]) => unknown>(ctor: T) {
   return new ctor();
 }
 ```
@@ -274,7 +274,7 @@ function print<T extends string | number>(value: T) {
 }
 ```
 
-## Extending Generic Classes
+## توسعه کلاس های جنریک
 
 ```ts
 interface User {
@@ -283,47 +283,151 @@ interface User {
 }
 
 class Store<T> {
-  protected items: T[] = []; // should be private or protected if we plan to inherit from it
+  protected items: T[] = []; // اگر قصد ارث‌بری داریم باید private یا protected باشد
 
   add(value: T): void {
-    this.users.push(value);
+    this.items.push(value);
   }
 }
 
 let store = new Store<User>();
 
-// Pass on the generic type parameter
+// عبور دادن پارامتر نوع جنریک
 class CompressibleStore<T> extends Store<T> {
-  compress() {};
+  compress() {}
 }
 
 let store = new CompressibleStore<User>();
 store.compress();
 
-// Restricting the generic type parameter
-class SearchableStore<T extends {name: string}> extends Store<T> {
+// محدود کردن پارامتر نوع جنریک
+class SearchableStore<T extends { name: string }> extends Store<T> {
   find(name: string): T | undefined {
-    retirn this.items.find(obj => obj.name === name); // we need to use constraints to  add name property to T
-  };
+    return this.items.find((obj) => obj.name === name); // ما باید از محدودیت‌ها استفاده کنیم تا ویژگی name را به T اضافه کنیم
+  }
 }
 
-// Fix the generic type parameter
+// تعیین پارامتر نوع جنریک
 class UserStore<User> extends Store<User> {
   filterByCategory(category: string): User[] {
     return [];
-  };
+  }
 }
 ```
 
-## The keyof Operator
+## عملگر keyof
+
+عملگر keyof یک نوع object را می‌گیرد و یک union از string یا literal عددی کلیدهایش تولید می‌کند. نوع P زیر همان نوع `type P = "x" | "y"` است:
 
 ```ts
+type Point = { x: number; y: number };
+type P = keyof Point;
+```
 
-class SearchableStore<T extends {name: string}> extends Store<T> {
+اگر نوع یک اِمضای index string یا number داشته باشد، keyof در عوض آن انواع را برمی‌گرداند:
 
-  find(property: string, value: unknown): T | undefined {
-    retirn this.items.find(obj => obj[property] === value); // No index signature with a parameter of type 'string' was found on type
-  };
-
+```ts
+class SearchableStore<T extends { name: string }> extends Store<T> {
+  // اگر ویژگی از نوع string استفاده کند، این خطا را دریافت می‌کنیم:
+  // "No index signature with a parameter of type 'string' was found on type"
+  // ما باید به کامپایلر بگوییم ما از index signature استفاده نمی‌کنیم،
+  // بلکه ویژگی‌های واقعی از نوع T هستند.
+  // عملگر keyof union ویژگی‌های نوع داده‌شده را برمی‌گرداند
+  find(property: keyof T, value: unknown): T | undefined {
+    return this.items.find((obj) => obj[property] === value);
+  }
 }
 ```
+
+## نقشه‌برداری نوع
+
+گاهی اوقات یک نوع باید بر اساس نوع دیگری باشد، بنابراین تکرار خصوصیات دقیق باعث تکرار می‌شود.
+
+با نقشه‌برداری نوع، ما می‌توانیم بر روی ویژگی‌های یک نوع و انواع آنها تکرار کنیم و نوع دیگری با برخی تحریف‌ات ایجاد کنیم.
+
+- نوع مبنا => نسخه readonly
+- نوع مبنا => نسخه ای که تمام ویژگی‌ها الزامی است
+- نوع مبنا => نسخه اختیاری
+
+مرحله اول: ایجاد نوعی بر اساس دیگری با استفاده از نقشه‌برداری نوع:
+
+```ts
+interface User {
+  id: number;
+  name: string;
+  birthDate: Date;
+}
+
+type ReadonlyUser = {
+  // index signature & keyof
+  readonly [Property in keyof User]: User[Property];
+  // سمت چپ: بر روی تمام ویژگی‌های User با استفاده از index signature & keyof تکرار کنید
+  // سمت راست: نوع ویژگی متناظر را دریافت کنید
+};
+```
+
+مرحله بعدی: نام ویژگی را به K تغییر دهید و آن را جنریک کنید:
+
+```ts
+type Readonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+let newUser: Readonly<User> = {
+  id: 2,
+  name: "Masoud",
+  birthDate: new Date(),
+};
+
+newUser.name = "somethingElse"; // خطا: نمی‌توان به 'name' اختصاص داد زیرا یک ویژگی read-only است
+```
+
+همان‌طور که برای Optional است,
+
+```ts
+type Readonly<T> = {
+  readonly [K in keyof T]: T[K];
+};
+
+type Optional<T> = {
+  [K in keyof T]?: T[K];
+};
+
+type Required<T> = {
+  [K in keyof T]: T[K] | null;
+};
+```
+
+### چون این انواع بسیار مفید هستند، در TypeScript داخل‌سازی شده‌اند
+
+انواع Utility در Typescript
+
+```ts
+Awaited<Type>;
+Partial<Type>;
+Required<Type>;
+Readonly<Type>;
+Record<Keys, Type>;
+Pick<Type, Keys>;
+Omit<Type, Keys>;
+Exclude<UnionType, ExcludedMembers>;
+Extract<Type, Union>;
+NonNullable<Type>;
+Parameters<Type>;
+ConstructorParameters<Type>;
+ReturnType<Type>;
+InstanceType<Type>;
+NoInfer<Type>;
+ThisParameterType<Type>;
+OmitThisParameter<Type>;
+ThisType<Type>;
+//Intrinsic String Manipulation Types
+Uppercase<StringType>;
+Lowercase<StringType>;
+Capitalize<StringType>;
+Uncapitalize<StringType>;
+```
+
+[انواع Utility در Typescript](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
+بخش بعدی: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)

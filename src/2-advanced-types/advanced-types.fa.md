@@ -1,4 +1,4 @@
-# Typescript Advanced Types
+# انواع پیشرفته در TypeScript
 
 - Type aliases
 - Unions and intersections
@@ -9,11 +9,11 @@
 
 ## Type Aliases & Interfaces
 
-Here we compare types with interfaces
+بیایید `Type Aliases` و `Interfaces` را با هم مقایسه کنیم
 
 ### Type Aliases
 
-Type Aliases allow defining types with a custom name (an Alias).
+`Type Aliases` اجازه می‌دهند نوع‌هایی با نام دلخواه تعریف کنید (Alias).
 
 ```ts
 type CarYear = number;
@@ -28,7 +28,7 @@ type Car = {
 
 ### Interfaces
 
-Interfaces are similar to type aliases, except they only apply to object types.
+`Interfaces` مشابه `Type Aliases` هستند، با این تفاوت که فقط برای انواع شیء (object types) کاربرد دارند.
 
 ```ts
 interface Rectangle {
@@ -44,7 +44,7 @@ const rectangle: Rectangle = {
 
 ## Type Narrowing
 
-what is the type narrowing:
+`Type Narrowing` چیست؟
 
 ```ts
 function kgToLbs(weight: number | string): number {
@@ -57,11 +57,11 @@ function kgToLbs(weight: number | string): number {
 }
 ```
 
-type narrowing is the process of refining a broad type to a more specific type within a conditional block. In the example above, we check if weight is of type number or string, and based on that, we narrow down the type to perform appropriate operations.
+`Type narrowing` فرایند محدود کردن یک نوع عمومی به یک نوع خاص‌تر داخل یک بلاک شرطی است. در مثال بالا ابتدا بررسی می‌کنیم `weight` از نوع `number` است یا `string` و بر اساس آن نوع را محدود می‌کنیم تا عملیات مناسب را انجام دهیم.
 
 ## Discriminating Unions
 
-A common technique for working with unions is to have a single field which uses literal types which you can use to let TypeScript narrow down the possible current type. For example, we’re going to create a union of three types which have a single shared field.
+یک روش معمول برای کار با `union`ها این است که یک فیلد مشترک با انواع literal داشته باشیم تا TypeScript بتواند نوع فعلی ممکن را تشخیص دهد. در مثال زیر یک `union` از سه نوع با یک فیلد مشترک تعریف شده است.
 
 ```ts
 type NetworkLoadingState = {
@@ -86,39 +86,37 @@ type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessSta
 
 ## Intersection Types
 
-Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one.
+`Intersection types` با `union`ها نزدیک هستند اما کاربرد متفاوتی دارند. یک `intersection` چندین نوع را با هم ترکیب می‌کند تا یک نوع جدید بسازد.
 
 ```ts
-
 type Draggable = {
-drag: () => void
-}
+  drag: () => void;
+};
 
 type Resizable = {
-resize: () => void
-}
+  resize: () => void;
+};
 
 type UIWidget = Draggable & Resizable;
 
 let textBox: UIWidget = {
-resize: ()=> {};
-drag: () => {}
-
-}
+  resize: () => {},
+  drag: () => {},
+};
 ```
 
 ## Literal Types
 
-There are three sets of literal types available in TypeScript: strings, numbers, and booleans; by using literal types you can allow an exact value which a string, number, or boolean must have.
+در TypeScript سه دستهٔ literal موجود است: رشته‌ها (strings)، اعداد (numbers) و بولی‌ها (booleans). با استفاده از literal types می‌توانید مقادیر دقیقی را که یک رشته، عدد یا بولین باید داشته باشد مشخص کنید.
 
 ```ts
 type percent = 3 | 6 | 9; // Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
-## Nuulable Values
+## Nullable Values
 
-Instead of disabling `strictNullChecks`, we should explicitly include null or undefined in the types when needed
+به‌جای غیرفعال کردن `strictNullChecks`، بهتر است زمانی که نیاز است صراحتاً `null` یا `undefined` را در نوع‌ها لحاظ کنیم.
 
 ```ts
 function greet(name: string | null | undefined) {
@@ -134,7 +132,7 @@ greet(null);
 
 ## Optional Chaining
 
-Optional property access operator: It’s a tiny piece of syntax with a big job: safely accessing a property when the value before it might be null or undefined.
+عمل‌گر دسترسی اختیاری (Optional property access): یک قطعهٔ کوچک نحوی با وظیفه‌ای مهم است — دسترسی امن به یک propriété زمانی که مقدار قبلی ممکن است `null` یا `undefined` باشد.
 
 ```ts
 function getUser(id: number): User | null | undefined {
@@ -147,18 +145,18 @@ console.log(user?.userName);
 // If user or profile were null, the code would still run without crashing.
 ```
 
-Why it exists
+چرا این ویژگی وجود دارد
 
-It saves you from defensive chains like:
+این ویژگی شما را از زنجیره‌های شرطی محافظتی مانند مثال زیر بی‌نیاز می‌کند:
 
 ```ts
 user && user.profile && user.profile.email;
 ```
 
-and keeps logic tidy while working nicely with `strictNullChecks`.
+و منطق را مرتب نگه می‌دارد و با `strictNullChecks` به‌خوبی کار می‌کند.
 
-For accessing an array:
-Optional element access operator
+برای دسترسی به عناصر آرایه:
+عمل‌گر دسترسی اختیاری به عنصر
 
 ```ts
 // before
@@ -169,7 +167,7 @@ if (customers !== null && customers !== undefined) {
 customers?.[0];
 ```
 
-For calling functions we have Optional call
+برای فراخوانی توابع نیز عمل‌گر Optional call وجود دارد
 
 ```ts
 let log: any = null; // (msg: string) =>{}
@@ -177,9 +175,9 @@ let log: any = null; // (msg: string) =>{}
 log?.("test");
 ```
 
-## Nullish Coalescing Opeator
+## Nullish Coalescing Operator
 
-What it does:
+چه کاری انجام می‌دهد:
 
 ```ts
 const x = foo ?? "default";
@@ -190,19 +188,15 @@ false || true; // true
 
 <!-- First we need to know about falsy/truthy values -->
 
-a ?? b returns:
+عبارت `a ?? b` مقدار `a` را برمی‌گرداند اگر `a` برابر `null` یا `undefined` نباشد؛ در غیر این صورت `b` را برمی‌گرداند.
 
-a if a is not null or not undefined
-
-otherwise, it returns b
-
-This makes it a “null-or-undefined fallback,” not a “falsey fallback.”
+بنابراین این عمل‌گر یک «فعل و انفعال بازگشتی برای null یا undefined» است، نه یک «بازگشت برای مقدارهای falsy».
 
 ## Type Assertion
 
-`as` wont do the conversion it just tell the compiler about return type of that expression
+`as` تبدیل (conversion) انجام نمی‌دهد؛ فقط به کامپایلر اطلاع می‌دهد که آن عبارت را به چه نوعی نسبت دهد.
 
-In other word, A type assertion tells the TypeScript compiler to treat a value as a specific type without changing the runtime value.
+به عبارت دیگر، یک type assertion به TypeScript می‌گوید که یک مقدار را به‌عنوان نوع مشخصی در نظر بگیرد بدون اینکه مقدار در زمان اجرا تغییر کند.
 
 ```ts
 const value = something as MyType;
@@ -213,9 +207,9 @@ The first form (as) is the modern standard.
 
 ## The Unknown Type
 
-Assume we have a parameter defining a parameter with any type we basically bypass the type checking.
+وقتی پارامتری را با نوع `any` تعریف می‌کنیم عملاً بررسی نوع را دور می‌زنیم.
 
-but if we use `unknown`, we have to use type narrowing or type guards
+اما اگر از `unknown` استفاده کنیم، باید از `type narrowing` یا محافظ‌های نوع (type guards) استفاده کنیم.
 
 ```ts
 function render(document: any) {
@@ -224,22 +218,25 @@ function render(document: any) {
 ```
 
 ```ts
-  function render(document: unknown){
-    // we either need to use type narrowing with typeOf or instnaceOf
-    // Narrowing
-    if(document typeof === 'string'){ // for primitives
-      document.toUpperCase();
-    }
-    if(document instanceof === WordDocument){ // for objects
-      document.toUpperCase();
-    }
+function render(document: unknown) {
+  // We need to use type narrowing with typeof or instanceof
+  // Narrowing
+  if (typeof document === "string") {
+    // for primitives
+    document.toUpperCase();
   }
+  if (document instanceof WordDocument) {
+    // for objects
+    document.toUpperCase();
+  }
+}
 ```
 
 ## The never Type
 
-The never type in TypeScript is a tiny creature with a very specific job: it represents values that should not exist. Whenever TypeScript concludes “this code path can’t produce a value,” you get never.
-It’s the type system’s way of yelling (politely): “If you ever reach this point, your logic is broken.”
+نوع `never` در TypeScript وظیفه‌ای مشخص دارد: نمایش مقادیری که قرار نیست وجود داشته باشند. هرگاه TypeScript نتیجه بگیرد «این مسیر اجرایی نمی‌تواند مقداری تولید کند»، نوع `never` به‌دست می‌آید.
+
+این نوع راهی است برای اعلام غیرمستقیم اینکه «اگر به این نقطه رسیدید، منطق شما نادرست است».
 
 ```ts
 function fail(message: string): never {
@@ -261,4 +258,6 @@ function process(x: string | number) {
 }
 ```
 
-we need to set never explicitly because sometime typescript compiler infer the return type as void
+گاهی لازم است `never` را صریحاً مشخص کنیم، زیرا گاهی کامپایلر TypeScript نوع بازگشتی را به‌اشتباه به‌عنوان `void` استنتاج می‌کند.
+
+[OOP in Typescript](./../3-oop-with-typescript/oop-with-typescript.md)

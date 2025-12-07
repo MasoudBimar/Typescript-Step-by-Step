@@ -1,6 +1,6 @@
-# Object-Oriented Programming with TypeScript
+# برنامه‌نویسی شیءگرا با TypeScript
 
-Topics covered:
+موارد پوشش‌داده‌شده:
 
 - OOP basics
 - Classes
@@ -17,13 +17,13 @@ Topics covered:
 - Abstract classes
 - Interfaces
 
-## Object-Oriented Programming
+## برنامه‌نویسی شیءگرا
 
-OOP organizes code around objects that bundle state and behavior. TypeScript layers static typing and visibility rules on top of JavaScript's prototype-based model to make those objects safer to use.
+OOP کد را حولِ اشیائی سازمان‌دهی می‌کند که وضعیت (state) و رفتار (behavior) را گرد هم می‌آورند. TypeScript با افزودن نوع‌دهی ایستا و قوانین دسترسی، لایه‌ای از ایمنی روی مدل مبتنی بر prototype در JavaScript می‌گذارد تا استفاده از این اشیاء ایمن‌تر شود.
 
-## Classes
+## کلاس‌ها
 
-The basic building block. TypeScript adds strong typing, visibility modifiers, and constructor shorthand.
+کلاس‌ها بلوک‌های سازندهٔ اصلی در OOP هستند. TypeScript انواع قوی، اصلاح‌کننده‌های دید (visibility modifiers) و نوشتار کوتاه برای سازنده را اضافه می‌کند.
 
 ```ts
 class UserClass {
@@ -67,14 +67,14 @@ console.log(user1.displayName);
 
 ## typeof vs instanceof
 
-### Summary
+### خلاصه
 
-- Use `typeof` for primitives.
-- Use `instanceof` for class instances or objects created by constructors.
+- از `typeof` برای مقادیر اولیه (primitives) استفاده کنید.
+- از `instanceof` برای نمونه‌های کلاس یا اشیائی که با سازنده‌ها ایجاد شده‌اند استفاده کنید.
 
-### When to use typeof
+### چه زمانی از `typeof` استفاده کنیم
 
-`typeof` only works reliably for primitive values:
+عملگر `typeof` به‌طور قابل‌اعتماد تنها برای مقادیر اولیه کار می‌کند:
 
 - string
 - number
@@ -83,6 +83,8 @@ console.log(user1.displayName);
 - symbol
 - undefined
 - function
+
+مثال:
 
 ```ts
 function handle(input: string | number) {
@@ -123,14 +125,14 @@ So it only works for:
 
 ## const vs readonly
 
-The essential difference: they operate on different things and at different times.
+تفاوت اصلی: این دو در سطوح مختلف و زمان‌های متفاوت اعمال می‌شوند.
 
-- `const` is a JavaScript runtime rule.
-- `readonly` is a TypeScript compile-time rule.
+- `const` یک قاعدهٔ زمان اجرا در JavaScript است.
+- `readonly` یک قاعدهٔ زمان کامپایل در TypeScript است.
 
-### const - prevents reassignment of a variable
+### `const` — جلوگیری از مقداردهی مجدد متغیر
 
-`const` controls the binding, not the value inside it.
+`const` انتساب (binding) را کنترل می‌کند، نه مقدار داخل آن را.
 
 ```ts
 const user = { name: "Masoud" };
@@ -142,18 +144,18 @@ const user = { name: "Masoud" };
 user.name = "Bimmer";
 ```
 
-`const` does NOT make objects immutable. It only says: this variable cannot point to another value.
+`const` اشیاء را immutable نمی‌کند؛ فقط می‌گوید این متغیر نمی‌تواند به مقدار دیگری اشاره کند.
 
-Use `const` for:
+موارد استفادهٔ `const`:
 
-- function-scoped immutable bindings
-- arrays or objects that should not be rebound, only mutated
-- anything that is not meant to be reassigned (best practice)
+- بایندینگ‌های غیرقابل‌تغییر در حوزهٔ تابع
+- آرایه‌ها یا اشیائی که نباید rebound شوند، اما ممکن است تغییر یابند
+- هر چیزی که قرار نیست مقداردهی مجدد شود (به‌عنوان بهترین شیوه)
 
-### readonly - prevents mutation of properties
+### `readonly` — جلوگیری از تغییر خواص
 
-`readonly` is a TypeScript type-level constraint.
-It stops you from modifying fields inside an object.
+`readonly` یک قید در سطح نوع (type-level constraint) در TypeScript است.
+این قید از تغییر فیلدهای داخل یک شیء جلوگیری می‌کند.
 
 ```ts
 class User {
@@ -248,12 +250,12 @@ const admin = new Admin("Bob", "pass123");
 admin.printRole();
 ```
 
-## Private vs Protected Members
+## اعضای `private` در برابر `protected`
 
-- `private`: accessible only inside the class where it is declared.
-- `protected`: accessible inside the class and inside subclasses.
+- `private`: تنها داخل همان کلاسی که اعلام شده قابل دسترسی است.
+- `protected`: داخل کلاس و در زیرکلاس‌ها قابل دسترسی است.
 
-Both hide internal details, but `protected` creates an inheritance-friendly API, while `private` creates a hard boundary.
+هر دو جزئیات داخلی را مخفی می‌کنند، اما `protected` یک API سازگار با ارث‌بری فراهم می‌آورد در حالی که `private` یک مرز سخت ایجاد می‌کند.
 
 ## Constructor Parameter Properties
 
@@ -269,15 +271,15 @@ class User {
 }
 ```
 
-They reduce boilerplate, but be careful not to accidentally shadow fields by redeclaring them in subclasses.
+آنها سربار کد را کاهش می‌دهند؛ اما مراقب باشید که با اعلام مجدد فیلدها در زیرکلاس‌ها به‌طور ناخواسته فیلدها را shadow نکنید.
 
-## Getters & Setters
+## Getters و Setters
 
-Why getters and setters are useful:
+چرا getters و setters مفید هستند:
 
-- `_name` and `_price` are private, guaranteeing invariants.
-- Getters and setters provide controlled access with validation.
-- The class surface stays minimal and predictable.
+- `_name` و `_price` خصوصی هستند و تضمین‌کنندهٔ برقرار ماندن ناهمخوانی‌ها (invariants) است.
+- getters و setters دسترسی کنترل‌شده همراه با اعتبارسنجی را فراهم می‌کنند.
+- سطح API کلاس کوچک و قابل‌پیش‌بینی باقی می‌ماند.
 
 ```ts
 class Product {
@@ -336,10 +338,10 @@ console.log(product.toString());
 // product._price;
 ```
 
-## Index Signature
+## امضای ایندکس (Index Signature)
 
-Index signatures are TypeScript's way of saying: this object can have dynamic keys, and here is the shape of the values behind those keys.
-They are useful when you do not know all property names ahead of time but you can describe the type pattern.
+Index signature راه TypeScript برای بیان این است: این شیء می‌تواند کلیدهای پویا داشته باشد و این شکلِ نوعِ مقادیرِ مرتبط با آن کلیدها است.
+این زمانی مفید است که همهٔ نام‌های خواص را از پیش نمی‌دانید اما می‌توانید الگوی نوع را توصیف کنید.
 
 ```ts
 // This means: any string key is allowed, and its value must be a number.
@@ -348,7 +350,7 @@ type MyMap = {
 };
 ```
 
-More practical example:
+مثال عملی‌تر:
 
 ```ts
 interface ErrorMessages {
@@ -383,9 +385,9 @@ const res: ApiResponse = {
 };
 ```
 
-### When not to use index signatures
+### چه زمانی از index signature استفاده نکنیم
 
-1. Prefer `Record<Key, Value>` when keys are unknown but consistent:
+1. وقتی کلیدها ناشناخته اما یکنواخت هستند، بهتر است از `Record<Key, Value>` استفاده کنید:
 
 ```ts
 type Scores = Record<string, number>;
@@ -401,11 +403,11 @@ type Permissions = {
 };
 ```
 
-Index signatures are best when property names are truly unknown.
+Index signatureها زمانی بهترین هستند که نام خواص واقعاً ناشناخته باشند.
 
-## Static Members
+## اعضای استاتیک (Static Members)
 
-Static members belong to the class itself, not to any instance. They work well for utilities, counters, factory methods, and configuration that should not depend on instance state.
+اعضای استاتیک به خودِ کلاس تعلق دارند، نه به هیچ نمونه‌ای. این اعضا برای ابزارهای کمکی، شمارنده‌ها، متدهای کارخانه‌ای و پیکربندی‌هایی که نباید به وضعیت یک نمونه وابسته باشند، مناسب‌اند.
 
 ```ts
 class Counter {
@@ -438,9 +440,9 @@ Counter.reset();
 console.log(Counter.count); // 0
 ```
 
-## Inheritance
+## ارث‌بری (Inheritance)
 
-Classic "is-a" relationships. Extend a base class when sharing behavior makes sense.
+روابط کلاسیک «is-a». زمانی که اشتراک‌گذاری رفتار منطقی است از یک کلاس پایه مشتق (extend) کنید.
 
 ```ts
 class User {
@@ -466,18 +468,17 @@ console.log(employee1.displayName);
 console.log(employee1.calculateSalary());
 ```
 
-Adding access modifiers to constructor parameters implicitly creates class properties.
-This can unintentionally hide state, cause incorrect overriding in subclasses,
-or introduce subtle bugs related to construction order.
-It looks concise, but it undermines safe inheritance.
-Therefore, avoid using access modifiers on parameters passed to `super` from a subclass constructor.
+اضافه کردن اصلاح‌کننده‌های دسترسی (access modifiers) به پارامترهای سازنده به‌طور ضمنی خصوصیات کلاس را ایجاد می‌کند.
+این می‌تواند به‌طور ناخواسته وضعیت را مخفی کند، باعث override نادرست در زیرکلاس‌ها شود یا باگ‌های ظریف مربوط به ترتیب ساخت را معرفی کند.
+اگرچه این نوشتار کوتاه به‌نظر می‌رسد، اما ایمنی ارث‌بری را تضعیف می‌کند.
+بنابراین از استفاده از access modifierها روی پارامترهایی که به `super` در سازندهٔ زیرکلاس ارسال می‌شوند خودداری کنید.
 
-Keep inheritance shallow in most codebases; composition often stays simpler.
+در بیشتر کدبیس‌ها ارث‌بری را کم‌عمق نگه دارید؛ ترکیب (composition) معمولاً ساده‌تر می‌ماند.
 
-## Polymorphism
+## چندریختی (Polymorphism)
 
-Different classes implement the same interface or override shared behavior.
-Polymorphism keeps code open for extension and closed for modification (Open/Closed Principle).
+کلاس‌های مختلف می‌توانند همان interface را پیاده‌سازی کنند یا رفتار مشترک را override نمایند.
+Polymorphism کد را برای توسعه باز و برای تغییر بسته نگه می‌دارد (اصل Open/Closed).
 
 ```ts
 interface PaymentMethod {
@@ -529,14 +530,14 @@ for (const p of pets) {
 }
 ```
 
-## Abstraction (abstract classes and interfaces)
+## انتزاع (Abstraction — کلاس‌های abstract و Interfaces)
 
-- Abstract class: partial implementation plus shared behavior.
-- Interface: shape only.
+- Abstract class: پیاده‌سازی جزئی به‌علاوه رفتار مشترک.
+- Interface: فقط شکلِ نوع (shape) را مشخص می‌کند.
 
 ```ts
 abstract class Shape {
-  abstract area(): number; // area should be marked as abstract to tell the compiler that it is not implemented here
+  abstract area(): number; // باید به‌عنوان abstract علامت‌گذاری شود تا به کامپایلر بگوییم اینجا پیاده‌سازی ندارد
 }
 
 class Circle extends Shape {
@@ -575,11 +576,13 @@ a.move(); // Dog runs
 a.describe(); // Rex is alive
 ```
 
-### Key differences (concise)
+### تفاوت‌های کلیدی (مختصر)
 
-- Runtime presence: Interface is erased; abstract class is emitted as a class.
-- Implementation: Interface cannot contain implementation; abstract class can.
-- Constructor: Interface has none; abstract class can have one but cannot be instantiated directly.
-- Access modifiers: Interface members are public by default; abstract classes can use private/protected/public.
-- Multiple inheritance: A class can implement many interfaces; it can extend only one abstract/base class.
-- Fields: Interface has only type signatures; abstract class can declare real fields (including readonly and visibility).
+- حضور در زمان اجرا: Interface حذف می‌شود؛ اما abstract class به‌صورت یک کلاس در خروجی ظاهر می‌شود.
+- پیاده‌سازی: Interface نمی‌تواند پیاده‌سازی داشته باشد؛ اما abstract class می‌تواند.
+- سازنده: Interface سازنده ندارد؛ abstract class می‌تواند داشته باشد اما نمی‌توان آن را مستقیماً نمونه‌سازی کرد.
+- اصلاح‌کننده‌های دسترسی: اعضای Interface به‌صورت پیش‌فرض public هستند؛ abstract class می‌تواند از private/protected/public استفاده کند.
+- وراثت چندگانه: یک کلاس می‌تواند چندین Interface را پیاده‌سازی کند؛ اما تنها می‌تواند از یک abstract/base class ارث ببرد.
+- فیلدها: Interface تنها امضای نوع دارد؛ abstract class می‌تواند فیلدهای واقعی (از جمله readonly و با سطح دسترسی) اعلام کند.
+
+[Generics In Typescript](./../4-generics-with-typescript/generic-with-typescript.md)

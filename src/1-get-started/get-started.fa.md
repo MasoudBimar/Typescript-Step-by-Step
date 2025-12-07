@@ -4,15 +4,10 @@ TypeScript یک ابرمجموعهٔ نحوی از JavaScript است که انو
 
 ## زبان TypeScript چه چیزهایی به JavaScript اضافه می‌کند
 
-- تایپ ایستا
-  - Static Typing
-- تکمیل کد
-  - Code completion
-- ابزارهای بازسازی کد
-  - Refactoring
-- نگارش کوتاه‌تر و قابلیت‌های جدید زبان
-
-  - Shorthand notation and new features
+- Static Typing
+- Code completion
+- Refactoring
+- Shorthand notation and new features
 
 ## Static Typing
 
