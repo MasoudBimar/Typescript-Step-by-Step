@@ -1,67 +1,67 @@
-# What is Typescript
+# تایپ اسکریپت چیست؟
 
-Typescript is s sytactic superset of JavaScript that adds static types. It is designed to help developers catch errors early through a type system and to make JavaScript development more efficient. TypeScript code is transpiled into plain JavaScript, which can run in any environment that supports JavaScript, such as web browsers and Node.js.
+TypeScript یک ابرمجموعهٔ نحوی از JavaScript است که انواع ایستا (static types) را اضافه می‌کند. این زبان به‌گونه‌ای طراحی شده تا به توسعه‌دهندگان کمک کند خطاها را زودتر از طریق سیستم نوع‌شناسی شناسایی کنند و توسعهٔ JavaScript را کارآمدتر سازد. کد TypeScript به JavaScript معمولی ترنسپایل می‌شود و می‌تواند در هر محیطی که از JavaScript پشتیبانی می‌کند اجرا شود، مانند مرورگرها و Node.js.
 
-## What Typescript adds to javascript
+## TypeScript چه چیزهایی به JavaScript اضافه می‌کند
 
-- Static Typing
-- Code completion
-- Refactoring
-- Shorthand notation and new features
+- تایپ ایستا (Static Typing)
+- تکمیل کد (Code completion)
+- ابزارهای بازسازی کد (Refactoring)
+- نگارش کوتاه‌تر و قابلیت‌های جدید زبان
 
 ## Static Typing
 
-Javascript is a Dynamically-Typed Language
-Typescript is a Statically-Typed language
-TypeScript uses compile time type checking.
-Which means it checks if the specified types match before running the code, not while running the code.
-Typescript is Javascript plus type-schecking
+JavaScript یک زبان با نوع‌دهی پویا (Dynamically-Typed) است.
+TypeScript یک زبان با نوع‌دهی ایستا (Statically-Typed) است. TypeScript از بررسی نوع در زمان کامپایل استفاده می‌کند؛ یعنی پیش از اجرای برنامه بررسی می‌کند که انواع مشخص‌شده با هم سازگار باشند، نه در زمان اجرا. به عبارت ساده، TypeScript همان JavaScript است با لایه‌ای از بررسی نوع.
 
-### Typeswcript Drawbacks
+### معایب TypeScript
 
-- Compilation (Transpilation)
-- Discipline in coding (need to be followed)
+- نیاز به فرآیند کامپایل/ترنسپایل (Compilation / Transpilation)
+- نیازمند انضباط در نگارش کد و رعایت انواع برای به‌دست آوردن بیشترین مزایا
 
-### Installing Typescript
+### نصب TypeScript
 
-```js
+```bash
 npm install -g typescript
 ```
 
-### Transpile Typescript file to Javascript
+### ترنسپایل فایل TypeScript به JavaScript
 
-```js
- tsc filename.ts
+```bash
+tsc filename.ts
 ```
 
-### Configure Typescript Compiler
+### پیکربندی کامپایلر TypeScript
 
-```js
+```bash
 tsc --init
 ```
 
-This command create a configuration file called tsconfig.json with default settings
+این فرمان یک فایل پیکربندی به نام `tsconfig.json` با تنظیمات پیش‌فرض ایجاد می‌کند.
 
-### Most Important configs in tsconfig.ts
+### مهم‌ترین تنظیم‌ها در `tsconfig.json`
+
+نمونه‌ای از تنظیمات معمول در `tsconfig.json`:
 
 ```json
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "removeComments": true,
-    "noEmitHelpers": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": true,
-    "noUnusedParameters": true,
-    "noUnusedLocals": true,
-    "allowUnreachableCode": false,
+  "rootDir": "./src",
+  "outDir": "./dist",
+  "removeComments": true,
+  "noEmitHelpers": true,
+  "noImplicitAny": true,
+  "noImplicitReturns": true,
+  "noUnusedParameters": true,
+  "noUnusedLocals": true,
+  "allowUnreachableCode": false,
 ```
 
-### Debugging
+### دیباگ کردن
 
-Just add a brakepoint somewhere and go to the dubug panel in vs-code.
-Then click on create launch.json file and select Node.js
+کافی است یک breakpoint در محل موردنظر قرار دهید و به پنل Debug در VS Code بروید. سپس روی گزینهٔ ایجاد `launch.json` کلیک کنید و پیکربندی مربوط به Node.js را انتخاب نمایید.
 
-### Launch File Configuration
+### پیکربندی فایل اجرای برنامه (launch.json)
+
+نمونهٔ پیکربندی `launch.json` برای اجرای برنامه با Node.js در VS Code:
 
 ```json
 {
@@ -85,7 +85,7 @@ Then click on create launch.json file and select Node.js
 
 ## Types
 
-Javascript built-in types
+انواع پایهٔ JavaScript
 
 - number
 - string
@@ -94,7 +94,7 @@ Javascript built-in types
 - undefined
 - object
 
-Typescript extended types
+انواع اضافی در TypeScript
 
 - any
 - unknown
@@ -104,17 +104,18 @@ Typescript extended types
 - BigInt (ES2020+)
 - Symbol
 
-### Type Annotation and Inference
+### اعلان نوع و استنتاج نوع (Type Annotation and Inference)
 
-TypeScript offers two ways to work with types:
+TypeScript دو روش برای کار با نوع‌ها ارائه می‌دهد:
 
-- Explicit Typing: You explicitly declare the type of a variable
-- Type Inference: TypeScript automatically determines the type based on the assigned value
+- اعلان صریح نوع (Explicit Typing): شما صریحاً نوع یک متغیر را مشخص می‌کنید.
+- استنتاج نوع (Type Inference): TypeScript به‌طور خودکار نوع را بر اساس مقدار اختصاص‌یافته تعیین می‌کند.
 
-### Typescript Tuples
+### تاپل‌ها در TypeScript (Tuples)
 
-- Typed Arrays
-  A tuple is a typed array with a pre-defined length and types for each index.
+- آرایه‌های دارای نوع مشخص (Typed Arrays)
+
+تاپل یک آرایهٔ دارای نوع است که طول و نوع هر ایندکس از پیش مشخص شده است.
 
 ```ts
 let user: [number, string] = [15, "Masoud"];
@@ -128,10 +129,9 @@ ourTuple.push("Something new and wrong");
 console.log(ourTuple);
 ```
 
-### Typescript Enums
+### Enumها در TypeScript
 
-Enums is a list of related constants.
-If we define our enum as constants the compiler will generate the more optimized code.
+Enumها فهرستی از ثابت‌های مرتبط هستند. اگر enum را به‌صورت ثابت‌ها تعریف کنیم، کامپایلر ممکن است کد بهینه‌تری تولید کند.
 
 ```ts
 const small = 1;
@@ -148,6 +148,7 @@ enum Size {
 
 let mySize: Size = Size.Meduim;
 
+// const
 const enum Size1 {
   Small = 1,
   Meduim = 2,

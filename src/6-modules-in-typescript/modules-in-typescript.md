@@ -286,3 +286,7 @@ import { C1, C2 } from "./C";
 ```
 
 Note: to enable certain resolution strategies or path mapping you may need to configure `tsconfig.json` (for example, setting `moduleResolution: "node"` or adding `paths` mappings). Use these options only when required by your build/tooling.
+
+[Barrels vs Type Aliases in Typesript](./barrels-vs-path-aliases-in-typescript.md)
+
+Next Section: [Integration Typescript with javascript](./../7-integration-typescript-with-javascript/integration-typescript-with-javascript.md)
