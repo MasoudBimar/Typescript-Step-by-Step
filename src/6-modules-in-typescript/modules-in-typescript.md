@@ -193,3 +193,5 @@ class Other2
 import User, {Other1} from './math';
 
 ```
+
+## Wildcard imports
