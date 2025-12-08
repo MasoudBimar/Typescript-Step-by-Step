@@ -345,4 +345,4 @@ class Vehicle {
 }
 ```
 
-Next Section: [Modules In Typescript](./../5-modules-in-typescript/modules-in-typescript.md)
+Next Section: [Modules In Typescript](./../6-modules-in-typescript/modules-in-typescript.md)
