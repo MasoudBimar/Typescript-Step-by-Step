@@ -24,19 +24,19 @@ Typescript is Javascript plus type-schecking
 
 ### Installing Typescript
 
-```js
+```bash
 npm install -g typescript
 ```
 
 ### Transpile Typescript file to Javascript
 
-```js
+```bash
  tsc filename.ts
 ```
 
 ### Configure Typescript Compiler
 
-```js
+```bash
 tsc --init
 ```
 
