@@ -55,4 +55,4 @@ export type { FooConfig } from "./lib/foo.types";
 import { FooService, type FooConfig } from "@org/my-lib";
 ```
 
-بخش بعدی: [Integration Typescript with javascript](./../7-integration-typescript-with-javascript/integration-typescript-with-javascript.md)
+بخش بعدی: [Integration Typescript with javascript](./../7-integration-typescript-with-javascript/integration-typescript-with-javascript.fa.md)

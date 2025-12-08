@@ -260,4 +260,4 @@ function process(x: string | number) {
 
 گاهی لازم است `never` را صریحاً مشخص کنیم، زیرا گاهی کامپایلر TypeScript نوع بازگشتی را به‌اشتباه به‌عنوان `void` استنتاج می‌کند.
 
-[OOP in Typescript](./../3-oop-with-typescript/oop-with-typescript.md)
+[OOP in Typescript](./../3-oop-with-typescript/oop-with-typescript.fa.md)

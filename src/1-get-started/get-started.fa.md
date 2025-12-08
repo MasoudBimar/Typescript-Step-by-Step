@@ -156,4 +156,4 @@ const enum Size1 {
 }
 ```
 
-[Typescript Advanced Types](./../2-advanced-types/advanced-types.md)
+[Typescript Advanced Types](./../2-advanced-types/advanced-types.fa.md)

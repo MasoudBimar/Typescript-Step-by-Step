@@ -585,4 +585,4 @@ a.describe(); // Rex is alive
 - وراثت چندگانه: یک کلاس می‌تواند چندین Interface را پیاده‌سازی کند؛ اما تنها می‌تواند از یک abstract/base class ارث ببرد.
 - فیلدها: Interface تنها امضای نوع دارد؛ abstract class می‌تواند فیلدهای واقعی (از جمله readonly و با سطح دسترسی) اعلام کند.
 
-[Generics In Typescript](./../4-generics-with-typescript/generic-with-typescript.md)
+[Generics In Typescript](./../4-generics-with-typescript/generic-with-typescript.fa.md)

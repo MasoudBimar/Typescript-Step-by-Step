@@ -287,6 +287,6 @@ import { C1, C2 } from "./C";
 
 نکته: برای فعال کردن استراتژی‌های حل خاص یا path mapping، ممکن است نیاز به تنظیم `tsconfig.json` داشته باشید (برای مثال، تنظیم `moduleResolution: "node"` یا اضافه کردن نقشه `paths`). این گزینه‌ها را تنها زمانی استفاده کنید که توسط build/tooling شما نیاز باشد.
 
-[Barrels vs Type Aliases in Typesript](./barrels-vs-path-aliases-in-typescript.md)
+[Barrels vs Type Aliases in Typesript](./barrels-vs-path-aliases-in-typescript.fa.md)
 
-بخش بعدی: [Integration Typescript with javascript](./../7-integration-typescript-with-javascript/integration-typescript-with-javascript.md)
+بخش بعدی: [Integration Typescript with javascript](./../7-integration-typescript-with-javascript/integration-typescript-with-javascript.fa.md)

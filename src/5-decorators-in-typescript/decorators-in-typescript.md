@@ -344,3 +344,5 @@ class Vehicle {
   move(@Watch speed: number) {}
 }
 ```
+
+Next Section: [Modules In Typescript](./../5-modules-in-typescript/modules-in-typescript.md)

@@ -430,4 +430,4 @@ Uncapitalize<StringType>;
 
 [انواع Utility در Typescript](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
-بخش بعدی: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)
+بخش بعدی: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.fa.md)
