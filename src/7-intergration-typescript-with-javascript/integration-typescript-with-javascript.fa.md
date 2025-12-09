@@ -67,15 +67,15 @@ module.exports = {
 
 ```ts
 // price.service.ts (compiled to run in a CommonJS environment)
-const pricingEngine = require('./pricingEngine');
+const pricingEngine = require("./pricingEngine");
 
 export function safeCalculate(price: number, factor: number): number {
   const result = pricingEngine.calculate(price, factor);
 
-  if (typeof result === 'number') return result;
-  if (result && typeof result === 'object' && 'value' in result) return (result as any).value;
+  if (typeof result === "number") return result;
+  if (result && typeof result === "object" && "value" in result) return (result as any).value;
 
-  throw new Error('Invalid response from pricing engine');
+  throw new Error("Invalid response from pricing engine");
 }
 ```
 
@@ -83,14 +83,14 @@ export function safeCalculate(price: number, factor: number): number {
 
 ```ts
 // price.service.ts (ESM runtime or with proper bundler support)
-import * as pricingEngine from './pricingEngine.js';
+import * as pricingEngine from "./pricingEngine.js";
 
 export function safeCalculate(price: number, factor: number): number {
   const result = pricingEngine.calculate(price, factor as any);
   // همان اعتبارسنجی زمان اجرا
-  if (typeof result === 'number') return result;
-  if (result && typeof result === 'object' && 'value' in result) return (result as any).value;
-  throw new Error('Invalid response from pricing engine');
+  if (typeof result === "number") return result;
+  if (result && typeof result === "object" && "value" in result) return (result as any).value;
+  throw new Error("Invalid response from pricing engine");
 }
 ```
 
@@ -142,7 +142,7 @@ module.exports = { multiply, safeParse };
 در TypeScript می‌توانید این‌ها را وارد کرده و با پشتیبانی مناسب ابزارها استفاده کنید. با `esModuleInterop: true` می‌توانید به شکل زیر عمل کنید:
 
 ```ts
-import mathTools = require('./mathTools');
+import mathTools = require("./mathTools");
 
 export function calculateTotal(x: number, y: number): number {
   return mathTools.multiply(x, y);
@@ -196,12 +196,12 @@ export function isAdult(user: User | null): boolean;
 سپس می‌توانید از TypeScript به‌صورت معمول وارد کنید:
 
 ```ts
-import { fetchUser, isAdult } from './userApi';
+import { fetchUser, isAdult } from "./userApi";
 
 export async function loadUserStatus(id: string) {
   const user = await fetchUser(id);
-  if (!user) return 'User not found';
-  return isAdult(user) ? 'Adult' : 'Minor';
+  if (!user) return "User not found";
+  return isAdult(user) ? "Adult" : "Minor";
 }
 ```
 
