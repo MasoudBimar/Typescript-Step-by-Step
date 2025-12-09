@@ -108,7 +108,7 @@ export function safeCalculate(price: number, factor: number): number {
 
 ## استفاده از JSDoc برای توصیف تایپ‌ها (مناسب برای مهاجرت تدریجی)
 
-افزودن نظرات JSDoc به فایل JS به TypeScript و ادیتور کمک می‌کند تا IntelliSense و بسیاری از خطاها را تشخیص دهند.
+افزودن JSDoc comments به فایل JS به TypeScript و ادیتور کمک می‌کند تا IntelliSense و بسیاری از خطاها را تشخیص دهند.
 
 ```js
 // mathTools.js

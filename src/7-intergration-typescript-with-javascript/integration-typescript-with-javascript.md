@@ -207,7 +207,7 @@ export async function loadUserStatus(id: string) {
 ```
 
 > [!CAUTION]
-> If the `.d.ts` file is incomplete or incorrect, TypeScript will use the provided shapes — but they won't change runtime behavior. Keep declarations accurate.
+> An incorrect or incomplete `.d.ts` file can mask the real runtime API. TypeScript will trust the declarations, which may hide missing or different members and lead to silent runtime errors. Keep declaration files accurate.
 
 ## Using `@types/*` packages (DefinitelyTyped)
 
