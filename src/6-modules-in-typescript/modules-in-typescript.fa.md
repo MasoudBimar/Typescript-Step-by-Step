@@ -31,12 +31,12 @@ Modules برای ساخت کد وجود دارند:
 - In code
 
 ```ts
-// math.ts  <-- این یک module است زیرا export می‌کند
+# math.ts  <-- این یک module است زیرا export می‌کند
 export function add(a: number, b: number) {
   return a + b;
 }
 
-// app.ts
+# app.ts
 import { add } from "./math";
 console.log(add(1, 2));
 ```
@@ -65,7 +65,7 @@ https://nodejs.org/api/packages.html
 ## ایجاد و استفاده از modules
 
 ```ts
-// file1.ts
+# file1.ts
 
 export class Circle {
   constructor(public radius: number) {}
@@ -79,7 +79,7 @@ export class Square {
 در Index File:
 
 ```ts
-// index.ts
+# index.ts
 import { Circle, Square } from "./file1";
 import { Circle as MyCircle, Square } from "./file1";
 ```
@@ -98,7 +98,7 @@ import { Circle as MyCircle, Square } from "./file1";
 browser loaders مانند RequireJS
 
 ```ts
-// math.amd.js
+# math.amd.js
 define([], function () {
   function add(a, b) {
     return a + b;
@@ -106,7 +106,7 @@ define([], function () {
   return { add };
 });
 
-// main.amd.js
+# main.amd.js
 require(["./math.amd"], function (math) {
   console.log(math.add(1, 2));
 });
@@ -117,14 +117,14 @@ require(["./math.amd"], function (math) {
 UMD یک الگو است، نه یک استاندارد زبان: AMD vs CommonJS vs "global" را شناسایی می‌کند و بر این اساس export می‌کند.
 
 ```ts
-// math.amd.js
+# math.amd.js
 (function (root, factory) {
   if (typeof define === "function" && define.amd) {
-    define([], factory); // AMD
+    define([], factory); # AMD
   } else if (typeof module === "object" && module.exports) {
-    module.exports = factory(); // CommonJS / Node
+    module.exports = factory(); # CommonJS / Node
   } else {
-    root.math = factory(); // Global (browser)
+    root.math = factory(); # Global (browser)
   }
 })(typeof self !== "undefined" ? self : this, function () {
   function add(a, b) {
@@ -145,13 +145,13 @@ UMD یک الگو است، نه یک استاندارد زبان: AMD vs CommonJ
 Node.js کلاسیک (require، module.exports)
 
 ```ts
-// math.js
+# math.js
 function add(a, b) {
   return a + b;
 }
 module.exports = { add };
 
-// main.js
+# main.js
 
 const math = require("./math.cjs");
 console.log(math.add(1, 2));
@@ -162,12 +162,12 @@ console.log(math.add(1, 2));
 استاندارد مدرن (import / export)
 
 ```ts
-// math.js
+# math.js
 export function add(a, b) {
   return a + b;
 }
 
-// main.js
+# main.js
 import { add } from "./math.mjs";
 console.log(add(1, 2));
 ```
@@ -180,14 +180,14 @@ ES modules از export و import استفاده می‌کنند و از نظر �
 ## Default Exports
 
 ```ts
-// math.ts
+# math.ts
 export default class User {}
 
 export class Other1 {}
 
 class Other2 {}
 
-// main.ts
+# main.ts
 import User, { Other1 } from "./math";
 ```
 
@@ -222,7 +222,7 @@ Dynamic import() همان نوع namespace object را برمی‌گرداند.
 این یک import به‌داخل scope فایل فعلی نیست — این "بازصادور همه چیز از module دیگری" است.
 
 ```ts
-// index.ts
+# index.ts
 export * from "./math";
 export * from "./strings";
 ```
@@ -257,16 +257,16 @@ export class C4 {}
 بازسازی به فایل‌های جداگانه:
 
 ```ts
-// C/C1.ts
+# C/C1.ts
 export class C1 {}
 
-// C/C2.ts
+# C/C2.ts
 export class C2 {}
 
-// C/C3.ts
+# C/C3.ts
 export class C3 {}
 
-// C/C4.ts
+# C/C4.ts
 export class C4 {}
 ```
 

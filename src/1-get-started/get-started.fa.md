@@ -65,9 +65,9 @@ tsc --init
 
 ```json
 {
-  // Use IntelliSense to learn about possible attributes.
-  // Hover to view descriptions of existing attributes.
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  # Use IntelliSense to learn about possible attributes.
+  # Hover to view descriptions of existing attributes.
+  # For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
     {
@@ -120,11 +120,11 @@ TypeScript دو روش برای کار با نوع‌ها ارائه می‌ده
 ```ts
 let user: [number, string] = [15, "Masoud"];
 
-// define our tuple
+# define our tuple
 let ourTuple: [number, boolean, string];
-// initialize correctly
+# initialize correctly
 ourTuple = [5, false, "Coding God was here"];
-// We have no type safety in our tuple for indexes 3+
+# We have no type safety in our tuple for indexes 3+
 ourTuple.push("Something new and wrong");
 console.log(ourTuple);
 ```
@@ -138,7 +138,7 @@ const small = 1;
 const meduim = 2;
 const large = 3;
 
-// PascalCase
+# PascalCase
 
 enum Size {
   Small = 1,
@@ -148,7 +148,7 @@ enum Size {
 
 let mySize: Size = Size.Meduim;
 
-// const
+# const
 const enum Size1 {
   Small = 1,
   Meduim = 2,

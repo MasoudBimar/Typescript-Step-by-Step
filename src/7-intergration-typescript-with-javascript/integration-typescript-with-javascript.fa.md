@@ -35,11 +35,11 @@
 در ادامه یک ماژول CommonJS ساده که اشکال بازگشتی نامنظم دارد را می‌بینید (نمونه‌ای برای نشان دادن نیاز به گاردهای زمان اجرا):
 
 ```js
-// pricingEngine.js (CommonJS)
+# pricingEngine.js (CommonJS)
 module.exports = {
   calculate(price, factor) {
-    if (Math.random() > 0.5) return price * factor; // number
-    return { value: price * factor }; // object
+    if (Math.random() > 0.5) return price * factor; # number
+    return { value: price * factor }; # object
   },
 };
 ```
@@ -48,11 +48,11 @@ module.exports = {
 > برای اجازه دادن به TypeScript جهت شامل کردن فایل‌های `.js`، در `tsconfig.json` مقدار `allowJs: true` را قرار دهید. اگر می‌خواهید این فایل‌های JS نیز تایپ-چک شوند، `checkJs: true` را فعال کنید.
 
 ```jsonc
-// tsconfig.json (partial)
+# tsconfig.json (partial)
 {
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": false, // set true to enable basic JSDoc type-checking for .js files
+    "checkJs": false, # set true to enable basic JSDoc type-checking for .js files
     "esModuleInterop": true
   }
 }
@@ -66,7 +66,7 @@ module.exports = {
 گزینه A — سبک CommonJS (Node + require)
 
 ```ts
-// price.service.ts (compiled to run in a CommonJS environment)
+# price.service.ts (compiled to run in a CommonJS environment)
 const pricingEngine = require("./pricingEngine");
 
 export function safeCalculate(price: number, factor: number): number {
@@ -82,12 +82,12 @@ export function safeCalculate(price: number, factor: number): number {
 گزینه B — سازگار با ESM (وقتی ماژول JS به‌صورت ESM است یا باندلر interop را مدیریت می‌کند)
 
 ```ts
-// price.service.ts (ESM runtime or with proper bundler support)
+# price.service.ts (ESM runtime or with proper bundler support)
 import * as pricingEngine from "./pricingEngine.js";
 
 export function safeCalculate(price: number, factor: number): number {
   const result = pricingEngine.calculate(price, factor as any);
-  // همان اعتبارسنجی زمان اجرا
+  # همان اعتبارسنجی زمان اجرا
   if (typeof result === "number") return result;
   if (result && typeof result === "object" && "value" in result) return (result as any).value;
   throw new Error("Invalid response from pricing engine");
@@ -111,7 +111,7 @@ export function safeCalculate(price: number, factor: number): number {
 افزودن JSDoc comments به فایل JS به TypeScript و ادیتور کمک می‌کند تا IntelliSense و بسیاری از خطاها را تشخیص دهند.
 
 ```js
-// mathTools.js
+# mathTools.js
 
 /**
  * Multiplies two numbers.
@@ -165,7 +165,7 @@ export function parseUserConfig(text: string) {
 مثال JS (CommonJS):
 
 ```js
-// userApi.js
+# userApi.js
 function fetchUser(id) {
   return fetch(`/api/users/${id}`)
     .then((r) => r.json())
@@ -182,7 +182,7 @@ module.exports = { fetchUser, isAdult };
 یک فایل اعلان `userApi.d.ts` کنار آن ایجاد کنید:
 
 ```ts
-// userApi.d.ts
+# userApi.d.ts
 export interface User {
   id: string;
   name: string;

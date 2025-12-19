@@ -35,11 +35,11 @@ You usually integrate JS into TS when migrating incrementally, using an untyped 
 Here is a simple CommonJS JavaScript module that returns inconsistent shapes (illustrates why runtime guards are needed):
 
 ```js
-// pricingEngine.js (CommonJS)
+# pricingEngine.js (CommonJS)
 module.exports = {
   calculate(price, factor) {
-    if (Math.random() > 0.5) return price * factor; // number
-    return { value: price * factor }; // object
+    if (Math.random() > 0.5) return price * factor; # number
+    return { value: price * factor }; # object
   },
 };
 ```
@@ -48,11 +48,11 @@ module.exports = {
 > To allow TypeScript to include `.js` files, set `allowJs: true` in `tsconfig.json`. If you also want to type-check those JS files, enable `checkJs: true`.
 
 ```jsonc
-// tsconfig.json (partial)
+# tsconfig.json (partial)
 {
   "compilerOptions": {
     "allowJs": true,
-    "checkJs": false, // set true to enable basic JSDoc type-checking for .js files
+    "checkJs": false, # set true to enable basic JSDoc type-checking for .js files
     "esModuleInterop": true
   }
 }
@@ -66,7 +66,7 @@ module.exports = {
 Option A — CommonJS style (Node + require)
 
 ```ts
-// price.service.ts (compiled to run in a CommonJS environment)
+# price.service.ts (compiled to run in a CommonJS environment)
 const pricingEngine = require("./pricingEngine");
 
 export function safeCalculate(price: number, factor: number): number {
@@ -82,12 +82,12 @@ export function safeCalculate(price: number, factor: number): number {
 Option B — ESM-friendly import (when JS module is ESM or bundler handles interop)
 
 ```ts
-// price.service.ts (ESM runtime or with proper bundler support)
+# price.service.ts (ESM runtime or with proper bundler support)
 import * as pricingEngine from "./pricingEngine.js";
 
 export function safeCalculate(price: number, factor: number): number {
   const result = pricingEngine.calculate(price, factor as any);
-  // same runtime validation as above
+  # same runtime validation as above
   if (typeof result === "number") return result;
   if (result && typeof result === "object" && "value" in result) return (result as any).value;
   throw new Error("Invalid response from pricing engine");
@@ -111,7 +111,7 @@ You can also suppress checking for a particular file with `// @ts-nocheck` at th
 Adding JSDoc comments to a JS file gives TypeScript (and editors) enough information to provide IntelliSense and catch many mistakes.
 
 ```js
-// mathTools.js
+# mathTools.js
 
 /**
  * Multiplies two numbers.
@@ -166,7 +166,7 @@ When you cannot or prefer not to edit the original JS file, a `.d.ts` file provi
 Example JS (CommonJS):
 
 ```js
-// userApi.js
+# userApi.js
 function fetchUser(id) {
   return fetch(`/api/users/${id}`)
     .then((r) => r.json())
@@ -183,7 +183,7 @@ module.exports = { fetchUser, isAdult };
 Create a declaration file `userApi.d.ts` next to it:
 
 ```ts
-// userApi.d.ts
+# userApi.d.ts
 export interface User {
   id: string;
   name: string;

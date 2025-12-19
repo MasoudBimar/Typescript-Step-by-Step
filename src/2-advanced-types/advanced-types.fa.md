@@ -48,7 +48,7 @@ const rectangle: Rectangle = {
 
 ```ts
 function kgToLbs(weight: number | string): number {
-  // Narrowing
+  # Narrowing
   if (typeof weight === "number") {
     return weight * 2.2;
   } else {
@@ -79,8 +79,8 @@ type NetworkSuccessState = {
     summary: string;
   };
 };
-// Create a type which represents only one of the above types
-// but you aren't sure which it is yet.
+# Create a type which represents only one of the above types
+# but you aren't sure which it is yet.
 type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
 ```
 
@@ -110,7 +110,7 @@ let textBox: UIWidget = {
 در TypeScript سه دستهٔ literal موجود است: رشته‌ها (strings)، اعداد (numbers) و بولی‌ها (booleans). با استفاده از literal types می‌توانید مقادیر دقیقی را که یک رشته، عدد یا بولین باید داشته باشد مشخص کنید.
 
 ```ts
-type percent = 3 | 6 | 9; // Cannot be any number other than 3,6,9
+type percent = 3 | 6 | 9; # Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
@@ -140,9 +140,9 @@ function getUser(id: number): User | null | undefined {
 }
 
 let user = getUser(0);
-// Optional property access operator
+# Optional property access operator
 console.log(user?.userName);
-// If user or profile were null, the code would still run without crashing.
+# If user or profile were null, the code would still run without crashing.
 ```
 
 چرا این ویژگی وجود دارد
@@ -159,18 +159,18 @@ user && user.profile && user.profile.email;
 عمل‌گر دسترسی اختیاری به عنصر
 
 ```ts
-// before
+# before
 if (customers !== null && customers !== undefined) {
   customers[0];
 }
-// after
+# after
 customers?.[0];
 ```
 
 برای فراخوانی توابع نیز عمل‌گر Optional call وجود دارد
 
 ```ts
-let log: any = null; // (msg: string) =>{}
+let log: any = null; # (msg: string) =>{}
 
 log?.("test");
 ```
@@ -181,9 +181,9 @@ log?.("test");
 
 ```ts
 const x = foo ?? "default";
-0 || 42; // 42   (oops if 0 was a valid value)
-"" || "abc"; // 'abc'
-false || true; // true
+0 || 42; # 42   (oops if 0 was a valid value)
+"" || "abc"; # 'abc'
+false || true; # true
 ```
 
 <!-- First we need to know about falsy/truthy values -->
@@ -213,20 +213,20 @@ The first form (as) is the modern standard.
 
 ```ts
 function render(document: any) {
-  document.x33(); // compilor wont complain about any types
+  document.x33(); # compilor wont complain about any types
 }
 ```
 
 ```ts
 function render(document: unknown) {
-  // We need to use type narrowing with typeof or instanceof
-  // Narrowing
+  # We need to use type narrowing with typeof or instanceof
+  # Narrowing
   if (typeof document === "string") {
-    // for primitives
+    # for primitives
     document.toUpperCase();
   }
   if (document instanceof WordDocument) {
-    // for objects
+    # for objects
     document.toUpperCase();
   }
 }
@@ -249,11 +249,11 @@ When TypeScript knows all possibilities have been excluded, the inferred type be
 ```ts
 function process(x: string | number) {
   if (typeof x === "string") {
-    // ...
+    # ...
   } else if (typeof x === "number") {
-    // ...
+    # ...
   } else {
-    // x is never
+    # x is never
   }
 }
 ```

@@ -86,7 +86,7 @@ TypeScript در حال حاضر دو سیستم decorator دارد:
   [اطلاعات بیشتر درباره این](https://github.com/angular/angular/issues/65739)
 
 ```ts
-// stage 2
+# stage 2
 function Component(constructor: Function) {
   constructor.prototype.someId = Date.now();
   constructor.prototype.insertInDom = () => {
@@ -142,7 +142,7 @@ type ComponentOptions = {
   selector: string;
 };
 
-// Decorator Factory
+# Decorator Factory
 function Component(options: ComponentOptions) {
   return (constructor: Function) => {
     constructor.prototype.options = options;
@@ -221,7 +221,7 @@ export function LogCalls(): MethodDecorator {
     const original = descriptor.value as Function;
 
     descriptor.value = function (this: unknown, ...args: unknown[]) {
-      // ما نمی‌توانیم از arrow functions اینجا استفاده کنیم زیرا با FAT نمی‌توانیم به this دسترسی داشته باشیم
+      # ما نمی‌توانیم از arrow functions اینجا استفاده کنیم زیرا با FAT نمی‌توانیم به this دسترسی داشته باشیم
       console.log(String(propertyKey), "args:", args);
       return original.apply(this, args);
     };

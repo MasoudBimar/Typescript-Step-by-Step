@@ -48,7 +48,7 @@ What is type narrowing?
 
 ```ts
 function kgToLbs(weight: number | string): number {
-  // Narrowing
+  # Narrowing
   if (typeof weight === "number") {
     return weight * 2.2;
   } else {
@@ -79,8 +79,8 @@ type NetworkSuccessState = {
     summary: string;
   };
 };
-// Create a type which represents only one of the above types
-// but you aren't sure which it is yet.
+# Create a type which represents only one of the above types
+# but you aren't sure which it is yet.
 type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
 ```
 
@@ -89,20 +89,19 @@ type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessSta
 Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one.
 
 ```ts
-
 type Draggable = {
-drag: () => void
-}
+  drag: () => void;
+};
 
 type Resizable = {
-resize: () => void
-}
+  resize: () => void;
+};
 
 type UIWidget = Draggable & Resizable;
 
 let textBox: UIWidget = {
   resize: () => {},
-  drag: () => {}
+  drag: () => {},
 };
 ```
 
@@ -111,7 +110,7 @@ let textBox: UIWidget = {
 There are three sets of literal types available in TypeScript: strings, numbers, and booleans; by using literal types you can allow an exact value which a string, number, or boolean must have.
 
 ```ts
-type percent = 3 | 6 | 9; // Cannot be any number other than 3,6,9
+type percent = 3 | 6 | 9; # Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
@@ -141,9 +140,9 @@ function getUser(id: number): User | null | undefined {
 }
 
 let user = getUser(0);
-// Optional property access operator
+# Optional property access operator
 console.log(user?.userName);
-// If user or profile were null, the code would still run without crashing.
+# If user or profile were null, the code would still run without crashing.
 ```
 
 Why it exists
@@ -160,18 +159,18 @@ For accessing an array:
 Optional element access operator
 
 ```ts
-// before
+# before
 if (customers !== null && customers !== undefined) {
   customers[0];
 }
-// after
+# after
 customers?.[0];
 ```
 
 For calling functions we have Optional call
 
 ```ts
-let log: any = null; // (msg: string) =>{}
+let log: any = null; # (msg: string) =>{}
 
 log?.("test");
 ```
@@ -182,9 +181,9 @@ What it does:
 
 ```ts
 const x = foo ?? "default";
-0 || 42; // 42   (oops if 0 was a valid value)
-"" || "abc"; // 'abc'
-false || true; // true
+0 || 42; # 42   (oops if 0 was a valid value)
+"" || "abc"; # 'abc'
+false || true; # true
 ```
 
 <!-- First we need to know about falsy/truthy values -->
@@ -218,18 +217,18 @@ But if we use `unknown`, we have to use type narrowing or type guards
 
 ```ts
 function render(document: any) {
-  document.x33(); // compilor wont complain about any types
+  document.x33(); # compilor wont complain about any types
 }
 ```
 
 ```ts
   function render(document: unknown){
-    // We need to use type narrowing with typeof or instanceof
-    // Narrowing
-    if(typeof document === 'string'){ // for primitives
+    # We need to use type narrowing with typeof or instanceof
+    # Narrowing
+    if(typeof document === 'string'){ # for primitives
       document.toUpperCase();
     }
-    if(document instanceof WordDocument){ // for objects
+    if(document instanceof WordDocument){ # for objects
       document.toUpperCase();
     }
   }
@@ -251,11 +250,11 @@ When TypeScript knows all possibilities have been excluded, the inferred type be
 ```ts
 function process(x: string | number) {
   if (typeof x === "string") {
-    // ...
+    # ...
   } else if (typeof x === "number") {
-    // ...
+    # ...
   } else {
-    // x is never
+    # x is never
   }
 }
 ```

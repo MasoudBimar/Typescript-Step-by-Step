@@ -47,11 +47,11 @@ Cons
 ```
 
 ```ts
-// libs/my-lib/src/index.ts
+# libs/my-lib/src/index.ts
 export { FooService } from "./lib/foo.service";
 export type { FooConfig } from "./lib/foo.types";
 
-// consumer
+# consumer
 import { FooService, type FooConfig } from "@org/my-lib";
 ```
 
