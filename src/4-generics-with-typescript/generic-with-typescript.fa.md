@@ -292,7 +292,7 @@ class Store<T> {
 
 let store = new Store<User>();
 
-# عبور دادن پارامتر نوع جنریک
+// عبور دادن پارامتر نوع جنریک
 class CompressibleStore<T> extends Store<T> {
   compress() {}
 }
@@ -300,14 +300,14 @@ class CompressibleStore<T> extends Store<T> {
 let store = new CompressibleStore<User>();
 store.compress();
 
-# محدود کردن پارامتر نوع جنریک
+// محدود کردن پارامتر نوع جنریک
 class SearchableStore<T extends { name: string }> extends Store<T> {
   find(name: string): T | undefined {
     return this.items.find((obj) => obj.name === name); # ما باید از محدودیت‌ها استفاده کنیم تا ویژگی name را به T اضافه کنیم
   }
 }
 
-# تعیین پارامتر نوع جنریک
+// تعیین پارامتر نوع جنریک
 class UserStore<User> extends Store<User> {
   filterByCategory(category: string): User[] {
     return [];
@@ -328,11 +328,11 @@ type P = keyof Point;
 
 ```ts
 class SearchableStore<T extends { name: string }> extends Store<T> {
-  # اگر ویژگی از نوع string استفاده کند، این خطا را دریافت می‌کنیم:
-  # "No index signature with a parameter of type 'string' was found on type"
-  # ما باید به کامپایلر بگوییم ما از index signature استفاده نمی‌کنیم،
-  # بلکه ویژگی‌های واقعی از نوع T هستند.
-  # عملگر keyof union ویژگی‌های نوع داده‌شده را برمی‌گرداند
+  // اگر ویژگی از نوع string استفاده کند، این خطا را دریافت می‌کنیم:
+  // "No index signature with a parameter of type 'string' was found on type"
+  // ما باید به کامپایلر بگوییم ما از index signature استفاده نمی‌کنیم،
+  // بلکه ویژگی‌های واقعی از نوع T هستند.
+  // عملگر keyof union ویژگی‌های نوع داده‌شده را برمی‌گرداند
   find(property: keyof T, value: unknown): T | undefined {
     return this.items.find((obj) => obj[property] === value);
   }
@@ -359,10 +359,10 @@ interface User {
 }
 
 type ReadonlyUser = {
-  # index signature & keyof
+  // index signature & keyof
   readonly [Property in keyof User]: User[Property];
-  # سمت چپ: بر روی تمام ویژگی‌های User با استفاده از index signature & keyof تکرار کنید
-  # سمت راست: نوع ویژگی متناظر را دریافت کنید
+  // سمت چپ: بر روی تمام ویژگی‌های User با استفاده از index signature & keyof تکرار کنید
+  // سمت راست: نوع ویژگی متناظر را دریافت کنید
 };
 ```
 
@@ -421,7 +421,7 @@ NoInfer<Type>;
 ThisParameterType<Type>;
 OmitThisParameter<Type>;
 ThisType<Type>;
-#Intrinsic String Manipulation Types
+//Intrinsic String Manipulation Types
 Uppercase<StringType>;
 Lowercase<StringType>;
 Capitalize<StringType>;

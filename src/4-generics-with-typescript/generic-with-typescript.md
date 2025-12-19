@@ -292,7 +292,7 @@ class Store<T> {
 
 let store = new Store<User>();
 
-# Pass on the generic type parameter
+// Pass on the generic type parameter
 class CompressibleStore<T> extends Store<T> {
   compress() {}
 }
@@ -300,14 +300,14 @@ class CompressibleStore<T> extends Store<T> {
 let store = new CompressibleStore<User>();
 store.compress();
 
-# Restricting the generic type parameter
+// Restricting the generic type parameter
 class SearchableStore<T extends { name: string }> extends Store<T> {
   find(name: string): T | undefined {
     return this.items.find((obj) => obj.name === name); # we need to use constraints to add the name property to T
   }
 }
 
-# Fix the generic type parameter
+// Fix the generic type parameter
 class UserStore<User> extends Store<User> {
   filterByCategory(category: string): User[] {
     return [];
@@ -328,11 +328,11 @@ If the type has a string or number index signature, keyof will return those type
 
 ```ts
 class SearchableStore<T extends { name: string }> extends Store<T> {
-  # If the property uses a string type, we get this error:
-  # "No index signature with a parameter of type 'string' was found on type"
-  # We need to tell the compiler we're not using an index signature,
-  # but actual properties of type T.
-  # The keyof operator returns the union of properties of the given type
+  // If the property uses a string type, we get this error:
+  // "No index signature with a parameter of type 'string' was found on type"
+  // We need to tell the compiler we're not using an index signature,
+  // but actual properties of type T.
+  // The keyof operator returns the union of properties of the given type
   find(property: keyof T, value: unknown): T | undefined {
     return this.items.find((obj) => obj[property] === value);
   }
@@ -359,10 +359,10 @@ interface User {
 }
 
 type ReadonlyUser = {
-  # index signature & keyof
+  // index signature & keyof
   readonly [Property in keyof User]: User[Property];
-  # left-hand side: iterate over all User's properties using index signature & keyof
-  # right-hand side: get the type of the corresponding property
+  // left-hand side: iterate over all User's properties using index signature & keyof
+  // right-hand side: get the type of the corresponding property
 };
 ```
 
@@ -421,7 +421,7 @@ NoInfer<Type>;
 ThisParameterType<Type>;
 OmitThisParameter<Type>;
 ThisType<Type>;
-#Intrinsic String Manipulation Types
+//Intrinsic String Manipulation Types
 Uppercase<StringType>;
 Lowercase<StringType>;
 Capitalize<StringType>;

@@ -135,10 +135,10 @@ The essential difference: they operate on different things and at different time
 ```ts
 const user = { name: "Masoud" };
 
-# Not allowed
-# user = { name: "Bimmer" };
+// Not allowed
+// user = { name: "Bimmer" };
 
-# Allowed (mutation)
+// Allowed (mutation)
 user.name = "Bimmer";
 ```
 
@@ -165,8 +165,8 @@ class User {
 
 const u = new User(1);
 
-# Compile-time error
-# u.id = 2;
+// Compile-time error
+// u.id = 2;
 ```
 
 Use `readonly` for:
@@ -227,22 +227,22 @@ class Admin extends User {
   }
 
   public printRole(): void {
-    # Allowed: `role` is protected - accessible here
+    // Allowed: `role` is protected - accessible here
     console.log(`Role: ${this.role}`);
   }
 }
 
 const u = new User("Alice", "reader", "secret123");
 
-# Allowed
+// Allowed
 console.log(u.name);
 u.updateName("Alicia");
 
-# Not allowed (compile-time errors):
-# u.role;
-# u.getRole();
-# u.password;
-# u.validatePassword("secret123");
+// Not allowed (compile-time errors):
+// u.role;
+// u.getRole();
+// u.password;
+// u.validatePassword("secret123");
 
 const admin = new Admin("Bob", "pass123");
 admin.printRole();
@@ -281,7 +281,7 @@ Why getters and setters are useful:
 
 ```ts
 class Product {
-  # Private fields ensure encapsulation
+  // Private fields ensure encapsulation
   private _name: string;
   private _price: number;
 
@@ -290,12 +290,12 @@ class Product {
     this._price = price;
   }
 
-  # Public getter
+  // Public getter
   public get name(): string {
     return this._name;
   }
 
-  # Public setter with validation logic
+  // Public setter with validation logic
   public set name(value: string) {
     if (!value.trim()) {
       throw new Error("Product name cannot be empty.");
@@ -303,12 +303,12 @@ class Product {
     this._name = value;
   }
 
-  # Getter for price
+  // Getter for price
   public get price(): number {
     return this._price;
   }
 
-  # Setter with guard
+  // Setter with guard
   public set price(value: number) {
     if (value < 0) {
       throw new Error("Price cannot be negative.");
@@ -331,9 +331,9 @@ product.price = 99;
 
 console.log(product.toString());
 
-# Not allowed (private):
-# product._name;
-# product._price;
+// Not allowed (private):
+// product._name;
+// product._price;
 ```
 
 ## Index Signature
@@ -342,7 +342,7 @@ Index signatures are TypeScript's way of saying: this object can have dynamic ke
 They are useful when you do not know all property names ahead of time but you can describe the type pattern.
 
 ```ts
-# This means: any string key is allowed, and its value must be a number.
+// This means: any string key is allowed, and its value must be a number.
 type MyMap = {
   [key: string]: number;
 };
@@ -361,11 +361,11 @@ const errors: ErrorMessages = {
   password: "Too short",
 };
 
-# Allowed
+// Allowed
 errors["confirmPassword"] = "Mismatch";
 
-# Not allowed
-# errors.count = 5; # number is not assignable to string
+// Not allowed
+// errors.count = 5; // number is not assignable to string
 ```
 
 ### Mixed defined properties + index signature
@@ -416,7 +416,7 @@ class Counter {
   }
 
   public static get count(): number {
-    # static getter
+    // static getter
     return Counter._count;
   }
 
