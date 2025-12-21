@@ -7,13 +7,13 @@
 - The unknown type
 - The never type
 
-## Type Aliases & Interfaces
+## تفاوت اینترفیس ها و تایپ الیاس ها Type Aliases & Interfaces
 
 بیایید `Type Aliases` و `Interfaces` را با هم مقایسه کنیم
 
-### Type Aliases
+### تایپ الیاس ها (مستعار) Type Aliases
 
-`Type Aliases` اجازه می‌دهند نوع‌هایی با نام دلخواه تعریف کنید (Alias).
+`Type Aliases` اجازه می‌دهند نوع‌هایی با نام دلخواه تعریف کنید `(Alias)`.
 
 ```ts
 type CarYear = number;
@@ -26,9 +26,9 @@ type Car = {
 };
 ```
 
-### Interfaces
+### اینترفیس ها Interfaces
 
-`Interfaces` مشابه `Type Aliases` هستند، با این تفاوت که فقط برای انواع شیء (object types) کاربرد دارند.
+`Interfaces` مشابه `Type Aliases` هستند، با این تفاوت که فقط برای انواع شیء `(object types)` کاربرد دارند.
 
 ```ts
 interface Rectangle {
@@ -42,7 +42,7 @@ const rectangle: Rectangle = {
 };
 ```
 
-## Type Narrowing
+## محدود کردن تایپ Type Narrowing
 
 `Type Narrowing` چیست؟
 
@@ -59,9 +59,9 @@ function kgToLbs(weight: number | string): number {
 
 `Type narrowing` فرایند محدود کردن یک نوع عمومی به یک نوع خاص‌تر داخل یک بلاک شرطی است. در مثال بالا ابتدا بررسی می‌کنیم `weight` از نوع `number` است یا `string` و بر اساس آن نوع را محدود می‌کنیم تا عملیات مناسب را انجام دهیم.
 
-## Discriminating Unions
+## آشنایی با `Discriminating Unions`
 
-یک روش معمول برای کار با `union`ها این است که یک فیلد مشترک با انواع literal داشته باشیم تا TypeScript بتواند نوع فعلی ممکن را تشخیص دهد. در مثال زیر یک `union` از سه نوع با یک فیلد مشترک تعریف شده است.
+یک روش معمول برای کار با `union`ها این است که یک فیلد مشترک با انواع `literal` داشته باشیم تا `TypeScript` بتواند نوع فعلی ممکن را تشخیص دهد. در مثال زیر یک `union` از سه نوع با یک فیلد مشترک تعریف شده است.
 
 ```ts
 type NetworkLoadingState = {
@@ -84,7 +84,7 @@ type NetworkSuccessState = {
 type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
 ```
 
-## Intersection Types
+## آشنایی با `Intersection Types`
 
 `Intersection types` با `union`ها نزدیک هستند اما کاربرد متفاوتی دارند. یک `intersection` چندین نوع را با هم ترکیب می‌کند تا یک نوع جدید بسازد.
 
@@ -105,7 +105,7 @@ let textBox: UIWidget = {
 };
 ```
 
-## Literal Types
+## آشنایی با `Literal Types`
 
 در TypeScript سه دستهٔ literal موجود است: رشته‌ها (strings)، اعداد (numbers) و بولی‌ها (booleans). با استفاده از literal types می‌توانید مقادیر دقیقی را که یک رشته، عدد یا بولین باید داشته باشد مشخص کنید.
 
@@ -114,7 +114,7 @@ type percent = 3 | 6 | 9; # Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
-## Nullable Values
+## آشنایی با `Nullable Values`
 
 به‌جای غیرفعال کردن `strictNullChecks`، بهتر است زمانی که نیاز است صراحتاً `null` یا `undefined` را در نوع‌ها لحاظ کنیم.
 
@@ -130,7 +130,7 @@ function greet(name: string | null | undefined) {
 greet(null);
 ```
 
-## Optional Chaining
+## آشنایی با `Optional Chaining`
 
 عمل‌گر دسترسی اختیاری (Optional property access): یک قطعهٔ کوچک نحوی با وظیفه‌ای مهم است — دسترسی امن به یک propriété زمانی که مقدار قبلی ممکن است `null` یا `undefined` باشد.
 
@@ -175,7 +175,7 @@ let log: any = null; # (msg: string) =>{}
 log?.("test");
 ```
 
-## Nullish Coalescing Operator
+## آشنایی با `Nullish Coalescing Operator`
 
 چه کاری انجام می‌دهد:
 
@@ -192,7 +192,7 @@ false || true; # true
 
 بنابراین این عمل‌گر یک «فعل و انفعال بازگشتی برای null یا undefined» است، نه یک «بازگشت برای مقدارهای falsy».
 
-## Type Assertion
+## آشنایی با `Type Assertion`
 
 `as` تبدیل (conversion) انجام نمی‌دهد؛ فقط به کامپایلر اطلاع می‌دهد که آن عبارت را به چه نوعی نسبت دهد.
 
@@ -205,7 +205,7 @@ const value = <MyType>something;
 
 The first form (as) is the modern standard.
 
-## The Unknown Type
+## آشنایی با `The Unknown Type`
 
 وقتی پارامتری را با نوع `any` تعریف می‌کنیم عملاً بررسی نوع را دور می‌زنیم.
 
@@ -232,7 +232,7 @@ function render(document: unknown) {
 }
 ```
 
-## The never Type
+## آشنایی با `The never Type`
 
 نوع `never` در TypeScript وظیفه‌ای مشخص دارد: نمایش مقادیری که قرار نیست وجود داشته باشند. هرگاه TypeScript نتیجه بگیرد «این مسیر اجرایی نمی‌تواند مقداری تولید کند»، نوع `never` به‌دست می‌آید.
 
