@@ -1,6 +1,14 @@
 # What is Typescript
 
-Typescript is s sytactic superset of JavaScript that adds static types. It is designed to help developers catch errors early through a type system and to make JavaScript development more efficient. TypeScript code is transpiled into plain JavaScript, which can run in any environment that supports JavaScript, such as web browsers and Node.js.
+Typescript is s syntactic superset of JavaScript that adds static types. It is designed to help developers catch errors early through a type system and to make JavaScript development more efficient. TypeScript code is transpiled into plain JavaScript, which can run in any environment that supports JavaScript, such as web browsers and Node.js.
+
+- Can TypeScript “check inconsistency” in JavaScript code?
+  - TypeScript can type-check plain .js files and catch a lot of inconsistencies (wrong argument types, missing properties, unsafe null usage, etc.), if you enable it.
+  - JSDoc + checkJs (type-check JS files)
+  - Gradual typing via .ts migration
+- Can we control which ECMAScript version TypeScript outputs?
+  - Yes — with target (and also module) in `tsconfig.json`
+  - TypeScript transpiles based on `compilerOptions.target`
 
 ## What Typescript adds to javascript
 
@@ -121,10 +129,13 @@ let user: [number, string] = [15, "Masoud"];
 
 // define our tuple
 let ourTuple: [number, boolean, string];
+
 // initialize correctly
 ourTuple = [5, false, "Coding God was here"];
+
 // We have no type safety in our tuple for indexes 3+
 ourTuple.push("Something new and wrong");
+
 console.log(ourTuple);
 ```
 
