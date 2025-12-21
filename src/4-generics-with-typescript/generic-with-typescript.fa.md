@@ -14,7 +14,7 @@
 
 Generic یک پارامتر نوع است — مانند یک متغیر برای انواع.
 
-وقتی یک تابع یا کلاس می‌نویسید، به‌جای التزام به یک نوع خاص (string، number، YourType)، می‌گویید:
+وقتی یک تابع یا کلاس می‌نویسید، به‌جای التزام به یک نوع خاص `(string، number، YourType)`، می‌گویید:
 
 ```ts
 function wrap<T>(value: T) {
@@ -22,23 +22,23 @@ function wrap<T>(value: T) {
 }
 ```
 
-اینجا T یک جای‌نگین است. تابع برای مقدار مهم نیست؛ فقط وعده می‌دهد نوع آن را ثابت نگه دارد.
+اینجا `T` یک جای‌نگین است. تابع برای مقدار مهم نیست؛ فقط وعده می‌دهد نوع آن را ثابت نگه دارد.
 
-این همان ایده‌ای است که در جبر داریم: f(x) = x² نیازی ندارد بداند x چیست، تنها اینکه x در داخل تابع به‌طور مسلسل رفتار کند.
+این همان ایده‌ای است که در جبر داریم: `f(x) = x²` نیازی ندارد بداند x چیست، تنها اینکه `x` در داخل تابع به‌طور مسلسل رفتار کند.
 
-### چرا به Generics نیاز داریم?
+### چرا به `Generics` نیاز داریم?
 
-Generics در TypeScript یک مشکل تکراری را حل می‌کند: قابل‌استفاده‌بودن بدون از دست دادن ایمنی نوع.
+`Generics` در TypeScript یک مشکل تکراری را حل می‌کند: قابل‌استفاده‌بودن بدون از دست دادن ایمنی نوع.
 
-بدون Generics، توابعی که برای "هر نوعی" کار کنند باید به any برگردند، که اساساً یک درب فرار است که تضمین‌های ایمنی را می‌شکند.
+بدون `Generics،` توابعی که برای "هر نوعی" کار کنند باید به any برگردند، که اساساً یک درب فرار است که تضمین‌های ایمنی را می‌شکند.
 
-Generics اجازه می‌دهد تا بسازید:
+`Generics` اجازه می‌دهد تا بسازید:
 
 - API‌های قابل‌استفاده بدون قربانی کردن دقت.
 - زنجیره‌های روان تبدیل‌ها جایی که نوع با داده "جریان می‌یابد".
 - قرارداد‌هایی که به انواع دیگری وابسته‌اند.
 
-نمونه‌های مسائل حل‌شده توسط Generics:
+نمونه‌های مسائل حل‌شده توسط `Generics`:
 
 - نگاشت مقادیر در حالی که شکل یکسان می‌ماند.
 - بیان "یک وعده از X".
@@ -47,13 +47,13 @@ Generics اجازه می‌دهد تا بسازید:
 
 آنها یک زبان ریاضیاتی برای بیان محدودیت‌ها در کد هستند.
 
-### Generics کجا استفاده می‌شود?
+### `Generics` کجا استفاده می‌شود?
 
 تقریباً در هر جایی که یک الگو به نوعی که کاربر تابع انتخاب می‌کند وابسته است.
 
 اینجا جاهای معمول هستند:
 
-Functions
+`Functions`
 
 ```ts
 function identity<T>(value: T): T {
@@ -61,7 +61,7 @@ function identity<T>(value: T): T {
 }
 ```
 
-Classes
+`Classes`
 
 ```ts
 class Box<T> {
@@ -69,7 +69,7 @@ class Box<T> {
 }
 ```
 
-Interfaces
+`Interfaces`
 
 ```ts
 interface ApiResponse<T> {
@@ -78,13 +78,13 @@ interface ApiResponse<T> {
 }
 ```
 
-Utility Types
+`Utility Types`
 
 ```ts
 type Maybe<T> = T | null | undefined;
 ```
 
-Constraints
+`Constraints`
 
 ```ts
 function logLength<T extends { length: number }>(item: T) {
@@ -118,7 +118,7 @@ class KeyValuePair<K, V> {
 }
 
 let pair = new KeyValuePair<string, number>("1", 123);
-let pair2 = new KeyValuePair("1", 123); # بدون تامین آرگومان‌های نوع جنریک، کامپایلر انواع را بر اساس پارامترهای سازنده استنتاج می‌کند
+let pair2 = new KeyValuePair("1", 123); // بدون تامین آرگومان‌های نوع جنریک، کامپایلر انواع را بر اساس پارامترهای سازنده استنتاج می‌کند
 ```
 
 ## توابع جنریک
@@ -238,7 +238,7 @@ doSomething(new Customer("test"));
 
 آنها مسئله توابع جنریک را حل می‌کنند که به عملیات خاصی نیاز دارند.
 
-بدون محدودیت‌ها، TypeScript دسترسی به ویژگی یا استفاده از روش را اجازه نمی‌دهد:
+بدون محدودیت‌ها، `TypeScript` دسترسی به ویژگی یا استفاده از روش را اجازه نمی‌دهد:
 
 ```ts
 function fail<T>(x: T) {
@@ -303,7 +303,7 @@ store.compress();
 // محدود کردن پارامتر نوع جنریک
 class SearchableStore<T extends { name: string }> extends Store<T> {
   find(name: string): T | undefined {
-    return this.items.find((obj) => obj.name === name); # ما باید از محدودیت‌ها استفاده کنیم تا ویژگی name را به T اضافه کنیم
+    return this.items.find((obj) => obj.name === name); // ما باید از محدودیت‌ها استفاده کنیم تا ویژگی `name` را به T اضافه کنیم
   }
 }
 
@@ -315,16 +315,16 @@ class UserStore<User> extends Store<User> {
 }
 ```
 
-## عملگر keyof
+## عملگر `keyof`
 
-عملگر keyof یک نوع object را می‌گیرد و یک union از string یا literal عددی کلیدهایش تولید می‌کند. نوع P زیر همان نوع `type P = "x" | "y"` است:
+عملگر `keyof` یک نوع `object` را می‌گیرد و یک `union` از `string` یا `literal` عددی کلیدهایش تولید می‌کند. نوع P زیر همان نوع `type P = "x" | "y"` است:
 
 ```ts
 type Point = { x: number; y: number };
 type P = keyof Point;
 ```
 
-اگر نوع یک اِمضای index string یا number داشته باشد، keyof در عوض آن انواع را برمی‌گرداند:
+اگر نوع یک اِمضای `index string` یا `number` داشته باشد، `keyof` در عوض آن انواع را برمی‌گرداند:
 
 ```ts
 class SearchableStore<T extends { name: string }> extends Store<T> {
@@ -345,7 +345,7 @@ class SearchableStore<T extends { name: string }> extends Store<T> {
 
 با نقشه‌برداری نوع، ما می‌توانیم بر روی ویژگی‌های یک نوع و انواع آنها تکرار کنیم و نوع دیگری با برخی تحریف‌ات ایجاد کنیم.
 
-- نوع مبنا => نسخه readonly
+- نوع مبنا => نسخه `readonly`
 - نوع مبنا => نسخه ای که تمام ویژگی‌ها الزامی است
 - نوع مبنا => نسخه اختیاری
 
@@ -366,7 +366,7 @@ type ReadonlyUser = {
 };
 ```
 
-مرحله بعدی: نام ویژگی را به K تغییر دهید و آن را جنریک کنید:
+مرحله بعدی: نام ویژگی را به `K` تغییر دهید و آن را جنریک کنید:
 
 ```ts
 type Readonly<T> = {
@@ -379,10 +379,10 @@ let newUser: Readonly<User> = {
   birthDate: new Date(),
 };
 
-newUser.name = "somethingElse"; # خطا: نمی‌توان به 'name' اختصاص داد زیرا یک ویژگی read-only است
+newUser.name = "somethingElse"; // خطا: نمی‌توان به 'name' اختصاص داد زیرا یک ویژگی read-only است
 ```
 
-همان‌طور که برای Optional است,
+همان‌طور که برای `Optional` است,
 
 ```ts
 type Readonly<T> = {
@@ -398,9 +398,9 @@ type Required<T> = {
 };
 ```
 
-### چون این انواع بسیار مفید هستند، در TypeScript داخل‌سازی شده‌اند
+### چون این انواع بسیار مفید هستند، در `TypeScript` داخل‌سازی شده‌اند
 
-انواع Utility در Typescript
+انواع `Utility` در `Typescript`
 
 ```ts
 Awaited<Type>;
@@ -428,6 +428,6 @@ Capitalize<StringType>;
 Uncapitalize<StringType>;
 ```
 
-[انواع Utility در Typescript](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+[انواع `Utility` در `Typescript`](https://www.typescriptlang.org/docs/handbook/utility-types.html)
 
 بخش بعدی: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.fa.md)
