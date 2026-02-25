@@ -114,7 +114,10 @@ console.log(strBox.get()); # string
 
 ```ts
 class KeyValuePair<K, V> {
-  constructor(public key: K, public value: V) {}
+  constructor(
+    public key: K,
+    public value: V,
+  ) {}
 }
 
 let pair = new KeyValuePair<string, number>("1", 123);
@@ -242,7 +245,7 @@ doSomething(new Customer("test"));
 
 ```ts
 function fail<T>(x: T) {
-  return x.length; # ❌ خطا — T می‌تواند هر چیزی باشد
+  return x.length; # خطا — T می‌تواند هر چیزی باشد
 }
 ```
 
@@ -250,7 +253,7 @@ function fail<T>(x: T) {
 
 ```ts
 function ok<T extends { length: number }>(x: T) {
-  return x.length; # ✔️ محفوظ
+  return x.length; # محفوظ
 }
 ```
 

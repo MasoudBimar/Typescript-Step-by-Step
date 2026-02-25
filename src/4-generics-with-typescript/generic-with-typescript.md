@@ -242,7 +242,7 @@ Without constraints, TypeScript won’t allow property access or method usage:
 
 ```ts
 function fail<T>(x: T) {
-  return x.length; # ❌ Error — T could be anything
+  return x.length; # Error — T could be anything
 }
 ```
 
@@ -250,7 +250,7 @@ With Constraints
 
 ```ts
 function ok<T extends { length: number }>(x: T) {
-  return x.length; # ✔️ Safe
+  return x.length; # Safe
 }
 ```
 
