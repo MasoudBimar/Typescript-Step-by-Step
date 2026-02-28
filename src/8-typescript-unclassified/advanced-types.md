@@ -91,10 +91,9 @@ function isAdmin(user: User | Admin): user is Admin {
   return "permissions" in user;
 }
 
-// استفاده
 function handleUser(user: User | Admin) {
   if (isAdmin(user)) {
-    console.log(user.permissions); // حالا خطا نمیده
+    console.log(user.permissions);
   }
 }
 ```
