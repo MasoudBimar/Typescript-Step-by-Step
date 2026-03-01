@@ -147,3 +147,11 @@ type ThisTypeExample = ThisType<{ name: string }>; // { name: string }
 type UppercaseName = Uppercase<"user">; // "USER"
 type AwaitedUser = Awaited<Promise<User>>; // User
 ```
+
+-- `Partial` is commonly used for update operations where you only want to provide some of the properties.
+-- `Record` is usefull for keeping configuratios & status maps.
+-- `Omit` & `Pick` is usefull for working with APIs to deal with part of data.
+-- `Readonly` is usefull for immutability & preventing accidental changes.
+-- `keyof` & indexed access types are usefull for dynamic property access & type manipulation.
+-- `NonNullable` is usefull for ensuring values are not null or undefined.
+-- `ReturnType` & `Parameters` are usefull for working with function types and ensuring type safety.
