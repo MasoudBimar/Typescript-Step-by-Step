@@ -105,3 +105,45 @@ function isAdmin(user: unknown): user is Admin {
   return typeof user === "object" && user !== null && "permissions" in user && Array.isArray((user as any).permissions);
 }
 ```
+
+## Utility Types
+
+TypeScript provides built-in utility types to manipulate types.
+
+- `Partial<T>`: Makes all properties optional.
+- `Required<T>`: Makes all properties required.
+- `Readonly<T>`: Makes all properties read-only.
+- `Pick<T, K>`: Creates a type by picking properties `K` from `T`.
+- `Omit<T, K>`: Creates a type by omitting properties `K` from `T`.
+- `Record<K, T>`: Creates a type with keys `K` and values of type `T`.
+- `Exclude<T, U>`: Excludes from `T` those types that are assignable to `U`.
+- `Extract<T, U>`: Extracts from `T` those types that are assignable to `U`.
+- `NonNullable<T>`: Excludes `null` and `undefined` from `T`.
+- `ReturnType<T>`: Gets the return type of a function type `T`.
+- `Parameters<T>`: Gets the parameter types of a function type `T` as a tuple.
+- `ConstructorParameters<T>`: Gets the parameter types of a constructor function type `T` as a tuple.
+- `InstanceType<T>`: Gets the instance type of a constructor function type `T`.
+- `ThisType<T>`: Used to specify the type of `this` in an object literal.
+- `Uppercase<S>`, `Lowercase<S>`, `Capitalize<S>`, `Uncapitalize<S>`: String manipulation types.
+- `Awaited<T>`: Unwraps the type of a Promise.
+
+```ts
+type User = { name: string; age: number };
+
+type PartialUser = Partial<User>; // { name?: string; age?: number }
+type RequiredUser = Required<PartialUser>; // { name: string; age: number }
+type ReadonlyUser = Readonly<User>; // { readonly name: string; readonly age: number }
+type UserName = Pick<User, "name">; // { name: string }
+type UserWithoutAge = Omit<User, "age">; // { name: string }
+type UserRecord = Record<string, User>; // { [key: string]: User }
+type UserKeys = keyof User; // "name" | "age"
+type UserValues = User[UserKeys]; // string | number
+type NonNullableUser = NonNullable<User | null>; // User
+type UserReturnType = ReturnType<() => User>; // User
+type UserParameters = Parameters<(name: string, age: number) => User>; // [string, number]
+type UserConstructorParameters = ConstructorParameters<typeof User>; // [string, number]
+type UserInstanceType = InstanceType<typeof User>; // User
+type ThisTypeExample = ThisType<{ name: string }>; // { name: string }
+type UppercaseName = Uppercase<"user">; // "USER"
+type AwaitedUser = Awaited<Promise<User>>; // User
+```
