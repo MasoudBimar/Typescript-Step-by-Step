@@ -2,6 +2,9 @@
 
 Typescript is s syntactic superset of JavaScript that adds static types. It is designed to help developers catch errors early through a type system and to make JavaScript development more efficient. TypeScript code is transpiled into plain JavaScript, which can run in any environment that supports JavaScript, such as web browsers and Node.js.
 
+> [!NOTE]
+> TypeScript is a superset of JavaScript.
+
 - Can TypeScript “check inconsistency” in JavaScript code?
   - TypeScript can type-check plain .js files and catch a lot of inconsistencies (wrong argument types, missing properties, unsafe null usage, etc.), if you enable it.
   - JSDoc + checkJs (type-check JS files)
@@ -10,12 +13,17 @@ Typescript is s syntactic superset of JavaScript that adds static types. It is d
   - Yes — with target (and also module) in `tsconfig.json`
   - TypeScript transpiles based on `compilerOptions.target`
 
+> [!NOTE]
+> TypeScript parse your code and emit JavaScript.
+
 ## What Typescript adds to javascript
 
-- Static Typing
-- Code completion
-- Refactoring
-- Shorthand notation and new features
+1. Static Typing
+2. Code completion
+3. Refactoring
+4. Shorthand notation and new features
+5. Type inference
+6. Type Checking
 
 ## Static Typing
 
@@ -25,7 +33,7 @@ TypeScript uses compile time type checking.
 Which means it checks if the specified types match before running the code, not while running the code.
 Typescript is Javascript plus type-schecking
 
-### Typeswcript Drawbacks
+### Typescript Drawbacks
 
 - Compilation (Transpilation)
 - Discipline in coding (need to be followed)
@@ -43,6 +51,9 @@ npm install -g typescript
 ```
 
 ### Configure Typescript Compiler
+
+For set the typescript compiler behavior we need to create a configuration file called `tsconfig.json` in the root of our project.
+by running this command:
 
 ```bash
 tsc --init
@@ -116,8 +127,8 @@ Typescript extended types
 
 TypeScript offers two ways to work with types:
 
-- Explicit Typing: You explicitly declare the type of a variable
-- Type Inference: TypeScript automatically determines the type based on the assigned value
+- **Explicit Typing**: You explicitly declare the type of a variable
+- **Type Inference**: TypeScript automatically determines the type based on the assigned value
 
 ### Typescript Tuples
 
