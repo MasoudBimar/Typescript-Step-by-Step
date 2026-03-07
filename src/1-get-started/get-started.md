@@ -69,10 +69,27 @@ This command create a configuration file called tsconfig.json with default setti
     "removeComments": true,
     "noEmitHelpers": true,
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "noImplicitReturns": true,
     "noUnusedParameters": true,
     "noUnusedLocals": true,
     "allowUnreachableCode": false,
+```
+
+More Usefull configs:
+
+- `noImplicitThis`: Raise error on `this` expressions with an implied `any` type.
+- `strictFunctionTypes`: Enable strict checking of function types.
+- `strict`: Enable all strict type-checking options. This is the same as enabling `noImplicitAny`, `strictNullChecks`, `strictFunctionTypes`, `strictBindCallApply`, `strictPropertyInitialization`, and `noImplicitThis` in a single command.
+
+```ts
+function greeter(fn: (a: string) => void) {
+  fn("Hello, World");
+}
+function printToConsole(s: string) {
+  console.log(s);
+}
+greeter(printToConsole);
 ```
 
 ### Debugging

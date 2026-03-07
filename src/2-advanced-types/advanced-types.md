@@ -116,7 +116,26 @@ type Metric = "cm" | "inch";
 
 ## Nullable Values
 
+This code is valid when `strictNullChecks` is off:
+
+```ts
+const x: number = null; // OK, null is a valid number
+```
+
+but triggers an error when you turn strictNullChecks on:
+
+```ts
+const x: number = null;
+// ~ Type 'null' is not assignable to type 'number'
+```
+
 Instead of disabling `strictNullChecks`, we should explicitly include null or undefined in the types when needed
+
+```ts
+const x: number | null = null;
+```
+
+Or we can use a union type to allow both null and undefined
 
 ```ts
 function greet(name: string | null | undefined) {
@@ -128,6 +147,21 @@ function greet(name: string | null | undefined) {
 }
 
 greet(null);
+```
+
+How to deal with null and undefined values?
+
+- Use union types to explicitly include null or undefined when needed.
+- Use optional chaining to safely access properties on potentially null or undefined values.
+- Use the nullish coalescing operator (??) to provide default values when dealing with null or undefined.
+
+```ts
+const el = document.getElementById("some-id");
+el.textContent = "Ready"; // ~~ Object is possibly 'null'
+if (el) {
+  el.textContent = "Ready"; // OK, null has been excluded (using check)
+}
+el!.textContent = "Ready"; // OK, we've asserted that el is non-null (using non-null assertion operator)
 ```
 
 ## Optional Chaining

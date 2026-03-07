@@ -261,4 +261,3 @@ const permissions = {
 // Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
 // const res = await fetch("https://example.com");
 // console.log(res.status);
-

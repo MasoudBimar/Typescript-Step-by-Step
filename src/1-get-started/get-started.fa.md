@@ -51,6 +51,7 @@ tsc --init
   "removeComments": true,
   "noEmitHelpers": true,
   "noImplicitAny": true,
+  "strictNullChecks": true,
   "noImplicitReturns": true,
   "noUnusedParameters": true,
   "noUnusedLocals": true,
