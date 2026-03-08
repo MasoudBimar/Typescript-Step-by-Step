@@ -113,3 +113,70 @@ function printEmployeeInfo(emp: EmployeeOrManager) {
   }
 }
 ```
+
+> [!NOTE]
+> Type Assertion (Generally Type Operation) cannot affect runtime values.
+
+It only tells the TypeScript compiler to treat a value as a different type for type checking purposes. It does not change the actual type of the value at runtime.
+
+```ts
+function getEmployeeInfo(emp: EmployeeOrManager) {
+  // Type assertion to treat emp as a Manager
+  const manager = emp as Manager;
+  console.log(manager.department); // This will cause a runtime error if emp is not actually a Manager
+}
+```
+
+after compilation(transpilation), the above code will look like this:
+
+```js
+"use strict";
+function getEmployeeInfo(emp) {
+  // Type assertion to treat emp as a Manager
+  const manager = emp;
+  console.log(manager.department); // This will cause a runtime error if emp is not actually a Manager
+}
+```
+
+So how should we handle type conversions in TypeScript?
+
+1. Check the type at runtime using typeof, instanceof, or the in operator before performing operations that depend on a specific type.
+2. Use Javascript type conversion methods (Type Constructs) (like `Number()`, `String()`, etc.) to convert values to the desired type.
+
+```ts
+function convertToNumber(value: string | number): number {
+  if (typeof value === "string") {
+    return Number(value); // Convert string to number
+  }
+  return value; // Already a number
+}
+```
+
+Event Primitive Types (Declared Types) in Typescript might be different from their JavaScript counterparts, for example:
+
+in this example the `boolean` type in TypeScript is a primitive type that can only be `true` or `false`, while in JavaScript, the `Boolean` type is an object wrapper around the primitive boolean value.
+
+```ts
+function setLightSwitch(value: boolean) {
+  switch (value) {
+    case true:
+      turnLightOn();
+      break;
+    case false:
+      turnLightOff();
+      break;
+    default:
+      console.log(`I can't do that.`);
+  }
+}
+
+function turnLightOn() {
+  console.log("switching on");
+}
+function turnLightOff() {
+  console.log("switching off");
+}
+
+setLightSwitch(true);
+setLightSwitch(false);
+```
