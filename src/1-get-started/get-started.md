@@ -2,6 +2,21 @@
 
 Typescript is s syntactic superset of JavaScript that adds static types. It is designed to help developers catch errors early through a type system and to make JavaScript development more efficient. TypeScript code is transpiled into plain JavaScript, which can run in any environment that supports JavaScript, such as web browsers and Node.js.
 
+- [What is Typescript](#what-is-typescript)
+  - [What Typescript adds to javascript](#what-typescript-adds-to-javascript)
+  - [Static Typing](#static-typing)
+    - [Typescript Drawbacks](#typescript-drawbacks)
+    - [Installing Typescript](#installing-typescript)
+    - [Transpile Typescript file to Javascript](#transpile-typescript-file-to-javascript)
+    - [Configure Typescript Compiler](#configure-typescript-compiler)
+    - [Most Important configs in tsconfig.ts](#most-important-configs-in-tsconfigts)
+    - [Debugging](#debugging)
+    - [Launch File Configuration](#launch-file-configuration)
+  - [Typescript Type System](#typescript-type-system)
+    - [Type Annotation and Inference](#type-annotation-and-inference)
+    - [Typescript Tuples](#typescript-tuples)
+    - [Typescript Enums](#typescript-enums)
+
 > [!NOTE]
 > TypeScript is a superset of JavaScript.
 
@@ -119,7 +134,16 @@ Then click on create launch.json file and select Node.js
 }
 ```
 
-## Types
+## Typescript Type System
+
+After Installing Typescript, we can use the typescript type system in our code.
+we have two service `tsc` and `tscserver` that provide us with type checking and code completion features.
+
+- `tsc` is the typescript compiler that transpile our typescript code to javascript and also check for type errors.
+- `tscserver` is the typescript language server that provide us language services for out code editor:
+  - Code Completion
+  - Inspection
+  - Refactoring
 
 Javascript built-in types
 

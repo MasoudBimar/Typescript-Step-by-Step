@@ -6,6 +6,7 @@
   - [Function Overloading using Typescript Types](#function-overloading-using-typescript-types)
   - [Runtime Performance \& TypeScript Types](#runtime-performance--typescript-types)
   - [JavaScript is inherently duck typed](#javascript-is-inherently-duck-typed)
+  - ['any' type in TypeScript](#any-type-in-typescript)
 
 ## TypeScript Compiler
 
@@ -334,3 +335,32 @@ showUser(v); // OK, no complain about type mismatch
 
 > [!TIP]
 > `structural typing`: Two type are compatible if their members are compatible, regardless of their names or declarations.
+
+## 'any' type in TypeScript
+
+The `any` type in TypeScript is a special type that can represent any value. It is often used when you want to opt out of type checking for a particular variable or when you are working with dynamic content.
+
+explicit 'any' type annotation:
+
+```ts
+let myVariable: any = "Hello, World!";
+myVariable = 42; // No error, myVariable can be assigned any type of value
+```
+
+implicit 'any' type:
+
+> [!NOTE]
+> implicit 'any' occurs when TypeScript cannot infer the type of the variable and it can be avoided by writing type declaration and for checking by providing an explicit type annotation or by enabling the `noImplicitAny` compiler option.
+
+```ts
+function logMessage(message) {
+  console.log(message);
+  // Error: Parameter 'message' implicitly has an 'any' type.ts(7006)
+}
+```
+
+Why using 'any' is not recommended in TypeScript?
+
+- The any type silences the type checker and TypeScript language services.
+- It defeats the purpose of using TypeScript by allowing any value to be assigned to a variable typed as 'any'.
+- It can lead to runtime errors that TypeScript is designed to prevent.

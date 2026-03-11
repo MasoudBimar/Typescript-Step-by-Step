@@ -116,13 +116,19 @@ type Metric = "cm" | "inch";
 
 ## Nullable Values
 
+In TypeScript, the `null` and `undefined` types represent the absence of a value. By default, when you declare a variable without initializing it, it is assigned the value `undefined`. The `null` value is typically used to indicate that a variable intentionally has no value.
+
+When you enable the `strictNullChecks` compiler option, TypeScript will not allow you to assign `null` or `undefined` to a variable unless you explicitly include them in the type.
+
+`strictNullChecks` controls
+
 This code is valid when `strictNullChecks` is off:
 
 ```ts
 const x: number = null; // OK, null is a valid number
 ```
 
-but triggers an error when you turn strictNullChecks on:
+but triggers an error when you turn `strictNullChecks` on:
 
 ```ts
 const x: number = null;
@@ -207,6 +213,18 @@ For calling functions we have Optional call
 let log: any = null; # (msg: string) =>{}
 
 log?.("test");
+```
+
+### noUncheckedIndexedAccess
+
+When you access an array element, TypeScript will check if the index is within the bounds of the array. If you try to access an index that is out of bounds, TypeScript will give you an error.
+
+```ts
+const myArray = ["one", "two", "three"];
+const value = myArray[5];
+console.log(value.toUpperCase()); // Error: Object is possibly 'undefined'.ts(2532)
+console.log(value?.toUpperCase()); // OK, value is possibly undefined, but we handle it with optional chaining
+console.log(myArray[0].toUpperCase()); // Error: Object is possibly 'undefined'.ts(2532)
 ```
 
 ## Nullish Coalescing Operator
