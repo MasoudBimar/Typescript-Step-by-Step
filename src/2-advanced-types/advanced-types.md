@@ -393,6 +393,9 @@ function logMessage(message) {
 }
 ```
 
+> [!CAUTION]
+> There’s No Type Safety with `any` Types. and `any` Lets You Break Contracts.
+
 Why using 'any' is not recommended in TypeScript?
 
 - The any type silences the type checker and TypeScript language services.

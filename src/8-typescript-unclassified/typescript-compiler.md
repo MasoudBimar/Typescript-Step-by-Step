@@ -4,6 +4,7 @@
   - [TypeScript Compiler](#typescript-compiler)
   - [Runtime Types vs Declared Types](#runtime-types-vs-declared-types)
   - [Function Overloading using Typescript Types](#function-overloading-using-typescript-types)
+    - [Function cannot be overloded by based on typescript types](#function-cannot-be-overloded-by-based-on-typescript-types)
   - [Runtime Performance \& TypeScript Types](#runtime-performance--typescript-types)
   - [JavaScript is inherently duck typed](#javascript-is-inherently-duck-typed)
 
@@ -163,9 +164,9 @@ function convertToNumber(value: string | number): number {
 
 ## Runtime Types vs Declared Types
 
-Primitive Types (Declared Types) in Typescript might be different from their JavaScript counterparts, for example:
+Primitive Types (Declared Types) in Typescript might be different from their JavaScript counterparts.
 
-in this example the `boolean` type in TypeScript is a primitive type that can only be `true` or `false`, while in JavaScript, the `Boolean` type is an object wrapper around the primitive boolean value.
+In this example the `boolean` type in TypeScript is a primitive type that can only be `true` or `false`, while in JavaScript, the `Boolean` type is an object wrapper around the primitive boolean value.
 
 ```ts
 function setLightSwitch(value: boolean) {
@@ -190,12 +191,16 @@ function turnLightOff() {
 
 setLightSwitch(true);
 setLightSwitch(false);
+let userInput = await getUserInput(); // Assume this returns a value from a service call
+setLightSwitch(userInput); // This will call the default case if userInput is not a boolean
 ```
 
 ## Function Overloading using Typescript Types
 
 > [!ERROR]
 > TypeScript does not support function overloading in the same way that languages like Java or C# do.
+
+### Function cannot be overloded by based on typescript types
 
 ```ts
 function add(a: number, b: number): number {
@@ -287,9 +292,10 @@ To use types at runtime, wee need to reconstruct it.
 ## JavaScript is inherently duck typed
 
 > [!NOTE]
-> If it walks like a duck and quacks like a duck, it’s a duck.
+> Structural Typing or Duck Typing: If it walks like a duck and quacks like a duck, it’s a duck.
 
 That said, TypeScript's type system is structural, which means that if two types have the same shape, they are considered compatible, regardless of their names or declarations.
+for exmple a function accepts any value whose structure matches the expected type, regardless of its declared type
 
 ```ts
 interface Duck {
@@ -334,3 +340,6 @@ showUser(v); // OK, no complain about type mismatch
 
 > [!TIP]
 > `structural typing`: Two type are compatible if their members are compatible, regardless of their names or declarations.
+
+> [!TIP]
+> Use structural typing to facilitate unit testing by creating mock objects that match the expected structure of the types being tested, without needing to create full implementations of those types.

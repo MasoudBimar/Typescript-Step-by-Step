@@ -261,3 +261,24 @@ const permissions = {
 // Top-level 'await' expressions are only allowed when the 'module' option is set to 'es2022', 'esnext', 'system', 'node16', 'node18', 'node20', 'nodenext', or 'preserve', and the 'target' option is set to 'es2017' or higher.
 // const res = await fetch("https://example.com");
 // console.log(res.status);
+
+
+// structural typing or duck typing
+
+type NormalUser = {
+    firstName: string;
+    lastName: string;
+}
+
+type SuperUser = {
+    firstName: string;
+    lastName: string;
+    permissionID: string;
+}
+
+function sopposedToAcceptNormalUser(user: NormalUser) {
+    console.log(user.firstName);
+}
+
+let superUserInstance: SuperUser = { firstName: 'john', lastName: 'Doe', permissionID: 'zxcvbnm' };
+sopposedToAcceptNormalUser(superUserInstance); // A function accepts a value if its shape (structure) matches the expected type — not based on its declared or nominal type
