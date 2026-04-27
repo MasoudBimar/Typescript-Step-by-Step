@@ -19,8 +19,9 @@
     - [First we need to know about falsy/truthy values](#first-we-need-to-know-about-falsytruthy-values)
     - [Assignment version](#assignment-version)
   - [Type Assertion](#type-assertion)
-  - [The Unknown Type](#the-unknown-type)
-  - [The never Type](#the-never-type)
+  - [The `any` type](#the-any-type)
+  - [The `unknown` Type](#the-unknown-type)
+  - [The `never` Type](#the-never-type)
   - [Utility Types](#utility-types)
   - [Type Guards](#type-guards)
   - [TypeScript Conditional Types](#typescript-conditional-types)
@@ -369,7 +370,36 @@ const value = <MyType>something;
 
 The first form (as) is the modern standard.
 
-## The Unknown Type
+## The `any` type
+
+The `any` type in TypeScript is a special type that can represent any value. It is often used when you want to opt out of type checking for a particular variable or when you are working with dynamic content.
+
+explicit 'any' type annotation:
+
+```ts
+let myVariable: any = "Hello, World!";
+myVariable = 42; // No error, myVariable can be assigned any type of value
+```
+
+implicit 'any' type:
+
+> [!NOTE]
+> implicit 'any' occurs when TypeScript cannot infer the type of the variable and it can be avoided by writing type declaration and for checking by providing an explicit type annotation or by enabling the `noImplicitAny` compiler option.
+
+```ts
+function logMessage(message) {
+  console.log(message);
+  // Error: Parameter 'message' implicitly has an 'any' type.ts(7006)
+}
+```
+
+Why using 'any' is not recommended in TypeScript?
+
+- The any type silences the type checker and TypeScript language services.
+- It defeats the purpose of using TypeScript by allowing any value to be assigned to a variable typed as 'any'.
+- It can lead to runtime errors that TypeScript is designed to prevent.
+
+## The `unknown` Type
 
 When we define a parameter with the `any` type, we basically bypass type checking.
 
@@ -400,7 +430,7 @@ function render(document: unknown) {
 
 > [!TIP] The `unknown` type is a safer alternative to `any` because it forces you to perform type checks (Type Narrowing or type guards) before using the value, reducing the risk of runtime errors.
 
-## The never Type
+## The `never` Type
 
 The never type in TypeScript represents values that should not exist. Whenever TypeScript concludes “this code path can’t produce a value,” you get `never`.
 
