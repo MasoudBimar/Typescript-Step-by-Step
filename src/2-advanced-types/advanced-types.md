@@ -1,11 +1,25 @@
 # TypeScript Advanced Types
 
-- Type aliases
-- Unions and intersections
-- Type narrowing
-- Nullable types
-- The unknown type
-- The never type
+- [TypeScript Advanced Types](#typescript-advanced-types)
+  - [Type Aliases \& Interfaces](#type-aliases--interfaces)
+    - [Type Aliases](#type-aliases)
+    - [Interfaces](#interfaces)
+      - [Core Differences between Type Aliases and Interfaces](#core-differences-between-type-aliases-and-interfaces)
+  - [Unions and intersections](#unions-and-intersections)
+    - [Union Types](#union-types)
+    - [Intersection Types](#intersection-types)
+  - [Literal Types](#literal-types)
+  - [Type Narrowing](#type-narrowing)
+  - [Discriminating Unions](#discriminating-unions)
+  - [Nullable Values](#nullable-values)
+  - [Optional Chaining](#optional-chaining)
+    - [noUncheckedIndexedAccess](#nouncheckedindexedaccess)
+  - [Nullish Coalescing Operator](#nullish-coalescing-operator)
+    - [First we need to know about falsy/truthy values](#first-we-need-to-know-about-falsytruthy-values)
+    - [Assignment version](#assignment-version)
+  - [Type Assertion](#type-assertion)
+  - [The Unknown Type](#the-unknown-type)
+  - [The never Type](#the-never-type)
 
 ## Type Aliases & Interfaces
 
@@ -42,51 +56,48 @@ const rectangle: Rectangle = {
 };
 ```
 
-## Type Narrowing
+#### Core Differences between Type Aliases and Interfaces
 
-What is type narrowing?
+> [!TIP]
+> Interface Designed specifically for object shape, Supports declaration merging, Can be extended / implemented cleanly
 
-```ts
-function kgToLbs(weight: number | string): number {
-  // Narrowing
-  if (typeof weight === "number") {
-    return weight * 2.2;
-  } else {
-    return parseFloat(weight) * 2.2;
-  }
-}
-```
+> [!TIP]
+> Type ALias More flexible, can represent Can represent: primitives, unions, intersections, tuples, mapped types, functions
 
-type narrowing is the process of refining a broad type to a more specific type within a conditional block. In the example above, we check if weight is of type number or string, and based on that, we narrow down the type to perform appropriate operations.
+## Unions and intersections
 
-## Discriminating Unions
+### Union Types
 
-A common technique for working with unions is to have a single field which uses literal types which you can use to let TypeScript narrow down the possible current type. For example, we’re going to create a union of three types which have a single shared field.
+Union types allow you to define a type that can be one of several types.
 
 ```ts
-type NetworkLoadingState = {
-  state: "loading";
-};
-type NetworkFailedState = {
-  state: "failed";
-  code: number;
-};
-type NetworkSuccessState = {
-  state: "success";
-  response: {
-    title: string;
-    duration: number;
-    summary: string;
-  };
-};
-// Create a type which represents only one of the above types
-// but you aren't sure which it is yet.
-type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState;
+type ID = number | string;
+let userId: ID;
+userId = 123; // OK
+userId = "abc"; // OK
+userId = true; // Error: Type 'boolean' is not assignable to type 'ID'
 ```
 
-## Intersection Types
+### Intersection Types
 
-Intersection types are closely related to union types, but they are used very differently. An intersection type combines multiple types into one.
+Intersection types allow you to combine multiple types into one.
+
+> [!TIP]
+> Derived types that combine properties of multiple types. An intersection type A & B has all properties of both A and B.
+
+```ts
+type X = { value: number };
+type Y = { text: string };
+
+type XY = X & Y;
+
+let a: XY = {
+  value: 42,
+  text: "Hello", // must have both properties
+};
+```
+
+Better example of intersection types is when we want to combine multiple behaviors into a single type.
 
 ```ts
 type Draggable = {
@@ -114,13 +125,80 @@ type percent = 3 | 6 | 9; # Cannot be any number other than 3,6,9
 type Metric = "cm" | "inch";
 ```
 
+## Type Narrowing
+
+**What is type narrowing?**
+
+**Type Narrowing** is the process of refining a broad type to a more specific type within a conditional block.
+
+```ts
+function kgToLbs(weight: number | string): number {
+  // Narrowing
+  if (typeof weight === "number") {
+    return weight * 2.2;
+  } else {
+    return parseFloat(weight) * 2.2;
+  }
+}
+```
+
+> [!NOTE]
+> when there is a union type, we need to use type narrowing to perform operations specific to each type.
+
+In the example above, we check if weight is of type number or string, and based on that, we narrow down the type to perform appropriate operations.
+
+> [!TIP]
+> Type Narrowing Techniques: must be used within a conditional block, Type Guards (typeof, instanceof), User-defined type guards, Discriminated unions
+
+```ts
+type Weight = number | string;
+
+function kgToLbs(weight: Weight): number {
+  // Narrowing
+  if (typeof weight === "number") {
+    return weight * 2.2;
+  } else {
+    return parseFloat(weight) * 2.2;
+  }
+}
+```
+
+## Discriminating Unions
+
+A common technique for working with unions is to have a single field which uses [Literal Types](#literal-types) which you can use to let TypeScript narrow down the possible current type.
+
+For example, we’re going to create a union of three types which have a single shared field.
+
+```ts
+type NetworkLoadingState = {
+  state: "loading";
+};
+type NetworkFailedState = {
+  state: "failed";
+  code: number;
+};
+type NetworkSuccessState = {
+  state: "success";
+  response: {
+    title: string;
+    duration: number;
+    summary: string;
+  };
+};
+// Create a type which represents only one of the above types
+// but you aren't sure which it is yet.
+type NetworkState = NetworkLoadingState | NetworkFailedState | NetworkSuccessState; // Union type + Discriminating field
+```
+
 ## Nullable Values
 
-In TypeScript, the `null` and `undefined` types represent the absence of a value. By default, when you declare a variable without initializing it, it is assigned the value `undefined`. The `null` value is typically used to indicate that a variable intentionally has no value.
+In TypeScript, the `null` and `undefined` types represent the absence of a value.
+By default, when you declare a variable without initializing it, it is assigned the value `undefined`.
+The `null` value is typically used to indicate that a variable intentionally has no value.
 
 When you enable the `strictNullChecks` compiler option, TypeScript will not allow you to assign `null` or `undefined` to a variable unless you explicitly include them in the type.
 
-`strictNullChecks` controls
+So `strictNullChecks` controls:
 
 This code is valid when `strictNullChecks` is off:
 
@@ -210,7 +288,7 @@ customers?.[0];
 For calling functions we have Optional call
 
 ```ts
-let log: any = null; # (msg: string) =>{}
+let log: any = null; // (msg: string) =>{}
 
 log?.("test");
 ```
@@ -229,16 +307,18 @@ console.log(myArray[0].toUpperCase()); // Error: Object is possibly 'undefined'.
 
 ## Nullish Coalescing Operator
 
+The `??` operator provides a safe default value, but only when the left-hand side is `null` or `undefined` not for all falsy values.
+
 What it does:
 
 ```ts
 const x = foo ?? "default";
-0 || 42; # 42   (oops if 0 was a valid value)
-"" || "abc"; # 'abc'
-false || true; # true
+0 || 42; // 42   (oops if 0 was a valid value)
+"" || "abc"; // 'abc'
+false || true; // true
 ```
 
-<!-- First we need to know about falsy/truthy values -->
+### First we need to know about falsy/truthy values
 
 a ?? b returns:
 
@@ -248,11 +328,24 @@ otherwise, it returns b
 
 This makes it a “null-or-undefined fallback,” not a “falsey fallback.”
 
+### Assignment version
+
+```ts
+let value: number | undefined;
+
+value ??= 10;
+// same as:
+value = value ?? 10;
+```
+
 ## Type Assertion
 
 `as` won't do the conversion; it just tells the compiler about the return type of that expression.
 
 In other words, a type assertion tells the TypeScript compiler to treat a value as a specific type without changing the runtime value.
+
+> [!CAUTION]
+> `as` won't do the conversion; it just tells the compiler about the return type of that expression.
 
 ```ts
 const value = something as MyType;
@@ -269,27 +362,32 @@ But if we use `unknown`, we have to use type narrowing or type guards
 
 ```ts
 function render(document: any) {
-  document.x33(); # compilor wont complain about any types
+  document.x33(); // compiler wont complain about any types
 }
 ```
 
+> [!CAUTION] Using `any` is like telling the compiler "I know what I'm doing, trust me." It can lead to runtime errors if the actual type doesn't match your assumptions.
+
 ```ts
-  function render(document: unknown){
-    // We need to use type narrowing with typeof or instanceof
-    // Narrowing
-    if(typeof document === 'string'){ # for primitives
-      document.toUpperCase();
-    }
-    if(document instanceof WordDocument){ # for objects
-      document.toUpperCase();
-    }
+function render(document: unknown) {
+  // We need to use type narrowing with typeof or instanceof
+  // Narrowing
+  if (typeof document === "string") {
+    // for primitives
+    document.toUpperCase();
   }
+  if (document instanceof WordDocument) {
+    // for objects
+    document.toUpperCase();
+  }
+}
 ```
+
+> [!TIP] The `unknown` type is a safer alternative to `any` because it forces you to perform type checks (Type Narrowing or type guards) before using the value, reducing the risk of runtime errors.
 
 ## The never Type
 
-The never type in TypeScript is a tiny creature with a very specific job: it represents values that should not exist. Whenever TypeScript concludes “this code path can’t produce a value,” you get never.
-It’s the type system’s way of yelling (politely): “If you ever reach this point, your logic is broken.”
+The never type in TypeScript represents values that should not exist. Whenever TypeScript concludes “this code path can’t produce a value,” you get `never`.
 
 ```ts
 function fail(message: string): never {
@@ -297,7 +395,9 @@ function fail(message: string): never {
 }
 ```
 
-When TypeScript knows all possibilities have been excluded, the inferred type becomes never.
+> [!TIP] The `never` type is useful for functions that `always throw an error` or have `infinite loops`, indicating that they will never return a value.
+
+When TypeScript knows all possibilities have been excluded, the inferred type becomes `never`.
 
 ```ts
 function process(x: string | number) {

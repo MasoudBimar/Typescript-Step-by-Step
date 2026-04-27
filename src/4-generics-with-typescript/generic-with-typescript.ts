@@ -4,14 +4,22 @@ interface User {
     birthDate: Date;
 }
 
-type Readonly<T> = {
+type CustomReadonly<T> = {
     readonly [K in keyof T]: T[K];
 }
 
-let newUser: Readonly<User> = {
+let newUser: CustomReadonly<User> = {
     id: 2,
     name: 'Masoud',
     birthDate: new Date()
 }
 
-newUser.name = 'somethingElse'; // Error: Cannot assign to 'name' because it is a read-only property.
+// newUser.name = 'somethingElse'; // Error: Cannot assign to 'name' because it is a read-only property.
+
+function wrapValue<T>(value: T) {
+    return { value };
+}
+
+let wrapped = wrapValue('test');
+
+console.log(wrapped);
