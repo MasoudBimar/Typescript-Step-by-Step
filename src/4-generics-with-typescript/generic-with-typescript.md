@@ -1,12 +1,22 @@
 # Generic With Typescript
 
-- What? Why? Where?
-- Generic Classes
-- Generic Functions
-- Generic Interfaces
-- Generic Constraints
-- Extending Generic Classes
-- Type Mapping
+- [Generic With Typescript](#generic-with-typescript)
+  - [What? Why? Where?](#what-why-where)
+    - [What are Generics?](#what-are-generics)
+    - [Why do we need Generics?](#why-do-we-need-generics)
+    - [Where are Generics used?](#where-are-generics-used)
+  - [Generic classes](#generic-classes)
+  - [Generic Functions](#generic-functions)
+  - [Generic Interfaces](#generic-interfaces)
+  - [Generic Constraints](#generic-constraints)
+    - [What Are Generic Constraints?](#what-are-generic-constraints)
+    - [Why Use Constraints?](#why-use-constraints)
+    - [Restricting to Objects, Classes and Unions or even shape of an object](#restricting-to-objects-classes-and-unions-or-even-shape-of-an-object)
+  - [Extending Generic Classes](#extending-generic-classes)
+  - [The keyof Operator](#the-keyof-operator)
+  - [Type Mapping](#type-mapping)
+    - [Typescript Utility Types](#typescript-utility-types)
+  - [Type Safety using Generics](#type-safety-using-generics)
 
 ## What? Why? Where?
 
@@ -398,36 +408,54 @@ type Required<T> = {
 };
 ```
 
-### Because these types are quite useful, they are built into TypeScript
-
-Typescript Utility Types
+### Typescript Utility Types
 
 ```ts
-Awaited<Type>;
-Partial<Type>;
-Required<Type>;
-Readonly<Type>;
-Record<Keys, Type>;
-Pick<Type, Keys>;
-Omit<Type, Keys>;
-Exclude<UnionType, ExcludedMembers>;
-Extract<Type, Union>;
-NonNullable<Type>;
-Parameters<Type>;
-ConstructorParameters<Type>;
-ReturnType<Type>;
-InstanceType<Type>;
-NoInfer<Type>;
-ThisParameterType<Type>;
-OmitThisParameter<Type>;
-ThisType<Type>;
+type AwaitedType = Awaited<Type>;
+type PartialType = Partial<Type>;
+type RequiredType = Required<Type>;
+type ReadonlyType = Readonly<Type>;
+type RecordType = Record<Keys, Type>;
+type PickType = Pick<Type, Keys>;
+type OmitType = Omit<Type, Keys>;
+type ExcludeType = Exclude<UnionType, ExcludedMembers>;
+type ExtractType = Extract<Type, Union>;
+type NonNullableType = NonNullable<Type>;
+type ParametersType = Parameters<Type>;
+type ConstructorParametersType = ConstructorParameters<Type>;
+type ReturnTypeType = ReturnType<Type>;
+type InstanceTypeType = InstanceType<Type>;
+type NoInferType = NoInfer<Type>;
+type ThisParameterTypeType = ThisParameterType<Type>;
+type OmitThisParameterType = OmitThisParameter<Type>;
+type ThisTypeType = ThisType<Type>;
 //Intrinsic String Manipulation Types
-Uppercase<StringType>;
-Lowercase<StringType>;
-Capitalize<StringType>;
-Uncapitalize<StringType>;
+type UppercaseType = Uppercase<StringType>;
+type LowercaseType = Lowercase<StringType>;
+type CapitalizeType = Capitalize<StringType>;
+type UncapitalizeType = Uncapitalize<StringType>;
 ```
 
 [Typescript Utility Types](https://www.typescriptlang.org/docs/handbook/utility-types.html)
+
+## Type Safety using Generics
+
+```ts
+function safeLocalStorage<T>(key: string, defaultValue: T) {
+  return {
+    get: (): T => {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : defaultValue;
+    },
+    set: (value: T) => {
+      localStorage.setItem(key, JSON.stringify(value));
+    },
+  };
+}
+
+const userStorage = safeLocalStorage("user", { name: "", age: 0 });
+userStorage.set({ name: "John", age: 25 });
+const user = userStorage.get();
+```
 
 Next Section: [Decorators In Typescript](./../5-decorators-in-typescript/decorators-in-typescript.md)
