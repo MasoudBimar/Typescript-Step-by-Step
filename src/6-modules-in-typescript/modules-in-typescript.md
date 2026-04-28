@@ -1,11 +1,22 @@
 # Modules In TypeScript
 
-- What? Why? Where?
-- Creating and using modules
-- Module formats
-- Default exports
-- Wildcard imports
-- Re-exporting
+- [Modules In TypeScript](#modules-in-typescript)
+  - [What? Why? Where?](#what-why-where)
+    - [What?](#what)
+    - [Why?](#why)
+    - [Where?](#where)
+  - [Creating and using modules](#creating-and-using-modules)
+  - [Module formats](#module-formats)
+    - [AMD](#amd)
+    - [UMD](#umd)
+    - [CommonJS](#commonjs)
+    - [ES2015 / ES6 Modules (ESM)](#es2015--es6-modules-esm)
+  - [Default Exports](#default-exports)
+  - [Wildcard imports](#wildcard-imports)
+    - [Namespace import (`import * as X from "…"`)](#namespace-import-import--as-x-from-)
+    - [Re-export wildcard (`export * from "…"`) a.k.a. barrel files](#re-export-wildcard-export--from--aka-barrel-files)
+    - [Real filesystem globs (“import everything in this folder”)](#real-filesystem-globs-import-everything-in-this-folder)
+  - [Re-exporting](#re-exporting)
 
 ## What? Why? Where?
 
@@ -44,7 +55,6 @@ console.log(add(1, 2));
 A file with no top-level `import/export` is a “script” and leaks declarations into the global scope. [Docs](https://www.typescriptlang.org/docs/handbook/2/modules.html?utm_source=chatgpt.com)
 
 - In tsconfig.json (how TS emits JS):
-
   - "compilerOptions.module" controls what module format TS outputs (ESM vs CommonJS vs preserve for bundlers).
   - "compilerOptions.moduleResolution" controls how TS finds imports on disk (node, nodenext, bundler, etc.).
 

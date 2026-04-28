@@ -1,11 +1,21 @@
 # Decorators In TypeScript
 
-- What? Why? Where?
-- Class Decorator
-- Method Decorator
-- Property Decorator
-- Accessor Decorator
-- Parameter Decorator
+- [Decorators In TypeScript](#decorators-in-typescript)
+  - [What? Why? Where?](#what-why-where)
+    - [What?](#what)
+    - [Why?](#why)
+      - [Metadata \& Reflection](#metadata--reflection)
+      - [Behavior Wrapping](#behavior-wrapping)
+      - [Declarative APIs](#declarative-apis)
+    - [Where?](#where)
+    - [What are Decorators?](#what-are-decorators)
+  - [Class Decorators](#class-decorators)
+    - [Parametrized Decorators](#parametrized-decorators)
+    - [Decorator Composition](#decorator-composition)
+  - [Method Decorator](#method-decorator)
+  - [Accessor Decorator](#accessor-decorator)
+  - [Property Decorator](#property-decorator)
+  - [Parameter Decorator](#parameter-decorator)
 
 ## What? Why? Where?
 
@@ -124,7 +134,7 @@ let SampleComponent = (() => {
       _classDecorators,
       { kind: "class", name: _classThis.name, metadata: _metadata },
       null,
-      _classExtraInitializers
+      _classExtraInitializers,
     );
     SampleComponent = _classThis = _classDescriptor.value;
     if (_metadata) Object.defineProperty(_classThis, Symbol.metadata, { enumerable: true, configurable: true, writable: true, value: _metadata });

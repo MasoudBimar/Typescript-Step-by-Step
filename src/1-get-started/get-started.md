@@ -137,10 +137,10 @@ Then click on create launch.json file and select Node.js
 ## Typescript Type System
 
 After Installing Typescript, we can use the typescript type system in our code.
-we have two service `tsc` and `tscserver` that provide us with type checking and code completion features.
+we have two service `tsc` and `tsserver` that provide us with type checking and code completion features.
 
 - `tsc` is the typescript compiler that transpile our typescript code to javascript and also check for type errors.
-- `tscserver` is the typescript language server that provide us language services for out code editor:
+- `tsserver` is the typescript language server that provide us language services for out code editor:
   - Code Completion
   - Inspection
   - Refactoring
