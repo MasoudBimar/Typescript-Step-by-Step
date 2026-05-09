@@ -672,7 +672,7 @@ obj.greet(); // Output: "Alice"
 
 ```ts
 class Builder {
-  private value: string = "";
+  protected value: string = "";
 
   add(text: string): this {
     // 'this' as a type ensures subclass instances are returned

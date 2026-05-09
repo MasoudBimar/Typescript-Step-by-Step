@@ -1,0 +1,24 @@
+{
+  "name": "Typescript-Step-by-Step",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "^11.0.9",
+      "onFail": "download"
+    }
+  },
+  "type": "module",
+  "devDependencies": {
+    "jsdom": "^29.1.1",
+    "vitest": "^4.1.5"
+  }
+}

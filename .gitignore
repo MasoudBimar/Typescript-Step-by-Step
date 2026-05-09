@@ -1,0 +1,41 @@
+## Node modules
+node_modules/
+
+## Dependency directories
+/.pnp/
+/.pnp.js
+
+## pnpm
+/pnpm-lock.yaml
+
+## TypeScript
+*.tsbuildinfo
+
+## Vite
+/dist/
+/.vite/
+
+## Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+pnpm-error.log*
+
+## Runtime data
+/coverage/
+/.nyc_output/
+
+## Environment files
+.env
+.env.*
+
+## Editor directories and files
+.idea/
+/.vscode/
+*.sublime-workspace
+*.sublime-project
+
+## OS files
+.DS_Store
+Thumbs.db
