@@ -76,6 +76,10 @@ export class BinaryTree<T> {
     return node;
   }
 
+  /**
+   * Finding the minimum value node in a subtree
+   * This is used during the delete operation to find the in-order successor when deleting a node with two children.
+   */
   private findMin(node: TreeNode<T>): TreeNode<T> {
     while (node.left) {
       node = node.left;
@@ -86,6 +90,9 @@ export class BinaryTree<T> {
 
 }
 
+/**
+ * Tree Traversal Algorithms: Pre-order
+ */
   export function traversePreOrder<T>(
     node: TreeNode<T> | null,
     visit: (node: TreeNode<T>) => void,
@@ -97,6 +104,9 @@ export class BinaryTree<T> {
     }
   }
 
+  /**
+ * Tree Traversal Algorithms: Post-order
+ */
   export function traversePostOrder<T>(
     node: TreeNode<T> | null,
     visit: (node: TreeNode<T>) => void,
@@ -108,6 +118,9 @@ export class BinaryTree<T> {
     }
   }
 
+  /**
+ * Tree Traversal Algorithms: In-order
+ */
   export function traverseInOrder<T>(
     node: TreeNode<T> | null,
     visit: (node: TreeNode<T>) => void,
@@ -119,6 +132,9 @@ export class BinaryTree<T> {
     }
   }
 
+  /**
+ * Tree Traversal Algorithms: Level-order (Breadth-First)
+ */
   export function traverseLevelOrder<T>(
     root: TreeNode<T> | null,
     visit: (node: TreeNode<T>) => void,
@@ -133,6 +149,10 @@ export class BinaryTree<T> {
     }
   }
 
+  /**
+ * Calculating the height of a binary tree
+ * The height of a binary tree is the number of edges on the longest path from the root to a leaf node. An empty tree has a height of -1, and a tree with just one node (the root) has a height of 0.
+ */
   export function binaryTreeHeight<T>(node: TreeNode<T> | null): number {
     if (!node) return -1;
     const leftHeight = binaryTreeHeight(node.left);
