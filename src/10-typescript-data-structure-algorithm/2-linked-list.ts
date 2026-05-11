@@ -9,9 +9,9 @@ export class Node<T> {
 }
 
 export class LinkedList<T> {
-  head: Node<T> | null;
-  tail: Node<T> | null;
-  length: number;
+  private head: Node<T> | null;
+  private tail: Node<T> | null;
+  public length: number;
 
   constructor() {
     this.head = null;
@@ -113,6 +113,14 @@ export class LinkedList<T> {
       this.tail.next = null;
     }
     this.head = prevNode;
+  }
+
+  getFirst(): T | null {
+    return this.head ? this.head.value : null;
+  }
+
+  getLast(): T | null {
+    return this.tail ? this.tail.value : null;
   }
 }
 
