@@ -159,3 +159,38 @@ export class BinaryTree<T> {
     const rightHeight = binaryTreeHeight(node.right);
     return Math.max(leftHeight, rightHeight) + 1;
   }
+
+  export function binaryTreeSize<T>(node: TreeNode<T> | null): number {
+    if (!node) return 0;
+    return 1 + binaryTreeSize(node.left) + binaryTreeSize(node.right);
+  }
+
+  export function binaryTreeIsBalanced<T>(node: TreeNode<T> | null): boolean {
+    if (!node) return true;
+    const leftHeight = binaryTreeHeight(node.left);
+    const rightHeight = binaryTreeHeight(node.right);
+    if (Math.abs(leftHeight - rightHeight) > 1) return false;
+    return binaryTreeIsBalanced(node.left) && binaryTreeIsBalanced(node.right);
+  }
+
+  export function binaryTreeIsBST<T>(node: TreeNode<T> | null, min: T | null = null, max: T | null = null): boolean {
+    if (!node) return true;
+    if ((min != null && node.value <= min) || (max != null && node.value >= max)) {
+      return false;
+    }
+    return binaryTreeIsBST(node.left, min, node.value) && binaryTreeIsBST(node.right, node.value, max);
+  }
+
+  export function countBinaryTreeLeaves<T>(node: TreeNode<T> | null): number {
+    if (!node) return 0;
+    if (!node.left && !node.right) return 1;
+    return countBinaryTreeLeaves(node.left) + countBinaryTreeLeaves(node.right);
+  }
+
+  export function getBinaryTreeNodeAncestors<T>(node: TreeNode<T> | null, target: T, ancestors: T[] = []): T[] | null {
+    if (!node) return null;
+    if (node.value === target) return ancestors;
+    const leftAncestors = getBinaryTreeNodeAncestors(node.left, target, [...ancestors, node.value]);
+    if (leftAncestors) return leftAncestors;
+    return getBinaryTreeNodeAncestors(node.right, target, [...ancestors, node.value]);
+  }
